@@ -36,34 +36,33 @@ except PermissionError:
     #sys.exit()
 
 print("Rendering map...")
-print("Image dimensions: " + str(MapData["Size"][0] + RenderBorder * 2) + ", " + str(MapData["Size"][1] + RenderBorder * 2) + ".")
 
 Image = np.zeros((MapData["Size"][1] + RenderBorder * 2, MapData["Size"][0] + RenderBorder * 2, 3), np.uint8)
 
 # Make every number nice and round.
 for Element in MapData["Elements"]:
-    print("Rendering Element: " + str(Element))
     for Index, Point in enumerate(MapData["Elements"][Element]["Points"]):
+        MapData["Elements"][Element]["Points"][Index][1] = abs(MapData["Elements"][Element]["Points"][Index][1] - MapData["Size"][1]) # Invert Y values, because OpenCV starts Y axis from the top-down
         MapData["Elements"][Element]["Points"][Index] = [round(Item + RenderBorder) for Item in Point]
     if "InteractiveFaces" in MapData["Elements"][Element]:
         for FaceIndex, Face in enumerate(MapData["Elements"][Element]["InteractiveFaces"]):
             for PointIndex, Point in enumerate(MapData["Elements"][Element]["InteractiveFaces"][FaceIndex]):
-                MapData["Elements"][Element]["InteractiveFaces"][FaceIndex][PointIndex] = [round(Item + RenderBorder) for Item in Point]
-
+                MapData["Elements"][Element]["InteractiveFaces"][FaceIndex][PointIndex][1] = abs(MapData["Elements"][Element]["InteractiveFaces"][FaceIndex][PointIndex][1] - MapData["Size"][1]) # Invert Y values, because OpenCV starts Y axis from the top-down
+                MapData["Elements"][Element]["InteractiveFaces"][FaceIndex][PointIndex] = [round(Item + RenderBorder) for Item in Point] # :(
 
 # Draw
 for Element in MapData["Elements"]:
     if MapData["Elements"][Element]["Solidity"] == 0:
         cv2.polylines(Image, np.array([MapData["Elements"][Element]["Points"]]), True, (255, 0, 0))
     elif MapData["Elements"][Element]["Solidity"] == 1:
-        Points = np.array(MapData["Elements"][Element]["Points"])
-        cv2.fillPoly(Image, [Points], (88, 88, 88))
+        cv2.polylines(Image, np.array([MapData["Elements"][Element]["Points"]]), True, (88, 88, 88))
     if "InteractiveFaces" in MapData["Elements"][Element]:
         for FaceIndex, Face in enumerate(MapData["Elements"][Element]["InteractiveFaces"]):
             cv2.line(Image, tuple(Face[0]), tuple(Face[1]), (0, 255, 0), 1)
             
 
 print("Map render complete.")
+print("Image dimensions: " + str(MapData["Size"][0] + RenderBorder * 2) + ", " + str(MapData["Size"][1] + RenderBorder * 2) + ".")
 
 cv2.imshow("Map Render", Image)
 cv2.waitKey(0)
