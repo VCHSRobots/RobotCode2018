@@ -47,9 +47,9 @@ public class RetroDriveDefault extends Command {
     protected void execute() {
     	
     	if (Robot.pIDRetroDrive.toggleDrive == true) {
-    		Robot.pIDRetroDrive.ArcadeDrive();
+    		Robot.pIDRetroDrive.arcadeDrive();
     	} else if (Robot.pIDRetroDrive.toggleDrive == false) {
-    		Robot.pIDRetroDrive.MecanumDrive();
+    		Robot.pIDRetroDrive.mecanumDrive();
     	}
     	
     }
