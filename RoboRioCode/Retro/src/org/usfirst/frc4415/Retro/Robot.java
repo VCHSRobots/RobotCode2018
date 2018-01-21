@@ -154,6 +154,5 @@ public class Robot extends TimedRobot {
     	SmartDashboard.putNumber("Teleop Distance Value: ", Robot.pIDRetroDrive.getEncoder() / 3.7302787);
     	SmartDashboard.putNumber("Teleop GyroAngle: ", Robot.pIDRetroDrive.getGyroAngle());
         
-        
     }
 }
