@@ -115,10 +115,6 @@ public class PIDRetroDrive extends PIDSubsystem {
     	robotDrive4.arcadeDrive(Robot.oi.getRetroStick().getRawAxis(1), Robot.oi.getRetroStick().getRawAxis(4));
     }
     
-    public void brakeMode() {
-    	RobotMap.pIDRetroDriveleftFront.enableBrakeMode(true);
-    }
-    
     public void toggleDrive() {
     	toggleDrive = !toggleDrive;
     	
