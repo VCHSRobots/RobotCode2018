@@ -45,7 +45,9 @@ public class AutoSwitch extends Command {
     @Override
     protected void execute() {
     	
-    	Robot.pIDRetroDrive.driveDistance(300, .7, .2);
+    	Robot.pIDRetroDrive.driveForwardDistance(300, .8, .7, .2);
+    	Robot.pIDRetroDrive.resetEncoder();
+    	Robot.pIDRetroDrive.driveBackwardDistance(-300, .8, .7, .2);
     	
     }
 
@@ -58,11 +60,17 @@ public class AutoSwitch extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
+    	
+    	Robot.pIDRetroDrive.motorsOff();
+    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+    	
+    	end();
+    	
     }
 }

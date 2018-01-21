@@ -111,6 +111,7 @@ public class Robot extends TimedRobot {
     	SmartDashboard.putString("Auto GameData: ", gameData);
     	
         Robot.pIDRetroDrive.resetEncoder();
+        Robot.pIDRetroDrive.resetGyroAngle();
         
     }
 
@@ -123,6 +124,7 @@ public class Robot extends TimedRobot {
         
         SmartDashboard.putNumber("Auto Encoder Value: ", Robot.pIDRetroDrive.getEncoder());
         SmartDashboard.putNumber("Auto Distance Value: ", Robot.pIDRetroDrive.getEncoder() / 3.7302787);
+        SmartDashboard.putNumber("Auto GyroAngle: ", Robot.pIDRetroDrive.getGyroAngle());
         
         
         
@@ -137,6 +139,7 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         
         Robot.pIDRetroDrive.resetEncoder();
+        Robot.pIDRetroDrive.resetGyroAngle();
         
     }
 
@@ -149,7 +152,7 @@ public class Robot extends TimedRobot {
         
         SmartDashboard.putNumber("Teleop Encoder Value: ", Robot.pIDRetroDrive.getEncoder());
     	SmartDashboard.putNumber("Teleop Distance Value: ", Robot.pIDRetroDrive.getEncoder() / 3.7302787);
-        
+    	SmartDashboard.putNumber("Teleop GyroAngle: ", Robot.pIDRetroDrive.getGyroAngle());
         
         
     }

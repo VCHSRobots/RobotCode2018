@@ -125,7 +125,9 @@ public class PIDRetroDrive extends PIDSubsystem {
     	}
     }
     
-    public void driveDistance(double distance, double speed1, double speed2) {  // in cm
+    // Autonoumous Functions Start Here
+    
+    public void driveForwardDistance(double distance, double slowDistance, double speed1, double speed2) {  // in cm
     	double setpoint;
     	setpoint = distance * 3.7302787;
     	quadratureEncoder1.reset();
@@ -134,7 +136,7 @@ public class PIDRetroDrive extends PIDSubsystem {
     		rightFront.set(speed1);
     		leftRear.set(-1 * speed1);
     		rightRear.set(speed1);
-    		if (quadratureEncoder1.get() > setpoint * .8) {
+    		if (quadratureEncoder1.get() > setpoint * slowDistance) {
     			break;
     		}
     		
@@ -149,12 +151,79 @@ public class PIDRetroDrive extends PIDSubsystem {
     	
     }
     
+    public void driveBackwardDistance(double distance, double slowDistance, double speed1, double speed2) {  // in cm
+    	double setpoint;
+    	setpoint = distance * 3.7302787;
+    	quadratureEncoder1.reset();
+    	while (quadratureEncoder1.get() > setpoint) {
+    		leftFront.set(speed1);
+    		rightFront.set(-1 * speed1);
+    		leftRear.set(speed1);
+    		rightRear.set(-1 * speed1);
+    		if (quadratureEncoder1.get() < setpoint * slowDistance) {
+    			break;
+    		}
+    		
+    		while (quadratureEncoder1.get() > setpoint) {
+        		leftFront.set(speed2);
+        		rightFront.set(-1 * speed2);
+        		leftRear.set(speed2);
+        		rightRear.set(-1 * speed2);
+    		}
+    	
+    	}
+    	
+    }
+    
+    public void driveForward(double speed1) {
+    	leftFront.set(-1 * speed1);
+		rightFront.set(speed1);
+		leftRear.set(-1 * speed1);
+		rightRear.set(speed1);
+    }
+    
+    public void driveBackward(double speed1) {
+    	leftFront.set(speed1);
+		rightFront.set(-1 * speed1);
+		leftRear.set(speed1);
+		rightRear.set(-1 * speed1);
+    }
+    
+    public void turnRight(double speed1) {
+    	leftFront.set(-1 * speed1);
+		rightFront.set(-1 * speed1);
+		leftRear.set(-1 * speed1);
+		rightRear.set(-1 * speed1);
+    }
+    
+    public void turnLeft (double speed1) {
+    	leftFront.set(speed1);
+		rightFront.set(speed1);
+		leftRear.set(speed1);
+		rightRear.set(speed1);
+    }
+    
+    public void motorsOff() {
+    	leftFront.set(0);
+		rightFront.set(0);
+		leftRear.set(0);
+		rightRear.set(0);
+    }
+    
     public int getEncoder() {
     	return quadratureEncoder1.get();
     }
     
     public void resetEncoder() {
     	quadratureEncoder1.reset();
+    }
+    
+    public double getGyroAngle() {
+    	return Robot.navX.getAngle();
+    }
+    
+    public void resetGyroAngle() {
+    	Robot.navX.reset();
     }
     
 }
