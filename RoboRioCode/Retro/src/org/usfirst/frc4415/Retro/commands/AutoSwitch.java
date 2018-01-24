@@ -46,8 +46,9 @@ public class AutoSwitch extends Command {
     protected void execute() {
     	
     	Robot.pIDRetroDrive.driveForwardDistance(300, .8, .7, .2);
-    	Robot.pIDRetroDrive.resetEncoder();
     	Robot.pIDRetroDrive.driveBackwardDistance(-300, .8, .7, .2);
+    	
+    	Robot.pIDRetroDrive.turnRightAngle(90, .7, 1, .35, false);
     	
     }
 
