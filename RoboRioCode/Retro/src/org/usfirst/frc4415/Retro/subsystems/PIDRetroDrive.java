@@ -127,7 +127,7 @@ public class PIDRetroDrive extends PIDSubsystem {
     
     // Autonoumous Functions Start Here
     
-    public void driveForwardDistance(double distance, double slowDistance, double speed1, double speed2) {  // in cm
+    public void driveForwardDistance(double distance, double startSlowSpeed, double speed1, double speed2) {  // in cm
     	double setpoint;
     	setpoint = distance * 3.7302787;
     	quadratureEncoder1.reset();
@@ -136,7 +136,7 @@ public class PIDRetroDrive extends PIDSubsystem {
     		rightFront.set(speed1);
     		leftRear.set(-1 * speed1);
     		rightRear.set(speed1);
-    		if (quadratureEncoder1.get() > setpoint * slowDistance) {
+    		if (quadratureEncoder1.get() > (setpoint * startSlowSpeed)) {
     			break;
     		}
     		
@@ -147,13 +147,15 @@ public class PIDRetroDrive extends PIDSubsystem {
         		rightRear.set(speed2);
     		}
     	
+    		quadratureEncoder1.reset();
+    		
     	}
     	
     }
     
     
     
-    public void driveBackwardDistance(double distance, double slowDistance, double speed1, double speed2) {  // in cm
+    public void driveBackwardDistance(double distance, double startSlowSpeed, double speed1, double speed2) {  // in cm
     	double setpoint;
     	setpoint = distance * 3.7302787;
     	quadratureEncoder1.reset();
@@ -162,7 +164,7 @@ public class PIDRetroDrive extends PIDSubsystem {
     		rightFront.set(-1 * speed1);
     		leftRear.set(speed1);
     		rightRear.set(-1 * speed1);
-    		if (quadratureEncoder1.get() < setpoint * slowDistance) {
+    		if (quadratureEncoder1.get() < (setpoint * startSlowSpeed)) {
     			break;
     		}
     		
@@ -171,6 +173,62 @@ public class PIDRetroDrive extends PIDSubsystem {
         		rightFront.set(-1 * speed2);
         		leftRear.set(speed2);
         		rightRear.set(-1 * speed2);
+    		}
+    	
+    		quadratureEncoder1.reset();
+    		
+    	}
+    	
+    }
+    
+    public void turnRightAngle(double angle, double startSlowSpeed, double speed1, double speed2, boolean resetGyro) {  // in cm
+    	
+    	Robot.navX.reset();
+    	double currentAngle = Robot.navX.getAngle();
+    	
+    	while (currentAngle < angle) {
+    		leftFront.set(-1 * speed1);
+    		rightFront.set(-1 * speed1);
+    		leftRear.set(-1 * speed1);
+    		rightRear.set(-1 * speed1);
+    		if (currentAngle > (angle * startSlowSpeed)) {
+    			break;
+    		}
+    		
+    		while (currentAngle < angle) {
+        		leftFront.set(-1 * speed2);
+        		rightFront.set(-1 * speed2);
+        		leftRear.set(-1 * speed2);
+        		rightRear.set(-1 * speed2);
+    		}
+    	
+    		if (resetGyro == true) {
+    			Robot.navX.reset();
+    		}
+    		
+    	}
+    	
+    }
+    
+public void turnLeftAngle(double angle, double startSlowSpeed, double speed1, double speed2) {  // in cm
+    	
+    	Robot.navX.reset();
+    	double currentAngle = Robot.navX.getAngle();
+    	
+    	while (currentAngle < angle) {
+    		leftFront.set(speed1);
+    		rightFront.set(speed1);
+    		leftRear.set(speed1);
+    		rightRear.set(speed1);
+    		if (currentAngle > (angle * startSlowSpeed)) {
+    			break;
+    		}
+    		
+    		while (currentAngle < angle) {
+        		leftFront.set(speed2);
+        		rightFront.set(speed2);
+        		leftRear.set(speed2);
+        		rightRear.set(speed2);
     		}
     	
     	}

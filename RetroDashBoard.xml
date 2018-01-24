@@ -1,45 +1,45 @@
 <xml version="1.0">
 <dashboard>
-	<widget field="Autonomous Command" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="21" y="364"/>
-	</widget>
-	<widget field="Auto mode" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="364" y="63"/>
-	</widget>
-	<widget field="RetroDrive Default" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="0" y="328"/>
-	</widget>
-	<widget field="RetroClimber Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="0" y="292"/>
-	</widget>
-	<widget field="Auto Switch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="0" y="256"/>
-	</widget>
-	<widget field="RetroDrive Toggle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="0" y="220"/>
-	</widget>
-	<widget field="RetroClimber Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
-		<location x="0" y="184"/>
-	</widget>
-	<widget field="Auto GameData: " type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="161"/>
-	</widget>
-	<widget field="Teleop Encoder Value: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="138"/>
-	</widget>
-	<widget field="Teleop GyroAngle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="115"/>
+	<widget field="Auto GyroAngle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="377"/>
 	</widget>
 	<widget field="Auto Distance Value: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="92"/>
-	</widget>
-	<widget field="Disable GameData: " type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="0" y="69"/>
+		<location x="0" y="354"/>
 	</widget>
 	<widget field="Auto Encoder Value: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="331"/>
+	</widget>
+	<widget field="Auto GameData: " type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="308"/>
+	</widget>
+	<widget field="Autonomous Command" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="21" y="272"/>
+	</widget>
+	<widget field="Auto mode" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="424" y="101"/>
+	</widget>
+	<widget field="RetroDrive Default" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="236"/>
+	</widget>
+	<widget field="RetroClimber Backward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="200"/>
+	</widget>
+	<widget field="Auto Switch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="164"/>
+	</widget>
+	<widget field="RetroDrive Toggle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="128"/>
+	</widget>
+	<widget field="RetroClimber Forward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="92"/>
+	</widget>
+	<widget field="Teleop Encoder Value: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="69"/>
+	</widget>
+	<widget field="Teleop GyroAngle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="46"/>
 	</widget>
-	<widget field="Auto GyroAngle: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+	<widget field="Disable GameData: " type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="23"/>
 	</widget>
 	<widget field="Teleop Distance Value: " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
