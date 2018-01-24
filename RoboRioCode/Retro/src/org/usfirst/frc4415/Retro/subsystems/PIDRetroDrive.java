@@ -147,7 +147,7 @@ public class PIDRetroDrive extends PIDSubsystem {
         		rightRear.set(speed2);
     		}
     	
-    		quadratureEncoder1.reset();
+    		//quadratureEncoder1.reset();
     		
     	}
     	
