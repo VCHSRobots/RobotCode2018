@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 """Pathfinding.py
 
 Pathfinding.py calculates the shortest path for the robot between it's current location and any number of locations.

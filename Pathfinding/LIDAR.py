@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 """LIDAR.py
 
 LIDAR.py compares measurements between expected and actual LIDAR sweeps at a specific point, and returns the coordinate offset.

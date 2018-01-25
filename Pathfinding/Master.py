@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 """Master.py
 
 Master.py handles communication between itself and the RoboRio code, and coordinates calls to Pathfinding.py and LIDAR.py

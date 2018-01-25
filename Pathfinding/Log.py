@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 """Log.py performs logging functions.
 
 Log.py takes logging information and places it into the "Logging" directory as a file.
