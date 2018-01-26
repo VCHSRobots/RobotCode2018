@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 """Configuration.py
 
 Configuration.py parses the configuration file ("Pathfinding.cfg") for all modules.

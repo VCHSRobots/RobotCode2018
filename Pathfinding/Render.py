@@ -1,3 +1,5 @@
+# -*- coding: utf8 -*-
+
 """Render.py
 
 Render.py can render .map files, along with any pathing information.
