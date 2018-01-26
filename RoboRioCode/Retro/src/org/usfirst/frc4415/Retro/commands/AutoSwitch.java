@@ -45,7 +45,7 @@ public class AutoSwitch extends Command {
     @Override
     protected void execute() {
     	
-    	Robot.pIDRetroDrive.driveForwardDistance(300, .7, .7, .2, true);
+    	Robot.pIDRetroDrive.driveForwardDistance(150, .7, .7, .2, false);
     	
     	Robot.pIDRetroDrive.turnRightAngle(90, .7, 1, .7, false);
     	

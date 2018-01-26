@@ -130,6 +130,7 @@ public class PIDRetroDrive extends PIDSubsystem {
     	setpoint = distance * 3.7302787;
     	quadratureEncoder1.reset();
     	double encoderTicks = quadratureEncoder1.get();
+    	
     	while (encoderTicks < setpoint) {
     		leftFront.set(-1 * speed1);
     		rightFront.set(speed1);
