@@ -59,11 +59,11 @@ def Render(MapData, FileName = None, PathInformation = None):
             pass
     # Save.
     if FileName:
-        FileName = "{0}.png".format(FileName)
+        NewFileName = "{0}.png".format(FileName)
     else:
-        FileName = "Render {0}.png".format(time.strftime("%Y-%m-%d %H:%M:%S"))
-    Log("Saving render \"{0}\".".format(FileName), 0)
-    cv2.imwrite("{0}/{1}".format(Config["RenderStorageLocation"], FileName), Image)
+        NewFileName = "Render {0}.png".format(time.strftime("%Y-%m-%d %H:%M:%S"))
+    Log("Saving render \"{0}\".".format(NewFileName), 0)
+    cv2.imwrite("{0}/{1}".format(Config["RenderStorageLocation"], NewFileName), Image)
 
 #
 # Mainline code.
