@@ -140,6 +140,7 @@ public class Robot extends TimedRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         
         Robot.pIDRetroDrive.resetEncoder();
+        navX.reset();
         
     }
 
@@ -152,7 +153,7 @@ public class Robot extends TimedRobot {
         
         SmartDashboard.putNumber("Teleop Encoder Value: ", Robot.pIDRetroDrive.getEncoder());
     	SmartDashboard.putNumber("Teleop Distance Value: ", Robot.pIDRetroDrive.getEncoder() / 3.7302787);
-        
+        SmartDashboard.putNumber("Teleop Gyro Angle: ", navX.getAngle());
         
         
         

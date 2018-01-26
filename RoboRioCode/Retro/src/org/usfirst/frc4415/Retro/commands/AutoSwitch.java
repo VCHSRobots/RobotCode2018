@@ -45,9 +45,25 @@ public class AutoSwitch extends Command {
     @Override
     protected void execute() {
     	
-    	Robot.pIDRetroDrive.driveForwardDistance(150, .7, .7, .2, false);
+    	Robot.pIDRetroDrive.driveForwardDistance(100, .5, .5, .2, true);
     	
-    	Robot.pIDRetroDrive.turnRightAngle(90, .7, 1, .7, false);
+    	Robot.pIDRetroDrive.turnLeftAngle(180, .7, .7, .6, true);
+    	
+    	Robot.pIDRetroDrive.turnRightAngle(180, .7, .7, .6, true);
+    	
+    	Robot.pIDRetroDrive.driveBackwardDistance(100, .5, .5, .2, true);
+    	
+    	Robot.pIDRetroDrive.turnLeftAngle(360, .7, .7, .6, true);
+    	
+    	Robot.pIDRetroDrive.driveForwardDistance(100, .5, .5, .2, true);
+    	
+    	Robot.pIDRetroDrive.turnRightAngle(180, .7, .7, .6, true);
+    	
+    	Robot.pIDRetroDrive.driveForwardDistance(100, .5, .5, .2, true);
+    	
+    	Robot.pIDRetroDrive.turnLeftAngle(180, .7, .7, .6, true);
+    	
+    	
     	
     }
 
@@ -60,11 +76,15 @@ public class AutoSwitch extends Command {
     // Called once after isFinished returns true
     @Override
     protected void end() {
+    	
+    	Robot.pIDRetroDrive.motorsOff();
+    	
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     @Override
     protected void interrupted() {
+    	end();
     }
 }
