@@ -157,7 +157,7 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
         PathPoints.append(TargetPoints) # TODO: Update this.
         Log("Pathfinding completed for step {0} of {1}".format(LinesEvaluated + 1, len(TargetPoints)), 0)
         LinesEvaluated += 1
-    PathInformation.append(PathPoints) # TODO: Update this.
+    PathInformation.append(PathPoints+) # TODO: Update this.
     Log("Pathfinding complete.", 0)
     # Return a list of points that make up the path, along with actions to be taken. Formatted as a tuple:
     # [(X, Y), (X, Y), "DELIVER", (X, Y), "COLLECT", (X, Y), (X, Y), "DELIVER"]
@@ -165,7 +165,7 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
     return PathInformation
 
 def VectorizePathInformation(PathInformation):
-    pass
+    return PathInformation
 
 #
 # Mainline code.

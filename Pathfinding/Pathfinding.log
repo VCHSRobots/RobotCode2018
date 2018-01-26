@@ -1107,3 +1107,34 @@ Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver']
 2018-01-24 21:19:44 > DEBUG:    Pathfinding completed for step 2 of 2
 2018-01-24 21:19:44 > DEBUG:    Pathfinding complete.
 2018-01-24 21:19:44 > DEBUG:    Saving render "Render 2018-01-24 21:19:44.png".
+2018-01-24 21:35:38 > INFO:     Pathfinding system stopped.
+2018-01-24 21:36:26 > INFO:     Pathfinding system initialized.
+2018-01-24 21:36:26 > DEBUG:    No command-line user input received.
+2018-01-24 21:36:26 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-01-24 21:36:26 > DEBUG:    Parsing pathing instructions.
+2018-01-24 21:36:26 > DEBUG:    Rendering initial render of map; paging Department of Redundancy Dept.
+2018-01-24 21:36:26 > DEBUG:    Saving render "Initial Map Render.png".
+2018-01-24 21:36:26 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14)
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver']
+2018-01-24 21:36:26 > DEBUG:    Pathfinding started for step 1. Step starts at point "(162, 14)" and ends at point "(129.0, 236.0)", and has an angle of 98°, therefore extending into quadrant [2].
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating potential element intersections for path step 1.
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "Field".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "NearLeftPortal".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "FarLeftPortal".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "NearExchangeZone".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "LeftNullTerritory".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "NearSwitch".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "FarSwitch".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "Scale".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "FarPowerCubeZone".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "NearAutoLine".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating intersections with element "FarAutoLine".
+2018-01-24 21:36:26 > DEBUG:    Pathfinding completed for step 1 of 2
+2018-01-24 21:36:26 > DEBUG:    Pathfinding started for step 2. Step starts at point "(129.0, 236.0)" and ends at point "(116.0, 160.0)", and has an angle of 260°, therefore extending into quadrant [3].
+2018-01-24 21:36:26 > DEBUG:    Pathfinding is evaluating potential element intersections for path step 2.
+2018-01-24 21:36:26 > DEBUG:    Pathfinding completed for step 2 of 2
+2018-01-24 21:36:26 > DEBUG:    Pathfinding complete.
+2018-01-24 21:36:26 > DEBUG:    Saving render "Render 2018-01-24 21:36:26.png".
+2018-01-24 21:36:52 > INFO:     Pathfinding system stopped.
