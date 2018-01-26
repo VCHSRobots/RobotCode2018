@@ -125,26 +125,116 @@ public class PIDRetroDrive extends PIDSubsystem {
     	}
     }
     
-    public void driveDistance(double distance, double speed1, double speed2) {  // in cm
+    public void driveForwardDistance(double distance, double startSlowSpeed, double speed1, double speed2, boolean resetEncoder) {  // in cm
     	double setpoint;
     	setpoint = distance * 3.7302787;
     	quadratureEncoder1.reset();
-    	while (quadratureEncoder1.get() < setpoint) {
+    	double encoderTicks = quadratureEncoder1.get();
+    	while (encoderTicks < setpoint) {
     		leftFront.set(-1 * speed1);
     		rightFront.set(speed1);
     		leftRear.set(-1 * speed1);
     		rightRear.set(speed1);
-    		if (quadratureEncoder1.get() > setpoint * .8) {
+    		if (encoderTicks > setpoint * startSlowSpeed) {
     			break;
     		}
     		
-    		while (quadratureEncoder1.get() < setpoint) {
+    		while (encoderTicks < setpoint) {
         		leftFront.set(-1 * speed2);
         		rightFront.set(speed2);
         		leftRear.set(-1 * speed2);
         		rightRear.set(speed2);
     		}
     	
+    	}
+    	
+    	if (resetEncoder == true) {
+    		quadratureEncoder1.reset();
+    	}
+    	
+    }
+    
+    public void driveBackwardDistance(double distance, double startSlowSpeed, double speed1, double speed2, boolean resetEncoder) {  // in cm
+    	double setpoint;
+    	setpoint = distance * 3.7302787;
+    	quadratureEncoder1.reset();
+    	double encoderTicks = quadratureEncoder1.get();
+    	while (Math.abs(encoderTicks) < setpoint) {
+    		leftFront.set(speed1);
+    		rightFront.set(-1 *speed1);
+    		leftRear.set(speed1);
+    		rightRear.set(-1 * speed1);
+    		if (encoderTicks > setpoint * startSlowSpeed) {
+    			break;
+    		}
+    		
+    		while (Math.abs(encoderTicks) < setpoint) {
+        		leftFront.set(speed2);
+        		rightFront.set(-1 * speed2);
+        		leftRear.set(speed2);
+        		rightRear.set(-1 * speed2);
+    		}
+    	
+    	}
+    	
+    	if (resetEncoder == true) {
+    		quadratureEncoder1.reset();
+    	}
+    	
+    }
+    
+    public void turnRightAngle(double angle, double startSlowSpeed, double speed1, double speed2, boolean resetGyro) {  // in cm
+    	Robot.navX.reset();
+    	double currentAngle = Robot.navX.getAngle();
+    	
+    	while (currentAngle < angle) {
+    		leftFront.set(-1 * speed1);
+    		rightFront.set(-1 * speed1);
+    		leftRear.set(-1 * speed1);
+    		rightRear.set(-1 * speed1);
+    		if (currentAngle > angle * startSlowSpeed) {
+    			break;
+    		}
+    		
+    		while (currentAngle < angle) {
+        		leftFront.set(-1 * speed2);
+        		rightFront.set(-1 * speed2);
+        		leftRear.set(-1 * speed2);
+        		rightRear.set(-1 * speed2);
+    		}
+    	
+    	}
+    	
+    	if (resetGyro == true) {
+    		Robot.navX.reset();
+    	}
+    	
+    }
+    
+    public void turnLeftAngle(double angle, double startSlowSpeed, double speed1, double speed2, boolean resetGyro) {  // in cm
+    	Robot.navX.reset();
+    	double currentAngle = Robot.navX.getAngle();
+    	
+    	while (Math.abs(currentAngle) < angle) {
+    		leftFront.set(speed1);
+    		rightFront.set(speed1);
+    		leftRear.set(speed1);
+    		rightRear.set(speed1);
+    		if (currentAngle > angle * startSlowSpeed) {
+    			break;
+    		}
+    		
+    		while (Math.abs(currentAngle) < angle) {
+        		leftFront.set(speed2);
+        		rightFront.set(speed2);
+        		leftRear.set(speed2);
+        		rightRear.set(speed2);
+    		}
+    	
+    	}
+    	
+    	if (resetGyro == true) {
+    		Robot.navX.reset();
     	}
     	
     }
