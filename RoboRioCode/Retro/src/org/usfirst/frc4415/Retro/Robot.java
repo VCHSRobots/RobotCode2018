@@ -113,6 +113,7 @@ public class Robot extends TimedRobot {
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
         
+        SmartDashboard.putBoolean("Auto DriveTrain: ", Robot.pIDRetroDrive.toggleDrive);
         Robot.pIDRetroDrive.resetEncoder();
         
     }
@@ -151,6 +152,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         
+        SmartDashboard.putBoolean("Teleop DriveTrain: ", Robot.pIDRetroDrive.toggleDrive);
         SmartDashboard.putNumber("Teleop Encoder Value: ", Robot.pIDRetroDrive.getEncoder());
     	SmartDashboard.putNumber("Teleop Distance Value: ", Robot.pIDRetroDrive.getEncoder() / 3.7302787);
         SmartDashboard.putNumber("Teleop Gyro Angle: ", navX.getAngle());

@@ -12,6 +12,7 @@
 package org.usfirst.frc4415.Retro.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc4415.Retro.Robot;
+import org.usfirst.frc4415.Retro.RobotMap;
 
 /**
  *
@@ -39,11 +40,16 @@ public class AutoSwitch extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
+
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() {
+    	
+    	if (Robot.pIDRetroDrive.toggleDrive == false) {
+    		Robot.pIDRetroDrive.MecanumDrive();
+    	}
     	
     	Robot.pIDRetroDrive.driveForwardDistance(100, .5, .5, .2, true);
     	
