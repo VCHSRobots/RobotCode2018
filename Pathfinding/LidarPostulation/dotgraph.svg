@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+                  <html>
+                  <body>
+                  <svg height = "700" width = "700">
+<circle cx = "80" cy = "80" r = "54.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "80" cy = "160" r = "50.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "80" cy = "240" r = "51.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "80" cy = "320" r = "51.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "80" cy = "400" r = "47.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "160" cy = "80" r = "57.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "160" cy = "160" r = "57.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "160" cy = "240" r = "53.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "160" cy = "320" r = "54.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "160" cy = "400" r = "50.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "240" cy = "80" r = "57.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "240" cy = "160" r = "58.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "240" cy = "240" r = "54.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "240" cy = "320" r = "55.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "240" cy = "400" r = "57.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "320" cy = "80" r = "60.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "320" cy = "160" r = "60.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "320" cy = "240" r = "56.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "320" cy = "320" r = "57.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "320" cy = "400" r = "57.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "400" cy = "80" r = "44.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "400" cy = "160" r = "46.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "400" cy = "240" r = "46.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "400" cy = "320" r = "42.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "400" cy = "400" r = "42.0" stroke = "black" stroke-width = "3" fill = "red"/>
+<circle cx = "320" cy = "160" r = "5" stroke = "blue" stroke-width = "3" fill = "blue"/>
+<circle cx = "320" cy = "160" r = "2" stroke = "yellow" stroke-width = "3" fill = "yellow"/>
+<\svg>
+                 <\body>
+                 <\html>
