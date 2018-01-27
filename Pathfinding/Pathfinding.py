@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+ # -*- coding: utf8 -*-
 
 """Pathfinding.py
 
@@ -9,6 +9,7 @@ Pathfinding.py calculates the shortest path for the robot between it's current l
 # Built-in imports.
 #
 
+from copy import deepcopy
 import math
 from operator import itemgetter
 
@@ -29,21 +30,52 @@ Config = Configuration.LoadConfig()
 # Functions.
 #
 
-def FindNearestActionableElementFace():
+def ExpandMapElements(MapData):
+    CopiedMapData = deepcopy(MapData)
+    RobotRadius = max(Config["RobotDimensions"]) / 2
+    VirtualElements = {}
+    for Element in CopiedMapData["Elements"]:
+        if Element not in Config["NonVirtualizableElements"]:
+            if CopiedMapData["Elements"][Element]["Solidity"] >= 1:
+                VirtualElement = {"Points": [], "Solidity": 3}
+                X, Y = zip(*CopiedMapData["Elements"][Element]["Points"])
+                Length = len(X)
+                ElementCenter = (sum(X) / Length, sum(Y) / Length)
+                for Point in CopiedMapData["Elements"][Element]["Points"]:
+                    RelativePoint = [0, 0]
+                    RelativePoint[0] = Point[0] - ElementCenter[0]
+                    RelativePoint[1] = Point[1] - ElementCenter[1]
+                    if RelativePoint[0] < 0:
+                        RelativePoint[0] = RelativePoint[0] - RobotRadius
+                    else:
+                        RelativePoint[0] = RelativePoint[0] + RobotRadius
+                    if RelativePoint[1] < 0:
+                        RelativePoint[1] = RelativePoint[1] - RobotRadius
+                    else:
+                        RelativePoint[1] = RelativePoint[1] + RobotRadius
+                    Point[0] = ElementCenter[0] + RelativePoint[0]
+                    Point[1] = ElementCenter[1] + RelativePoint[1]
+                    VirtualElement["Points"].append(Point)
+                if "InteractiveFaces" in CopiedMapData["Elements"][Element]:
+                    VirtualElement["InteractiveFaces"] = []
+                    for Face in CopiedMapData["Elements"][Element]["InteractiveFaces"]:
+                        VirtualFace = []
+                        for Point in Face: # TODO: Simplify FOR statements.
+                            # TODO: Do this!
+                            VirtualFace.append(Point)
+                        VirtualElement["InteractiveFaces"].append(VirtualFace)
+                if "InteractiveSides" in CopiedMapData["Elements"][Element]:
+                    VirtualElement["InteractiveSides"] = CopiedMapData["Elements"][Element]["InteractiveSides"]
+                VirtualElements["Virtual{0}".format(Element)] = VirtualElement
+    for Element in VirtualElements:
+        MapData["Elements"][Element] = VirtualElements[Element]
+    return MapData
+
+def GetNearestActionableElementFace():
     pass
 
-def GetIntersectionPoint(LineOne, LineTwo): # Returns False if line segments do not intersect. Credit for this function goes to Paul Draper. See https://stackoverflow.com/a/20677983 for source.
-    XDifference = (LineOne[0][0] - LineOne[1][0], LineTwo[0][0] - LineTwo[1][0])
-    YDifference = (LineOne[0][1] - LineOne[1][1], LineTwo[0][1] - LineTwo[1][1])
-    def Det(A, B):
-        return A[0] * B[1] - A[1] * B[0]
-    Div = Det(XDifference, YDifference)
-    if Div == 0:
-        return False
-    D = (Det(*LineOne), Det(*LineTwo))
-    X = Det(D, XDifference) / Div
-    Y = Det(D, YDifference) / Div
-    return (X, Y)
+def GetIntersectionPoint(LineOne, LineTwo): # Returns False if line segments do not intersect. Otherwise returns coordinate of intersection point. Credit for this function goes to Paul Draper. See https://stackoverflow.com/a/20677983 for source.
+    pass
 
 def GetQuadrants(Angle):
         StepQuadrants = []
@@ -73,70 +105,76 @@ def ParseInstructions(Instructions):
 
 def Path(MapData, CurrentPosition, ElementDistribution, PathList):
     Log("Pathing instructions:\r\n                                 - Initial position: {0}\r\n                                 - Element distribution: {1}\r\n                                 - Path list: {2}".format(CurrentPosition, ElementDistribution, PathList), 0)
+    PathfindingMapData = deepcopy(MapData)
     PathInformation = []
     TargetPoints = []
-    for Item in PathList:
+    for PathIndex, Item in enumerate(PathList):
         if Item.lower() in ("deliver", "collect"): # If the item is an action.
             PathInformation.append(Item)
         elif len(Item) == 2: # If the item is a location (pair of coordinates).
-            TargetPoints.append(Item)
+            if 0 > Item[0] > PathfindingMapData["Size"][0]:
+                Log("X value of path coordinate is out of bounds. ({0} != 0 to {1}).".format(Item[0], PathfindingMapData["Size"][0]), 3)
+                return
+            if 0 > Item[1] > PathfindingMapData["Size"][1]:
+                Log("Y value of path coordinate is out of bounds. ({0} != 0 to {1}).".format(Item[1], PathfindingMapData["Size"][1]), 3)
+                return
+            TargetPoints.append((Item, PathIndex))
         else: # If the item is a pre-defined location, as described in the .map file.
-            if not Item in MapData["Elements"]:
+            if not Item in PathfindingMapData["Elements"]:
                 Log("Path target \"{0}\" is not described in map file.".format(Element), 3)
                 return
-            if "InteractiveFaces" in MapData["Elements"][Item]:
+            if "InteractiveFaces" in PathfindingMapData["Elements"][Item]:
                 FacesToEvaluate = []
-                if "InteractiveSides" in MapData["Elements"][Item]:
+                if "InteractiveSides" in PathfindingMapData["Elements"][Item]:
                     if Item == "NearSwitch":
                         if ElementDistribution[0] == "L":
-                            for Index in MapData["Elements"][Item]["InteractiveSides"]["Left"]:
-                                FacesToEvaluate.append(MapData["Elements"][Item]["InteractiveFaces"][Index])
+                            for Index in PathfindingMapData["Elements"][Item]["InteractiveSides"]["Left"]:
+                                FacesToEvaluate.append(PathfindingMapData["Elements"][Item]["InteractiveFaces"][Index])
                         else:
-                            for Index in MapData["Elements"][Item]["InteractiveSides"]["Right"]:
-                                FacesToEvaluate.append(MapData["Elements"][Item]["InteractiveFaces"][Index])
+                            for Index in PathfindingMapData["Elements"][Item]["InteractiveSides"]["Right"]:
+                                FacesToEvaluate.append(PathfindingMapData["Elements"][Item]["InteractiveFaces"][Index])
                     elif Item == "Scale":
-                        if ElementDistribution[0] == "L":
-                            for Index in MapData["Elements"][Item]["InteractiveSides"]["Left"]:
-                                FacesToEvaluate.append(MapData["Elements"][Item]["InteractiveFaces"][Index])
+                        if ElementDistribution[1] == "L":
+                            for Index in PathfindingMapData["Elements"][Item]["InteractiveSides"]["Left"]:
+                                FacesToEvaluate.append(PathfindingMapData["Elements"][Item]["InteractiveFaces"][Index])
                         else:
-                            for Index in MapData["Elements"][Item]["InteractiveSides"]["Right"]:
-                                FacesToEvaluate.append(MapData["Elements"][Item]["InteractiveFaces"][Index])
+                            for Index in PathfindingMapData["Elements"][Item]["InteractiveSides"]["Right"]:
+                                FacesToEvaluate.append(PathfindingMapData["Elements"][Item]["InteractiveFaces"][Index])
                     elif Item == "FarSwitch":
-                        if ElementDistribution[0] == "L":
-                            for Index in MapData["Elements"][Item]["InteractiveSides"]["Left"]:
-                                FacesToEvaluate.append(MapData["Elements"][Item]["InteractiveFaces"][Index])
+                        if ElementDistribution[2] == "L":
+                            for Index in PathfindingMapData["Elements"][Item]["InteractiveSides"]["Left"]:
+                                FacesToEvaluate.append(PathfindingMapData["Elements"][Item]["InteractiveFaces"][Index])
                         else:
-                            for Index in MapData["Elements"][Item]["InteractiveSides"]["Right"]:
-                                FacesToEvaluate.append(MapData["Elements"][Item]["InteractiveFaces"][Index])
+                            for Index in PathfindingMapData["Elements"][Item]["InteractiveSides"]["Right"]:
+                                FacesToEvaluate.append(PathfindingMapData["Elements"][Item]["InteractiveFaces"][Index])
                 else:
-                    FacesToEvaluate = MapData["Elements"]["Item"]
+                    FacesToEvaluate = PathfindingMapData["Elements"][Item]["InteractiveFaces"]
                 FaceCenters = []
                 FaceDistances = []
                 for Face in FacesToEvaluate: # Determine the nearest face.
-                    FaceCenter = (Face[0][0] + Face[1][0]) / 2, (Face[0][1]) / 2
+                    FaceCenter = ((Face[0][0] + Face[1][0]) / 2, (Face[0][1] + Face[1][1]) / 2)
                     FaceCenters.append(FaceCenter)
                     Distance = abs(FaceCenter[0] - CurrentPosition[0]) + abs(FaceCenter[1] - CurrentPosition[1])
                     FaceDistances.append(Distance)
-                TargetPoints.append(FaceCenters[min(enumerate(FaceDistances), key=itemgetter(1))[0]])
+                TargetPoints.append((FaceCenters[min(enumerate(FaceDistances), key=itemgetter(1))[0]], PathIndex))
             else:
                 Log("Path target \"{0}\" does not have any InteractiveFaces.", 2)
                 # Put down a point to path to regardless. (Use the center of the element.)
-                X, Y = zip(MapData["Elements"][Item]["Points"])
+                X, Y = zip(*PathfindingMapData["Elements"][Item]["Points"])
                 Length = len(X)
-                TargetPoints.append((sum(X) / L, sum(Y) / L))
+                TargetPoints.append(((sum(X) / Length, sum(Y) / Length), PathIndex))
     LinesEvaluated = 0
-    StartPoint = []
-    EndPoint = []
-    PathPoints = []
-    while LinesEvaluated < len(TargetPoints): # Evaluate the shortest path between the current location and each of the points listed.
+    for Index, Point in enumerate(TargetPoints): # Evaluate the shortest path between the current location and each of the points listed.
+        StartPoint = []
+        EndPoint = []
+        PathPoints = []
         if LinesEvaluated == 0:
             StartPoint = CurrentPosition
-            EndPoint = TargetPoints[0]
+            EndPoint = TargetPoints[0][0]
         else:
-            StartPoint = TargetPoints[LinesEvaluated - 1]
-            EndPoint = TargetPoints[LinesEvaluated]
-        # Check for intersections, and path around them.
-        # Filter out possible intersections with elements by only searching for ones which exist within the quadrant of the vector's direction.
+            StartPoint = TargetPoints[LinesEvaluated - 1][0]
+            EndPoint = TargetPoints[LinesEvaluated][0]
+        # Filter out possible intersections with elements by only searching for ones which have a solidity greater than or equal to 1 and exist within the quadrant of the vector's direction.
         Angle = round(math.degrees(math.atan2(EndPoint[1] - StartPoint[1], EndPoint[0] - StartPoint[0])))
         if Angle < 0:
             Angle = 360 + Angle
@@ -146,25 +184,50 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
         else:
             Plural = ""
         Log("Pathfinding started for step {0}. Step starts at point \"{1}\" and ends at point \"{2}\", and has an angle of {3}°, therefore extending into quadrant{4} {5}.".format(LinesEvaluated + 1, StartPoint, EndPoint, Angle, Plural, StepQuadrants), 0)
+        SolidElements = []
+        for Element in PathfindingMapData["Elements"]:
+            if PathfindingMapData["Elements"][Element]["Solidity"] >= 1:
+                SolidElements.append(Element)
         ElementsToEvaluate = []
-        for Element in MapData["Elements"]:
-            if any(GetQuadrants(round(math.degrees(math.atan2(Point[1] - StartPoint[1], Point[0] - StartPoint[0])))) == StepQuadrants for Point in MapData["Elements"][Element]["Points"]): # If any of the element's points exist within the proper quadrant(s).
-                ElementsToEvaluate.append(Element)
+        for Element in SolidElements:
+            if any(GetQuadrants(round(math.degrees(math.atan2(Point[1] - StartPoint[1], Point[0] - StartPoint[0])))) == StepQuadrants for Point in PathfindingMapData["Elements"][Element]["Points"]): # If any of the element's points exist within the proper quadrant(s).
+               ElementsToEvaluate.append(Element)
+        StartPoint = [int(Coordinate) for Coordinate in StartPoint]
+        PathPoints.append(list(StartPoint))
         Log("Pathfinding is evaluating potential element intersections for path step {0}.".format(LinesEvaluated + 1), 0)
+        ElementIntersections = []
         for Element in ElementsToEvaluate:
             Log("Pathfinding is evaluating intersections with element \"{0}\".".format(Element), 0)
-            # TODO: Evaluate intersections and path around elements as needed. Append new points to PathPoints.
-        PathPoints.append(TargetPoints) # TODO: Update this.
+            ElementLinesEvaluated = 0
+            while ElementLinesEvaluated < len(PathfindingMapData["Elements"][Element]["Points"]) - 1:
+                LineOne = (StartPoint, EndPoint)
+                LineTwo = (PathfindingMapData["Elements"][Element]["Points"][ElementLinesEvaluated], PathfindingMapData["Elements"][Element]["Points"][ElementLinesEvaluated + 1])
+                IntersectionPoint = GetIntersectionPoint(LineOne, LineTwo)
+                if IntersectionPoint:
+                    Distance = math.hypot(IntersectionPoint[0] - LineOne[0][0], IntersectionPoint[1] - LineOne[0][1])
+                    ElementIntersections.append((Element, IntersectionPoint, Distance))
+                ElementLinesEvaluated += 1
+        if len(ElementIntersections) == 0:
+            Log("Pathfinding found no intersections with element \"{0}\"".format(Element), 0)
+        elif len(ElementIntersections) > 0:
+            print(str(ElementIntersections)) # TODO: TEMP
+            IntersectedElement, ClosestIntersectionPoint, Distance = ElementIntersections[0], [round(Number) for Number in sorted(ElementIntersections, key=itemgetter(2))[0][1]], ElementIntersections[2] # Sort element intersections by distance, and keep the coordinates of the closest intersection.
+            Plural = ""
+            if len(ElementIntersections) > 1:
+                Plural = "s"
+            Log("Pathfinding found {0} intersection{1}. The closest intersection was at point \"{2}\" with element {3}".format(len(ElementIntersections), Plural, ClosestIntersectionPoint, IntersectedElement), 0)
+        EndPoint = [int(Coordinate) for Coordinate in EndPoint]
+        PathPoints.append(list(EndPoint))
         Log("Pathfinding completed for step {0} of {1}".format(LinesEvaluated + 1, len(TargetPoints)), 0)
         LinesEvaluated += 1
-    PathInformation.append(PathPoints+) # TODO: Update this.
+        PathInformation.insert(TargetPoints[Index][1], list(PathPoints)) # TODO: Update this.
     Log("Pathfinding complete.", 0)
     # Return a list of points that make up the path, along with actions to be taken. Formatted as a tuple:
     # [(X, Y), (X, Y), "DELIVER", (X, Y), "COLLECT", (X, Y), (X, Y), "DELIVER"]
-    print(str(PathInformation)) # TODO TEMP
     return PathInformation
 
 def VectorizePathInformation(PathInformation):
+    pass
     return PathInformation
 
 #

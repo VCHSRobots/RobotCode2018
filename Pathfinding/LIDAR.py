@@ -25,6 +25,9 @@ Config = Configuration.LoadConfig()
 def Compare():
     pass
 
+def CompressCurrentData(Data):
+    pass
+
 def GetCurrentData():
     FOV = Config["LIDARFOV"]
     CurrentPosition = None

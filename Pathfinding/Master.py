@@ -65,13 +65,14 @@ def Exit():
     Log("Pathfinding system stopped.", 1)
 
 def Move(Instructions):
+    global DistanceTraversed
     global MapData
     global NumberOfPositionEvaluations
     ParsedInstructions = Pathfinding.ParseInstructions(Instructions)
     if not MapData: # If we have yet to load any map data.
-        Log("Rendering initial render of map; paging Department of Redundancy Dept.", 0)
         with open(Config["MapSource"]) as File:
             MapData = json.load(File)
+            MapData = Pathfinding.ExpandMapElements(MapData)
             Render(MapData, "Initial Map Render")
             NumberOfPositionEvaluations += 1
     CurrentPosition, CurrentRotation, AnomalousElements = LIDAR.GetCurrentData()
@@ -88,6 +89,7 @@ def Move(Instructions):
                 # Begin moving toward point.
                 # TODO: Convert "steps" (two pairs of points) to vectors for calculating progression along path.
                 PathInformation = Pathfinding.VectorizePathInformation(PathInformation)
+                DistanceTraversed += 1
                 # Communicate.Send("") # Send direction command to RoboRio.
 
 
