@@ -74,8 +74,29 @@ def ExpandMapElements(MapData):
 def GetNearestActionableElementFace():
     pass
 
-def GetIntersectionPoint(LineOne, LineTwo): # Returns False if line segments do not intersect. Otherwise returns coordinate of intersection point. Credit for this function goes to Paul Draper. See https://stackoverflow.com/a/20677983 for source.
-    pass
+def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True): # Returns False if line segments do not intersect. Otherwise returns coordinate of intersection point. Call with "LineSegments" as False to calculate the intersections of unbounded lines.
+    X1, Y1, X2, Y2, X3, Y3, X4, Y4 = LineOne[0][0], LineOne[0][1], LineOne[1][0], LineOne[1][1], LineTwo[0][0], LineTwo[0][1], LineTwo[1][0], LineTwo[1][1]
+    UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
+    UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+    UbNumerator = ((X2 - X1) * (Y1 - Y3) - (Y2 - Y1) * (X1 - X3))
+    UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+    if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0: # If the lines are coincident.
+        return False
+    elif UaDenominator == 0 and UbDenominator == 0: # If the lines are parallel.
+        return False
+    else:
+        Ua = UaNumerator / UaDenominator
+        Ub = UbNumerator / UbDenominator
+        X = X1 + Ua * (X2 - X1)
+        Y = Y1 + Ua * (Y2 - Y1)
+        IntersectionPoint = (X, Y)
+        if not LineSegments:
+            return IntersectionPoint
+        elif 0 <= Ua <= 1 and 0 <= Ub <= 1: # If they are line segments and they intersect:
+            return IntersectionPoint
+        else: # If they are line segments and they do not intersect:
+            return False
+
 
 def GetQuadrants(Angle):
         StepQuadrants = []
@@ -210,8 +231,9 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
         if len(ElementIntersections) == 0:
             Log("Pathfinding found no intersections with element \"{0}\"".format(Element), 0)
         elif len(ElementIntersections) > 0:
+            ElementIntersections = sorted(ElementIntersections, key=itemgetter(2))
             print(str(ElementIntersections)) # TODO: TEMP
-            IntersectedElement, ClosestIntersectionPoint, Distance = ElementIntersections[0], [round(Number) for Number in sorted(ElementIntersections, key=itemgetter(2))[0][1]], ElementIntersections[2] # Sort element intersections by distance, and keep the coordinates of the closest intersection.
+            IntersectedElement, ClosestIntersectionPoint, Distance = ElementIntersections[0][0], [round(Number) for Number in ElementIntersections[0][1]], round(ElementIntersections[0][2]) # Sort element intersections by distance, and keep the coordinates of the closest intersection.
             Plural = ""
             if len(ElementIntersections) > 1:
                 Plural = "s"
