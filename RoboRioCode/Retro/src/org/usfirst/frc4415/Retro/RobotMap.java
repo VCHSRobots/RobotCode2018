@@ -78,7 +78,7 @@ public class RobotMap {
         pIDRetroDriveDoubleSolenoid1 = new DoubleSolenoid(0, 0, 1);
         LiveWindow.addActuator("PIDRetroDrive", "Double Solenoid 1", pIDRetroDriveDoubleSolenoid1);
         
-        pIDRetroClimberMotor = new WPI_TalonSRX(0);
+        pIDRetroClimberMotor = new WPI_TalonSRX(9);
         
         
         pIDRetroClimberQuadratureEncoder1 = new Encoder(3, 4, false, EncodingType.k4X);
@@ -88,7 +88,7 @@ public class RobotMap {
         retroTelescopeMotor = new WPI_TalonSRX(4);
         
         
-        pIDRetroClawMotor = new WPI_TalonSRX(5);
+        pIDRetroClawMotor = new WPI_TalonSRX(1);
         
         
         pIDRetroClawQuadratureEncoder1 = new Encoder(5, 6, false, EncodingType.k4X);

@@ -176,7 +176,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Teleop Gyro Angle: ", navX.getAngle());
         SmartDashboard.putNumber("Teleop ClimberEncoder Value: ", Robot.pIDRetroClimber.getEncoder());
         
-        
+        SmartDashboard.putNumber("PID Error: ", Robot.pIDRetroDrive.getPIDController().getError());
         
         
     }

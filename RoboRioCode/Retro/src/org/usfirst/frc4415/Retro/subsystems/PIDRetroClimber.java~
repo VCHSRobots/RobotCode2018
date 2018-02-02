@@ -92,7 +92,7 @@ public class PIDRetroClimber extends PIDSubsystem {
     
     public void staySetpoint() {
     	while (quadratureEncoder1.get() < -5) {
-    		setSetpoint(-.025);
+    		setSetpoint(-.075);
     	}
     	
     }
