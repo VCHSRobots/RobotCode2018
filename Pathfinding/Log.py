@@ -30,6 +30,13 @@ Config = Configuration.LoadConfig()
 #
 
 def Log(Message = None, LogLevel = 1):
+    """
+    Logs a specific message according to its LogLevel.
+    Logged messages are printed in the console, and are saved to the file as defined in the configuration file "Pathfinding.cfg".
+    LogLevels are:
+    0 / "DEBUG"; 1 / "INFO"; 2 / "WARNING"; 3 / "ERROR"; 4 / "CRITICAL".
+    Debug messages will not be logged if LogDebugMessages = false in Pathfinding.cfg.
+    """
     if Message == None:
         raise ValueError("Message has no value.")
     Time = time.strftime("%Y-%m-%d %H:%M:%S")

@@ -32,14 +32,18 @@ Config = Configuration.LoadConfig()
 
 def Anya(GridData, StartPoint, EndPoint):
     """
-    Anya implementation based on:
-
-    D. Harabor, A. Grastien, D. Oz and V. Aksakalli, 2016
-    Optimal Any-angle Pathfinding in Practice, In
-    Journal of Artificial Intelligence Research (JAIR)
+    Find the optimal path between two points on a grid. Returns tuple with each point in the path. Returns False if no path exists.
+    Anya implementation based on the paper "Optimal Any-angle Pathfinding in Practice", published in the Journal of Artificial Intelligence Research (JAIR); written by D. Harabor, A. Grastien, D. Oz and V. Aksakalli, 2016.
     """
-    
+
+    #
+    # Sub-functions.
+    #
+
     def FareySequence(N, Descending = False):
+        """
+        Calculate the Farey Sequence of order N.
+        """
         # N needs to be min(Width, Height)
         FareySequence = []
         A, B, C, D = 0, 1, 1, N
@@ -52,12 +56,50 @@ def Anya(GridData, StartPoint, EndPoint):
             FareySequence.append(A, B)
         return FareySequence
     def GenerateSuccessors(SearchNode):
+        """
+        Generates the successors of an Anya search node.
+        """
+        def GenerateConeSuccessors(PointOne, PointTwo, Root):
+            """
+            Generates the successors of a cone search node.
+            """
+            pass
+        def GenerateFlatSuccessors(Point, Root):
+            """
+            Generates the successors of a flat search node.
+            """
+            pass
+        def GenerateStartSuccessors(Interval):
+            """
+            Generates the successors for the start search node.
+            """
+            pass
+        Successors = []
         return Successors
     def LineOfSight(PointOne, PointTwo):
+        """
+        Determines whether two points have a line-of-sight; that is, if a line drawn between them does not intersect with any solid elements.
+        """
         LineOfSight = False
         return LineOfSight
+    def NodeType(Node):
+        """
+        Determines and returns the type of an Anya search node.
+        """
+        NodeType = "" # "START" = Start Node; "CONE" = Cone Node; "FLAT" = Flat Node
+        return NodeType
+
+    #
+    # Mainline function code.
+    #
+
+    StepPathData = []
+    return StepPathData
 
 def ExpandMapElements(MapData):
+    """
+    Creates a large "virtual element" around specified solid map elements, and append it to the MapData["Elements"] list. Return the modified MapData.
+    """
     CopiedMapData = deepcopy(MapData)
     RobotRadius = max(Config["RobotDimensions"]) / 2
     VirtualElements = {}
@@ -98,7 +140,12 @@ def ExpandMapElements(MapData):
         MapData["Elements"][Element] = VirtualElements[Element]
     return MapData
 
-def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True): # Returns False if line segments do not intersect. Otherwise returns coordinate of intersection point. Call with "LineSegments" as False to calculate the intersections of unbounded lines.
+def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True):
+    """
+    Determines and returns the intersection point of two line segments.
+    Returns False if the line segments do not intersect.
+    Can be called with "LineSegments = False" to calculate the intersections of unbounded lines.
+    """
     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = LineOne[0][0], LineOne[0][1], LineOne[1][0], LineOne[1][1], LineTwo[0][0], LineTwo[0][1], LineTwo[1][0], LineTwo[1][1]
     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
@@ -114,40 +161,49 @@ def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True): # Returns False
         X = X1 + Ua * (X2 - X1)
         Y = Y1 + Ua * (Y2 - Y1)
         IntersectionPoint = (X, Y)
-        if not LineSegments:
+        if not LineSegments: # If they are lines.
             return IntersectionPoint
         elif 0 <= Ua <= 1 and 0 <= Ub <= 1: # If they are line segments and they intersect:
             return IntersectionPoint
-        else: # If they are line segments and they do not intersect:
+        else: # If they are line segments or lines and they do not intersect:
             return False
 
 def GetQuadrants(Angle):
-        StepQuadrants = []
-        if Angle == 0:
-            StepQuadrants = [1, 4]
-        elif 0 < Angle < 90:
-            StepQuadrants = [1]
-        elif Angle == 90:
-            StepQuadrants = [1, 2]
-        elif 90 < Angle < 180:
-            StepQuadrants = [2]
-        elif Angle == 180:
-            StepQuadrants = [2, 3]
-        elif 180 < Angle < 270:
-            StepQuadrants = [3]
-        elif Angle == 270:
-            StepQuadrants = [3, 4]
-        elif 270 < Angle < 360:
-            StepQuadrants = [4]
-        return StepQuadrants
+    """
+    Returns the quadrants that an angle extends into.
+    """
+    StepQuadrants = []
+    if Angle == 0:
+        StepQuadrants = [1, 4]
+    elif 0 < Angle < 90:
+        StepQuadrants = [1]
+    elif Angle == 90:
+        StepQuadrants = [1, 2]
+    elif 90 < Angle < 180:
+        StepQuadrants = [2]
+    elif Angle == 180:
+        StepQuadrants = [2, 3]
+    elif 180 < Angle < 270:
+        StepQuadrants = [3]
+    elif Angle == 270:
+        StepQuadrants = [3, 4]
+    elif 270 < Angle < 360:
+        StepQuadrants = [4]
+    return StepQuadrants
 
 def ParseInstructions(Instructions):
+    """
+    Parses and returns pathing instructions.
+    """
     Log("Parsing pathing instructions.", 0)
     SplitInstructions = Instructions.split(";")
     ParsedInstructions = {"CurrentPosition": (int(SplitInstructions[0]), int(SplitInstructions[1])), "CurrentRotation": int(SplitInstructions[2]), "ElementDistribution": SplitInstructions[3], "PathList": SplitInstructions[4:]}
     return ParsedInstructions
 
 def Path(MapData, CurrentPosition, ElementDistribution, PathList):
+    """
+    Constructs and returns the optimal path between each destination in PathList, with respect to the elements described in MapData and ElementDistribution.
+    """
     Log("Pathing instructions:\r\n                                 - Initial position: {0}\r\n                                 - Element distribution: {1}\r\n                                 - Path list: {2}".format(CurrentPosition, ElementDistribution, PathList), 0)
     PathfindingMapData = deepcopy(MapData)
     PathInformation = []
@@ -236,8 +292,13 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
     return PathInformation
 
 def RasterizeMapData(MapData):
-    Log("Converting MapData from Vector to Raster format.", 0)
+    """
+    Converts MapData to raster format. Every point in the element is described, as opposed to the original format containing just corners.
+    """
     def BresenhamLinePoints(StartPoint, EndPoint):
+        """
+        Returns every point that lies along the line created by the StartPoint and the EndPoint.
+        """
         X1, Y1 = [int(round(Number)) for Number in StartPoint]
         X2, Y2 = [int(round(Number)) for Number in EndPoint]
         DX = X2 - X1
@@ -267,6 +328,7 @@ def RasterizeMapData(MapData):
         if Swapped:
             Points.reverse()
         return Points
+    Log("Converting MapData from Vector to Raster format.", 0)
     RasterMapData = [] # Grid. Dimensions are [W] * H. To get map height, do len(RasterMapData). To get map width, just get the len() of any one of the elements.
     # Create blank grid.
     I = 0
@@ -290,6 +352,9 @@ def RasterizeMapData(MapData):
     return RasterMapData
 
 def VectorizePathInformation(PathInformation):
+    """
+    Converts each pair of destination points into a vector with an offset in degrees from the previous line, and a length.
+    """
     return PathInformation
 
 #
