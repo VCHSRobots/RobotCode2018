@@ -1,1 +1,1 @@
-162,14,90,LLL,NearSwitch,Deliver,Collect,Scale,Deliver
+162;14;90;LLL;NearSwitch;Deliver;Collect;Scale;Deliver;320,48

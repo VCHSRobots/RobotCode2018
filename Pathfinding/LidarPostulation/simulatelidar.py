@@ -288,5 +288,11 @@ def writeFieldSvg(location, scans, fn, lines):
 def main():
     angledRayIntersects(Point(250, 350), 0, 1, debug = False)
 
+def IntersectPoints(Points):
+    seg1 = sim.LineSeg(Point(Points[0][0], Points[0][1]))
+    seg2 = sim.LineSeg(Point(Points[1][0], Points[1][1]))
+    inter = seg1.findinter(seg2)
+    return inter
+
 
 # main()
