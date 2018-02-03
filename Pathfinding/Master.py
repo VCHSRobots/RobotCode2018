@@ -92,7 +92,6 @@ def Move(Instructions):
                 DistanceTraversed += 1
                 # Communicate.Send("") # Send direction command to RoboRio.
 
-
 def ParseUserInput():
     Input = [X.lower() for X in sys.argv[1:]]
     if len(Input) < 1:

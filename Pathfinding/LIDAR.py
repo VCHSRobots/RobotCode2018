@@ -40,7 +40,10 @@ def ExpandExpectedData(ExpectedData):
 
 def GetCurrentData():
     FOV = Config["LIDARFOV"]
-    CurrentData = None
+    CurrentPosition = None
+    CurrentRotation = None
+    AnomalousElements = None
+    CurrentData = CurrentPosition, CurrentRotation, AnomalousElements
     # TODO: Get latest LIDAR sweep data, parse.
     return CurrentData
 

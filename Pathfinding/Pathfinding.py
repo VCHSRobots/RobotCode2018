@@ -31,20 +31,31 @@ Config = Configuration.LoadConfig()
 #
 
 def Anya(GridData, StartPoint, EndPoint):
+    """
+    Anya implementation based on:
+
+    D. Harabor, A. Grastien, D. Oz and V. Aksakalli, 2016
+    Optimal Any-angle Pathfinding in Practice, In
+    Journal of Artificial Intelligence Research (JAIR)
+    """
+    
     def FareySequence(N, Descending = False):
         # N needs to be min(Width, Height)
-        FareySequence = ()
+        FareySequence = []
         A, B, C, D = 0, 1, 1, N
         if Descending:
             A, C = 1, N - 1
-        FareySequence.append((A, C)
+        FareySequence.append(A, C)
         while (C <= N and not Descending) or (A > 0 and Descending):
             K = int((N + B) / D)
             A, B, C, D = C, D, (K * C - A), (K * D - B)
-            FareySequence.append((A, B))
+            FareySequence.append(A, B)
         return FareySequence
     def GenerateSuccessors(SearchNode):
         return Successors
+    def LineOfSight(PointOne, PointTwo):
+        LineOfSight = False
+        return LineOfSight
 
 def ExpandMapElements(MapData):
     CopiedMapData = deepcopy(MapData)
@@ -214,7 +225,8 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
         StartPoint = PathSteps[StepsEvaluated][1][0]
         EndPoint = PathSteps[StepsEvaluated][1][1]
         StepPoints = [StartPoint]
-        #StepPoints.extend(Anya(PathfindingMapData, StartPoint, EndPoint)) # TODO: Un-comment this line once Anya is complete.
+        GridData = RasterizeMapData(PathfindingMapData)
+        #StepPoints.extend(Anya(GridData, StartPoint, EndPoint)) # TODO: Un-comment this line once Anya is complete.
         StepPoints.append(EndPoint)
         StepsEvaluated += 1
         Log("Pathfinding complete for step {0} of {1}".format(StepsEvaluated, len(PathSteps)), 0)
@@ -223,12 +235,60 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
     # [((X, Y), (X, Y)), "DELIVER", ((X, Y)), "COLLECT", ((X, Y), (X, Y)), "DELIVER"]
     return PathInformation
 
-RasterizeMapData(MapData):
-    RasterMapData = None
+def RasterizeMapData(MapData):
+    def BresenhamLinePoints(StartPoint, EndPoint):
+        X1, Y1 = [int(round(Number)) for Number in StartPoint]
+        X2, Y2 = [int(round(Number)) for Number in EndPoint]
+        DX = X2 - X1
+        DY = Y2 - Y1
+        IsSteep = abs(DY) > abs(DX)
+        if IsSteep:
+            X1, Y1 = Y1, X1
+            X2, Y2 = Y2, X2
+        Swapped = False
+        if X1 > X2:
+            X1, X2 = X2, X1
+            Y1, Y2 = Y2, Y1
+            Swapped = True
+        DX = X2 - X1
+        DY = Y2 - Y1
+        Error = int(DX / 2.0)
+        YStep = 1 if Y1 < Y2 else -1
+        Y = Y1
+        Points = []
+        for X in range(X1, X2 + 1):
+            Coordinate = (Y, X) if IsSteep else (X, Y)
+            Points.append(Coordinate)
+            Error -= abs(DY)
+            if Error < 0:
+                Y += YStep
+                Error += DX
+        if Swapped:
+            Points.reverse()
+        return Points
+    RasterMapData = [] # Grid. Dimensions are [W] * H. To get map height, do len(RasterMapData). To get map width, just get the len() of any one of the elements.
+    # Create blank grid.
+    I = 0
+    while I != MapData["Size"][1] + 1:
+        RasterMapData.append([0, ] * (MapData["Size"][0] + 1))
+        I += 1
+    # Add polygonal MapData elements to grid.
+    for Element in  MapData["Elements"]:
+        if MapData["Elements"][Element]["Solidity"] > 0:
+            Log("Rasterizing element \"{0}\".".format(Element))
+            PairsConverted = 0
+            while PairsConverted != len(MapData["Elements"][Element]["Points"]):
+                if PairsConverted == 0:
+                    PointOne, PointTwo = MapData["Elements"][Element]["Points"][len(MapData["Elements"][Element]["Points"]) - 1], MapData["Elements"][Element]["Points"][0] # The first pair will be the last item in the list --> the first item in the list.
+                else:
+                    PointOne, PointTwo = MapData["Elements"][Element]["Points"][PairsConverted - 1], MapData["Elements"][Element]["Points"][PairsConverted]
+                PairPoints = BresenhamLinePoints(PointOne, PointTwo)
+                for Point in PairPoints:
+                    RasterMapData[Point[1]][Point[0]] = 1
+                PairsConverted += 1
     return RasterMapData
 
 def VectorizePathInformation(PathInformation):
-    pass
     return PathInformation
 
 #
