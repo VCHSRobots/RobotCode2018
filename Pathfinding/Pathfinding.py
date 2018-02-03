@@ -101,7 +101,7 @@ def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True): # Returns False
 def GetQuadrants(Angle):
         StepQuadrants = []
         if Angle == 0:
-            StepQuadrants = (1, 4)
+            StepQuadrants = [1, 4]
         elif 0 < Angle < 90:
             StepQuadrants = [1]
         elif Angle == 90:

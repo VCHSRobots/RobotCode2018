@@ -232,7 +232,7 @@ def main():
     dotSvg(findLargestPointPerAngle(pointvals), realpoints)
 
 
-speedThisProgramUpDramatically()
+# speedThisProgramUpDramatically()
 
-# cProfile.run("main()")
+cProfile.run("main()")
 # With Numpy calculations
