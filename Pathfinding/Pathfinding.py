@@ -221,21 +221,22 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
         TargetPointsEvaluated += 1
     # Perform Anya pathfinding for each step of the path.
     StepsEvaluated = 0
+    GridData = RasterizeMapData(PathfindingMapData)
     while StepsEvaluated < len(PathSteps):
         StartPoint = PathSteps[StepsEvaluated][1][0]
         EndPoint = PathSteps[StepsEvaluated][1][1]
         StepPoints = [StartPoint]
-        GridData = RasterizeMapData(PathfindingMapData)
         #StepPoints.extend(Anya(GridData, StartPoint, EndPoint)) # TODO: Un-comment this line once Anya is complete.
         StepPoints.append(EndPoint)
         StepsEvaluated += 1
-        Log("Pathfinding complete for step {0} of {1}".format(StepsEvaluated, len(PathSteps)), 0)
+        Log("Pathfinding complete for step {0} of {1}.".format(StepsEvaluated, len(PathSteps)), 0)
     Log("Pathfinding complete.", 0)
     # Return a list of points that make up the path, along with actions to be taken. Formatted as a tuple:
     # [((X, Y), (X, Y)), "DELIVER", ((X, Y)), "COLLECT", ((X, Y), (X, Y)), "DELIVER"]
     return PathInformation
 
 def RasterizeMapData(MapData):
+    Log("Converting MapData from Vector to Raster format.", 0)
     def BresenhamLinePoints(StartPoint, EndPoint):
         X1, Y1 = [int(round(Number)) for Number in StartPoint]
         X2, Y2 = [int(round(Number)) for Number in EndPoint]
@@ -275,7 +276,7 @@ def RasterizeMapData(MapData):
     # Add polygonal MapData elements to grid.
     for Element in  MapData["Elements"]:
         if MapData["Elements"][Element]["Solidity"] > 0:
-            Log("Rasterizing element \"{0}\".".format(Element))
+            Log("Rasterizing element \"{0}\".".format(Element), 0)
             PairsConverted = 0
             while PairsConverted != len(MapData["Elements"][Element]["Points"]):
                 if PairsConverted == 0:
