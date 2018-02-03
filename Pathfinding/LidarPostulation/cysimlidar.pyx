@@ -1,6 +1,7 @@
 # simulatelidar.py: Tests Patrick's positioning algorithm
 # 1-6-2018
 #
+
 import json
 import numpy as np
 
@@ -12,18 +13,6 @@ cdef class Point:
         self.x = x
         self.y = y
 
-
-"""
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def dist(self, point):
-        x = (self.x - point.x) ** 2
-        y = (self.y - point.y) ** 2
-        return (x + y) ** .5
-"""
 
 cdef int isInQuadrant(Point self, Point origin):
     if self.y == origin.y:
@@ -48,11 +37,7 @@ cdef int isInQuadrant(Point self, Point origin):
             return 4
 
 
-cdef double yInter(self):
-    inter = (-self.slope * self.p1.x) + self.p1.y
-    return inter
-
-def findSlope(self, p1, p2):
+cdef findSlope(self, p1, p2):
     xdif = p1.x - p2.x
     if xdif == 0:
         slope = None
@@ -75,89 +60,74 @@ class LineSeg:
         self.p1 = p1
         self.p2 = p2
         self.slope = findSlope(self, p1, p2)
-        if self.slope is not None:
-            self.inter = yInter(self)
-            self.ang = rad2deg(np.arctan(self.slope / 1))
-        else:
+        if self.slope is None:
             self.inter = None
             self.x = self.p1.x
             self.ang = 90
-        self.point = self.p1
-
-cdef int segIsReal(self, point):
-    if self.p1.x > self.p2.x:
-        maxx = self.p1.x
-        minx = self.p2.x
-    else:
-        minx = self.p1.x
-        maxx = self.p2.x
-    if self.p1.y > self.p2.y:
-        maxy = self.p1.y
-        miny = self.p2.y
-    else:
-        miny = self.p1.y
-        maxy = self.p2.y
-    if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
-        return 0
-    else:
-        return 1
-
-
-def solveXInter(self, obj):
-    """Solves for the x intercept between two lines in slope"""
-    v = self.slope - obj.slope
-    c = obj.inter - self.inter
-    c /= v
-    return c
-
-
-cdef Point findValidInter(self, obj):
-    x = solveXInter(self, obj)
-    y = (self.slope * x) + self.inter
-    point = Point(x, y)
-    return point
-
-
-def findinter(self, obj):
-    if self.slope is None or obj.slope is None:
-        if self.slope is None:
-            objs = [self, obj]
         else:
-            objs = [obj, self]
-        x = objs[0].x
-        if type(x) == int or type(x) == float:
-            y = findYWithX(objs[1], x)
-            point = Point(x, y)
-        else:
-            return None
-    elif self.slope == obj.slope:
+            self.inter = (-self.slope * self.p1.x) + self.p1.y
+            self.ang = rad2deg(np.arctan(self.slope / 1))
+
+
+# cdef int segIsReal(self, point):
+#     if self.p1.x > self.p2.x:
+#         maxx = self.p1.x
+#         minx = self.p2.x
+#     else:
+#         minx = self.p1.x
+#         maxx = self.p2.x
+#     if self.p1.y > self.p2.y:
+#         maxy = self.p1.y
+#         miny = self.p2.y
+#     else:
+#         miny = self.p1.y
+#         maxy = self.p2.y
+#     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
+#         return 0
+#     else:
+#         return 1
+
+
+cdef findinter(self, obj):
+    X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
+    UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
+    UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+    UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+    if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
+        return None
+    elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.
         return None
     else:
-        point = findValidInter(self, obj)
-    if segIsReal(self, point) and rayIsReal(obj, point):
-        return point
+        Ua = UaNumerator / UaDenominator
+        X = X1 + Ua * (X2 - X1)
+        Y = Y1 + Ua * (Y2 - Y1)
+        point = Point(X, Y)
+        if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
+        # if segIsReal(self, point) and rayIsReal(obj, point):
+            return point
 
 
 class Ray:
     def __init__(self, float ang, Point point):
         self.ang = ang
-        self.point = point
+        self.p1 = point
         self.quadrant = int(self.ang / 90) + 1
         if self.quadrant == 2 or self.quadrant == 4:
             slopeang = 90 - (self.ang % 90)
         else:
             slopeang = self.ang % 90
-        self.slope = round(np.tan(deg2rad(slopeang)), 5)
+        self.slope = round(np.tan(deg2rad(slopeang)), 3)
         if self.quadrant == 2 or self.quadrant == 4:
             self.slope *= -1
         if self.slope == 0:
-            self.inter = self.point.y
-            self.x = self.point.x
+            self.inter = self.p1.y
+            self.x = self.p1.x
         else:
-            self.inter = (-self.slope * self.point.x) + self.point.y
+            self.inter = (-self.slope * self.p1.x) + self.p1.y
+        self.p2 = Point(point.x + 1, self.p1.y + self.slope)
 
 cdef int rayIsReal(self, point):
-    pointquad = isInQuadrant(point, self.point)
+    pointquad = isInQuadrant(point, self.p1)
     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
         return 1
     else:
@@ -182,7 +152,7 @@ cdef double dist(p1, p2):
     return (x + y) ** .5
 
 # Function that needs the most optimizing
-def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False):
+cpdef angledRayIntersects(Point robotlocation, robotangle, samplerate = 1):
     rayinters = {}
     debuginters = []
     fieldlines = openEnvFile("FRC_Field_2018.map")
@@ -196,7 +166,7 @@ def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False
     return rayinters
 
 
-def compForAngle(rayinters, float robotangle):
+cdef compForAngle(rayinters, float robotangle):
     angles = []
     inters = []
     adjustedinters = {}
@@ -209,15 +179,8 @@ def compForAngle(rayinters, float robotangle):
         adjustedinters[angle] = inters[ind]
     return adjustedinters
 
-def outputJsonOfInters(rayinters, location):
-    lidarsim = open("lidarsim.json", "w")
-    json.dump({
-        "Name": "Lidar Simulation",
-        "Location": [location.x, location.y],
-        "Distances": rayinters
-    }, lidarsim, indent = 2)
 
-cdef Point findLineIntersects(float ang, Point location, fieldlines):
+cdef Point findLineIntersects(float ang, Point location, list fieldlines):
     inters = []
     ray = Ray(ang, location)
     for line in fieldlines:
@@ -231,7 +194,7 @@ cdef Point findLineIntersects(float ang, Point location, fieldlines):
     #     return None
 
 
-def makeDictOfDists(inters, location):
+cdef dict makeDictOfDists(inters, Point location):
     dists = {}
     for point in inters:
         dists[dist(location, point)] = point
@@ -259,16 +222,9 @@ cdef list openEnvFile(env):
     return lines
 
 
-def findLinesFromPoints(points):
+cdef list findLinesFromPoints(points):
     ret = []
     for ind, point in enumerate(points[:-1]):
         pair = [points[ind], points[ind + 1]]
         ret.append(pair)
     return ret
-
-
-def main():
-    angledRayIntersects(Point(250, 350), 0, 1, debug = False)
-
-
-# main()

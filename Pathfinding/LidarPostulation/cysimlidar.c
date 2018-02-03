@@ -741,8 +741,21 @@ static const char *__pyx_f[] = {
 
 /*--- Type declarations ---*/
 struct __pyx_obj_10cysimlidar_Point;
+struct __pyx_opt_args_10cysimlidar_angledRayIntersects;
 
-/* "cysimlidar.pyx":7
+/* "cysimlidar.pyx":155
+ * 
+ * # Function that needs the most optimizing
+ * cpdef angledRayIntersects(Point robotlocation, robotangle, samplerate = 1):             # <<<<<<<<<<<<<<
+ *     rayinters = {}
+ *     debuginters = []
+ */
+struct __pyx_opt_args_10cysimlidar_angledRayIntersects {
+  int __pyx_n;
+  PyObject *samplerate;
+};
+
+/* "cysimlidar.pyx":8
  * import numpy as np
  * 
  * cdef class Point:             # <<<<<<<<<<<<<<
@@ -897,11 +910,6 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
-
 /* PyIntBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
 static PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, long intval, int inplace);
@@ -909,6 +917,11 @@ static PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, long intval, i
 #define __Pyx_PyInt_EqObjC(op1, op2, intval, inplace)\
     PyObject_RichCompare(op1, op2, Py_EQ)
     #endif
+
+/* WriteUnraisableException.proto */
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
 
 /* PyObjectSetAttrStr.proto */
 #if CYTHON_USE_TYPE_SLOTS
@@ -931,6 +944,13 @@ static CYTHON_INLINE int __Pyx_PyObject_SetAttrStr(PyObject* obj, PyObject* attr
 /* GetModuleGlobalName.proto */
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name);
 
+/* PyCFunctionFastCall.proto */
+#if CYTHON_FAST_PYCCALL
+static CYTHON_INLINE PyObject *__Pyx_PyCFunction_FastCall(PyObject *func, PyObject **args, Py_ssize_t nargs);
+#else
+#define __Pyx_PyCFunction_FastCall(func, args, nargs)  (assert(0), NULL)
+#endif
+
 /* PyFunctionFastCall.proto */
 #if CYTHON_FAST_PYCALL
 #define __Pyx_PyFunction_FastCall(func, args, nargs)\
@@ -942,13 +962,6 @@ static PyObject *__Pyx_PyFunction_FastCallDict(PyObject *func, PyObject **args, 
 #endif
 #endif
 
-/* PyCFunctionFastCall.proto */
-#if CYTHON_FAST_PYCCALL
-static CYTHON_INLINE PyObject *__Pyx_PyCFunction_FastCall(PyObject *func, PyObject **args, Py_ssize_t nargs);
-#else
-#define __Pyx_PyCFunction_FastCall(func, args, nargs)  (assert(0), NULL)
-#endif
-
 /* PyObjectCallMethO.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject *arg);
@@ -956,28 +969,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject
 
 /* PyObjectCallOneArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
-
-/* GetItemInt.proto */
-#define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
-    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
-    __Pyx_GetItemInt_Fast(o, (Py_ssize_t)i, is_list, wraparound, boundscheck) :\
-    (is_list ? (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL) :\
-               __Pyx_GetItemInt_Generic(o, to_py_func(i))))
-#define __Pyx_GetItemInt_List(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
-    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
-    __Pyx_GetItemInt_List_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
-    (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL))
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
-                                                              int wraparound, int boundscheck);
-#define __Pyx_GetItemInt_Tuple(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
-    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
-    __Pyx_GetItemInt_Tuple_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
-    (PyErr_SetString(PyExc_IndexError, "tuple index out of range"), (PyObject*)NULL))
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
-                                                              int wraparound, int boundscheck);
-static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
-                                                     int is_list, int wraparound, int boundscheck);
 
 /* ArgTypeTest.proto */
 #define __Pyx_ArgTypeTest(obj, type, none_allowed, name, exact)\
@@ -1037,6 +1028,49 @@ static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
 }
 #else
 #define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
+#endif
+
+/* GetItemInt.proto */
+#define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_Fast(o, (Py_ssize_t)i, is_list, wraparound, boundscheck) :\
+    (is_list ? (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL) :\
+               __Pyx_GetItemInt_Generic(o, to_py_func(i))))
+#define __Pyx_GetItemInt_List(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_List_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
+    (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL))
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
+                                                              int wraparound, int boundscheck);
+#define __Pyx_GetItemInt_Tuple(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_Tuple_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
+    (PyErr_SetString(PyExc_IndexError, "tuple index out of range"), (PyObject*)NULL))
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
+                                                              int wraparound, int boundscheck);
+static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
+                                                     int is_list, int wraparound, int boundscheck);
+
+/* DictGetItem.proto */
+#if PY_MAJOR_VERSION >= 3 && !CYTHON_COMPILING_IN_PYPY
+static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key) {
+    PyObject *value;
+    value = PyDict_GetItemWithError(d, key);
+    if (unlikely(!value)) {
+        if (!PyErr_Occurred()) {
+            PyObject* args = PyTuple_Pack(1, key);
+            if (likely(args))
+                PyErr_SetObject(PyExc_KeyError, args);
+            Py_XDECREF(args);
+        }
+        return NULL;
+    }
+    Py_INCREF(value);
+    return value;
+}
+#else
+    #define __Pyx_PyDict_GetItem(d, key) PyObject_GetItem(d, key)
 #endif
 
 /* PyObjectCallNoArg.proto */
@@ -1151,10 +1185,10 @@ static void __Pyx_AddTraceback(const char *funcname, int c_line,
                                int py_line, const char *filename);
 
 /* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
 /* CIntToPy.proto */
-static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
@@ -1184,17 +1218,19 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 /* Module declarations from 'cysimlidar' */
 static PyTypeObject *__pyx_ptype_10cysimlidar_Point = 0;
 static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point *, struct __pyx_obj_10cysimlidar_Point *); /*proto*/
-static double __pyx_f_10cysimlidar_yInter(PyObject *); /*proto*/
-static float __pyx_f_10cysimlidar_findYWithX(PyObject *, PyObject *); /*proto*/
-static int __pyx_f_10cysimlidar_segIsReal(PyObject *, PyObject *); /*proto*/
-static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findValidInter(PyObject *, PyObject *); /*proto*/
+static PyObject *__pyx_f_10cysimlidar_findSlope(PyObject *, PyObject *, PyObject *); /*proto*/
+static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *, PyObject *); /*proto*/
 static int __pyx_f_10cysimlidar_rayIsReal(PyObject *, PyObject *); /*proto*/
 static double __pyx_f_10cysimlidar_rad2deg(double); /*proto*/
 static double __pyx_f_10cysimlidar_deg2rad(double); /*proto*/
 static double __pyx_f_10cysimlidar_dist(PyObject *, PyObject *); /*proto*/
+static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cysimlidar_Point *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_10cysimlidar_angledRayIntersects *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *, float); /*proto*/
 static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineIntersects(float, struct __pyx_obj_10cysimlidar_Point *, PyObject *); /*proto*/
+static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *, struct __pyx_obj_10cysimlidar_Point *); /*proto*/
 static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *); /*proto*/
 static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *); /*proto*/
+static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *); /*proto*/
 #define __Pyx_MODULE_NAME "cysimlidar"
 extern int __pyx_module_is_main_cysimlidar;
 int __pyx_module_is_main_cysimlidar = 0;
@@ -1204,11 +1240,7 @@ static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_round;
 static PyObject *__pyx_builtin_enumerate;
 static PyObject *__pyx_builtin_open;
-static const char __pyx_k_c[] = "c";
-static const char __pyx_k_i[] = "i";
 static const char __pyx_k_r[] = "r";
-static const char __pyx_k_v[] = "v";
-static const char __pyx_k_w[] = "w";
 static const char __pyx_k_x[] = "x";
 static const char __pyx_k_y[] = "y";
 static const char __pyx_k_np[] = "np";
@@ -1217,160 +1249,92 @@ static const char __pyx_k_p2[] = "p2";
 static const char __pyx_k_Ray[] = "Ray";
 static const char __pyx_k_ang[] = "ang";
 static const char __pyx_k_doc[] = "__doc__";
-static const char __pyx_k_ind[] = "ind";
-static const char __pyx_k_obj[] = "obj";
-static const char __pyx_k_ret[] = "ret";
 static const char __pyx_k_tan[] = "tan";
-static const char __pyx_k_Name[] = "Name";
-static const char __pyx_k_dump[] = "dump";
 static const char __pyx_k_init[] = "__init__";
 static const char __pyx_k_json[] = "json";
 static const char __pyx_k_load[] = "load";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
-static const char __pyx_k_objs[] = "objs";
 static const char __pyx_k_open[] = "open";
-static const char __pyx_k_pair[] = "pair";
 static const char __pyx_k_self[] = "self";
 static const char __pyx_k_test[] = "__test__";
-static const char __pyx_k_xdif[] = "xdif";
-static const char __pyx_k_angle[] = "angle";
 static const char __pyx_k_close[] = "close";
-static const char __pyx_k_debug[] = "debug";
-static const char __pyx_k_dists[] = "dists";
 static const char __pyx_k_inter[] = "inter";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_point[] = "point";
 static const char __pyx_k_round[] = "round";
 static const char __pyx_k_slope[] = "slope";
 static const char __pyx_k_Points[] = "Points";
-static const char __pyx_k_angles[] = "angles";
 static const char __pyx_k_arctan[] = "arctan";
 static const char __pyx_k_import[] = "__import__";
-static const char __pyx_k_indent[] = "indent";
-static const char __pyx_k_inters[] = "inters";
-static const char __pyx_k_main_2[] = "main";
 static const char __pyx_k_module[] = "__module__";
-static const char __pyx_k_points[] = "points";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_LineSeg[] = "LineSeg";
 static const char __pyx_k_prepare[] = "__prepare__";
 static const char __pyx_k_Elements[] = "Elements";
-static const char __pyx_k_Location[] = "Location";
 static const char __pyx_k_Solidity[] = "Solidity";
 static const char __pyx_k_getstate[] = "__getstate__";
-static const char __pyx_k_lidarsim[] = "lidarsim";
-static const char __pyx_k_location[] = "location";
 static const char __pyx_k_quadrant[] = "quadrant";
 static const char __pyx_k_qualname[] = "__qualname__";
 static const char __pyx_k_setstate[] = "__setstate__";
 static const char __pyx_k_slopeang[] = "slopeang";
-static const char __pyx_k_Distances[] = "Distances";
 static const char __pyx_k_TypeError[] = "TypeError";
 static const char __pyx_k_enumerate[] = "enumerate";
-static const char __pyx_k_findSlope[] = "findSlope";
-static const char __pyx_k_findinter[] = "findinter";
 static const char __pyx_k_metaclass[] = "__metaclass__";
-static const char __pyx_k_rayinters[] = "rayinters";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_Ray___init[] = "Ray.__init__";
 static const char __pyx_k_cysimlidar[] = "cysimlidar";
-static const char __pyx_k_fieldlines[] = "fieldlines";
 static const char __pyx_k_robotangle[] = "robotangle";
 static const char __pyx_k_samplerate[] = "samplerate";
-static const char __pyx_k_debuginters[] = "debuginters";
-static const char __pyx_k_solveXInter[] = "solveXInter";
-static const char __pyx_k_compForAngle[] = "compForAngle";
-static const char __pyx_k_lidarsim_json[] = "lidarsim.json";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_robotlocation[] = "robotlocation";
 static const char __pyx_k_LineSeg___init[] = "LineSeg.__init__";
-static const char __pyx_k_adjustedinters[] = "adjustedinters";
 static const char __pyx_k_cysimlidar_pyx[] = "cysimlidar.pyx";
-static const char __pyx_k_makeDictOfDists[] = "makeDictOfDists";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
-static const char __pyx_k_Lidar_Simulation[] = "Lidar Simulation";
 static const char __pyx_k_FRC_Field_2018_map[] = "FRC_Field_2018.map";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_outputJsonOfInters[] = "outputJsonOfInters";
-static const char __pyx_k_angledRayIntersects[] = "angledRayIntersects";
-static const char __pyx_k_findLinesFromPoints[] = "findLinesFromPoints";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
-static PyObject *__pyx_n_s_Distances;
 static PyObject *__pyx_n_s_Elements;
 static PyObject *__pyx_kp_s_FRC_Field_2018_map;
-static PyObject *__pyx_kp_s_Lidar_Simulation;
 static PyObject *__pyx_n_s_LineSeg;
 static PyObject *__pyx_n_s_LineSeg___init;
-static PyObject *__pyx_n_s_Location;
-static PyObject *__pyx_n_s_Name;
 static PyObject *__pyx_n_s_Points;
 static PyObject *__pyx_n_s_Ray;
 static PyObject *__pyx_n_s_Ray___init;
 static PyObject *__pyx_n_s_Solidity;
 static PyObject *__pyx_n_s_TypeError;
-static PyObject *__pyx_n_s_adjustedinters;
 static PyObject *__pyx_n_s_ang;
-static PyObject *__pyx_n_s_angle;
-static PyObject *__pyx_n_s_angledRayIntersects;
-static PyObject *__pyx_n_s_angles;
 static PyObject *__pyx_n_s_arctan;
-static PyObject *__pyx_n_s_c;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_close;
-static PyObject *__pyx_n_s_compForAngle;
 static PyObject *__pyx_n_s_cysimlidar;
 static PyObject *__pyx_kp_s_cysimlidar_pyx;
-static PyObject *__pyx_n_s_debug;
-static PyObject *__pyx_n_s_debuginters;
-static PyObject *__pyx_n_s_dists;
 static PyObject *__pyx_n_s_doc;
-static PyObject *__pyx_n_s_dump;
 static PyObject *__pyx_n_s_enumerate;
-static PyObject *__pyx_n_s_fieldlines;
-static PyObject *__pyx_n_s_findLinesFromPoints;
-static PyObject *__pyx_n_s_findSlope;
-static PyObject *__pyx_n_s_findinter;
 static PyObject *__pyx_n_s_getstate;
-static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_import;
-static PyObject *__pyx_n_s_ind;
-static PyObject *__pyx_n_s_indent;
 static PyObject *__pyx_n_s_init;
 static PyObject *__pyx_n_s_inter;
-static PyObject *__pyx_n_s_inters;
 static PyObject *__pyx_n_s_json;
-static PyObject *__pyx_n_s_lidarsim;
-static PyObject *__pyx_kp_s_lidarsim_json;
 static PyObject *__pyx_n_s_load;
-static PyObject *__pyx_n_s_location;
 static PyObject *__pyx_n_s_main;
-static PyObject *__pyx_n_s_main_2;
-static PyObject *__pyx_n_s_makeDictOfDists;
 static PyObject *__pyx_n_s_metaclass;
 static PyObject *__pyx_n_s_module;
 static PyObject *__pyx_n_s_name;
 static PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
 static PyObject *__pyx_n_s_np;
 static PyObject *__pyx_n_s_numpy;
-static PyObject *__pyx_n_s_obj;
-static PyObject *__pyx_n_s_objs;
 static PyObject *__pyx_n_s_open;
-static PyObject *__pyx_n_s_outputJsonOfInters;
 static PyObject *__pyx_n_s_p1;
 static PyObject *__pyx_n_s_p2;
-static PyObject *__pyx_n_s_pair;
 static PyObject *__pyx_n_s_point;
-static PyObject *__pyx_n_s_points;
 static PyObject *__pyx_n_s_prepare;
 static PyObject *__pyx_n_s_quadrant;
 static PyObject *__pyx_n_s_qualname;
 static PyObject *__pyx_n_s_r;
-static PyObject *__pyx_n_s_rayinters;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
-static PyObject *__pyx_n_s_ret;
 static PyObject *__pyx_n_s_robotangle;
 static PyObject *__pyx_n_s_robotlocation;
 static PyObject *__pyx_n_s_round;
@@ -1380,13 +1344,9 @@ static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
 static PyObject *__pyx_n_s_slope;
 static PyObject *__pyx_n_s_slopeang;
-static PyObject *__pyx_n_s_solveXInter;
 static PyObject *__pyx_n_s_tan;
 static PyObject *__pyx_n_s_test;
-static PyObject *__pyx_n_s_v;
-static PyObject *__pyx_n_s_w;
 static PyObject *__pyx_n_s_x;
-static PyObject *__pyx_n_s_xdif;
 static PyObject *__pyx_n_s_y;
 static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y); /* proto */
 static PyObject *__pyx_pf_10cysimlidar_5Point_1x___get__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self); /* proto */
@@ -1395,57 +1355,28 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_1y___get__(struct __pyx_obj_10cysi
 static int __pyx_pf_10cysimlidar_5Point_1y_2__set__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_10cysimlidar_5Point_2__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_10cysimlidar_Point *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_10cysimlidar_5Point_4__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2); /* proto */
 static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_2solveXInter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_obj); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_4findinter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_obj); /* proto */
 static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, float __pyx_v_ang, struct __pyx_obj_10cysimlidar_Point *__pyx_v_point); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_6angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_samplerate, CYTHON_UNUSED PyObject *__pyx_v_debug); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_rayinters, float __pyx_v_robotangle); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_10outputJsonOfInters(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_rayinters, PyObject *__pyx_v_location); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_inters, PyObject *__pyx_v_location); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_points); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_16main(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_10cysimlidar_angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_samplerate); /* proto */
 static PyObject *__pyx_tp_new_10cysimlidar_Point(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_float__5;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
+static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_4;
-static PyObject *__pyx_int_5;
 static PyObject *__pyx_int_90;
-static PyObject *__pyx_int_250;
-static PyObject *__pyx_int_350;
 static PyObject *__pyx_int_360;
 static PyObject *__pyx_int_neg_1;
 static PyObject *__pyx_tuple_;
-static PyObject *__pyx_slice__4;
+static PyObject *__pyx_slice__3;
 static PyObject *__pyx_tuple__2;
-static PyObject *__pyx_tuple__3;
-static PyObject *__pyx_tuple__5;
+static PyObject *__pyx_tuple__4;
 static PyObject *__pyx_tuple__6;
-static PyObject *__pyx_tuple__8;
-static PyObject *__pyx_tuple__10;
-static PyObject *__pyx_tuple__12;
-static PyObject *__pyx_tuple__14;
-static PyObject *__pyx_tuple__16;
-static PyObject *__pyx_tuple__18;
-static PyObject *__pyx_tuple__20;
-static PyObject *__pyx_tuple__22;
-static PyObject *__pyx_tuple__24;
+static PyObject *__pyx_codeobj__5;
 static PyObject *__pyx_codeobj__7;
-static PyObject *__pyx_codeobj__9;
-static PyObject *__pyx_codeobj__11;
-static PyObject *__pyx_codeobj__13;
-static PyObject *__pyx_codeobj__15;
-static PyObject *__pyx_codeobj__17;
-static PyObject *__pyx_codeobj__19;
-static PyObject *__pyx_codeobj__21;
-static PyObject *__pyx_codeobj__23;
-static PyObject *__pyx_codeobj__25;
-static PyObject *__pyx_codeobj__26;
 
-/* "cysimlidar.pyx":11
+/* "cysimlidar.pyx":12
  *     cdef public float x, y
  * 
  *     def __cinit__(self, x, y):             # <<<<<<<<<<<<<<
@@ -1484,11 +1415,11 @@ static int __pyx_pw_10cysimlidar_5Point_1__cinit__(PyObject *__pyx_v_self, PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_y)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, 1); __PYX_ERR(1, 11, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, 1); __PYX_ERR(1, 12, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 11, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) __PYX_ERR(1, 12, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1501,7 +1432,7 @@ static int __pyx_pw_10cysimlidar_5Point_1__cinit__(PyObject *__pyx_v_self, PyObj
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 11, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 12, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cysimlidar.Point.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1520,27 +1451,27 @@ static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_
   float __pyx_t_1;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "cysimlidar.pyx":12
+  /* "cysimlidar.pyx":13
  * 
  *     def __cinit__(self, x, y):
  *         self.x = x             # <<<<<<<<<<<<<<
  *         self.y = y
  * 
  */
-  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_x); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_x); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 13, __pyx_L1_error)
   __pyx_v_self->x = __pyx_t_1;
 
-  /* "cysimlidar.pyx":13
+  /* "cysimlidar.pyx":14
  *     def __cinit__(self, x, y):
  *         self.x = x
  *         self.y = y             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_y); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 13, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_y); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 14, __pyx_L1_error)
   __pyx_v_self->y = __pyx_t_1;
 
-  /* "cysimlidar.pyx":11
+  /* "cysimlidar.pyx":12
  *     cdef public float x, y
  * 
  *     def __cinit__(self, x, y):             # <<<<<<<<<<<<<<
@@ -1559,7 +1490,7 @@ static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":9
+/* "cysimlidar.pyx":10
  * cdef class Point:
  * 
  *     cdef public float x, y             # <<<<<<<<<<<<<<
@@ -1586,7 +1517,7 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_1x___get__(struct __pyx_obj_10cysi
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1621,7 +1552,7 @@ static int __pyx_pf_10cysimlidar_5Point_1x_2__set__(struct __pyx_obj_10cysimlida
   __Pyx_RefNannyDeclarations
   float __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_value); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 9, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_value); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 10, __pyx_L1_error)
   __pyx_v_self->x = __pyx_t_1;
 
   /* function exit code */
@@ -1654,7 +1585,7 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_1y___get__(struct __pyx_obj_10cysi
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__get__", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->y); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_self->y); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1689,7 +1620,7 @@ static int __pyx_pf_10cysimlidar_5Point_1y_2__set__(struct __pyx_obj_10cysimlida
   __Pyx_RefNannyDeclarations
   float __pyx_t_1;
   __Pyx_RefNannySetupContext("__set__", 0);
-  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_value); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 9, __pyx_L1_error)
+  __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_value); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 10, __pyx_L1_error)
   __pyx_v_self->y = __pyx_t_1;
 
   /* function exit code */
@@ -1810,8 +1741,8 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_4__setstate_cython__(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":28
- * """
+/* "cysimlidar.pyx":17
+ * 
  * 
  * cdef int isInQuadrant(Point self, Point origin):             # <<<<<<<<<<<<<<
  *     if self.y == origin.y:
@@ -1824,7 +1755,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("isInQuadrant", 0);
 
-  /* "cysimlidar.pyx":29
+  /* "cysimlidar.pyx":18
  * 
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:             # <<<<<<<<<<<<<<
@@ -1834,7 +1765,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->y == __pyx_v_origin->y) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":30
+    /* "cysimlidar.pyx":19
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:
  *         if self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1844,7 +1775,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->x > __pyx_v_origin->x) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":31
+      /* "cysimlidar.pyx":20
  *     if self.y == origin.y:
  *         if self.x > origin.x:
  *             return 1             # <<<<<<<<<<<<<<
@@ -1854,7 +1785,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 1;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":30
+      /* "cysimlidar.pyx":19
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:
  *         if self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1863,7 +1794,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":32
+    /* "cysimlidar.pyx":21
  *         if self.x > origin.x:
  *             return 1
  *         elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -1873,7 +1804,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->x < __pyx_v_origin->x) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":33
+      /* "cysimlidar.pyx":22
  *             return 1
  *         elif self.x < origin.x:
  *             return 3             # <<<<<<<<<<<<<<
@@ -1883,7 +1814,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 3;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":32
+      /* "cysimlidar.pyx":21
  *         if self.x > origin.x:
  *             return 1
  *         elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -1892,7 +1823,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":29
+    /* "cysimlidar.pyx":18
  * 
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:             # <<<<<<<<<<<<<<
@@ -1902,7 +1833,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":34
+  /* "cysimlidar.pyx":23
  *         elif self.x < origin.x:
  *             return 3
  *     elif self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1912,7 +1843,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->x > __pyx_v_origin->x) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":35
+    /* "cysimlidar.pyx":24
  *             return 3
  *     elif self.x > origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -1922,7 +1853,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y >= __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":36
+      /* "cysimlidar.pyx":25
  *     elif self.x > origin.x:
  *         if self.y >= origin.y:
  *             return 1             # <<<<<<<<<<<<<<
@@ -1932,7 +1863,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 1;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":35
+      /* "cysimlidar.pyx":24
  *             return 3
  *     elif self.x > origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -1941,7 +1872,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":38
+    /* "cysimlidar.pyx":27
  *             return 1
  *         else:
  *             return 4             # <<<<<<<<<<<<<<
@@ -1953,7 +1884,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       goto __pyx_L0;
     }
 
-    /* "cysimlidar.pyx":34
+    /* "cysimlidar.pyx":23
  *         elif self.x < origin.x:
  *             return 3
  *     elif self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1962,7 +1893,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
   }
 
-  /* "cysimlidar.pyx":39
+  /* "cysimlidar.pyx":28
  *         else:
  *             return 4
  *     elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -1972,7 +1903,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->x < __pyx_v_origin->x) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":40
+    /* "cysimlidar.pyx":29
  *             return 4
  *     elif self.x < origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -1982,7 +1913,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y >= __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":41
+      /* "cysimlidar.pyx":30
  *     elif self.x < origin.x:
  *         if self.y >= origin.y:
  *             return 2             # <<<<<<<<<<<<<<
@@ -1992,7 +1923,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 2;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":40
+      /* "cysimlidar.pyx":29
  *             return 4
  *     elif self.x < origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -2001,7 +1932,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":43
+    /* "cysimlidar.pyx":32
  *             return 2
  *         else:
  *             return 3             # <<<<<<<<<<<<<<
@@ -2013,7 +1944,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       goto __pyx_L0;
     }
 
-    /* "cysimlidar.pyx":39
+    /* "cysimlidar.pyx":28
  *         else:
  *             return 4
  *     elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -2022,7 +1953,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
   }
 
-  /* "cysimlidar.pyx":44
+  /* "cysimlidar.pyx":33
  *         else:
  *             return 3
  *     elif self.x == origin.x:             # <<<<<<<<<<<<<<
@@ -2032,7 +1963,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->x == __pyx_v_origin->x) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":45
+    /* "cysimlidar.pyx":34
  *             return 3
  *     elif self.x == origin.x:
  *         if self.y > origin.y:             # <<<<<<<<<<<<<<
@@ -2042,7 +1973,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y > __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":46
+      /* "cysimlidar.pyx":35
  *     elif self.x == origin.x:
  *         if self.y > origin.y:
  *             return 2             # <<<<<<<<<<<<<<
@@ -2052,7 +1983,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 2;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":45
+      /* "cysimlidar.pyx":34
  *             return 3
  *     elif self.x == origin.x:
  *         if self.y > origin.y:             # <<<<<<<<<<<<<<
@@ -2061,7 +1992,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":47
+    /* "cysimlidar.pyx":36
  *         if self.y > origin.y:
  *             return 2
  *         elif self.y < origin.y:             # <<<<<<<<<<<<<<
@@ -2071,7 +2002,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y < __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":48
+      /* "cysimlidar.pyx":37
  *             return 2
  *         elif self.y < origin.y:
  *             return 4             # <<<<<<<<<<<<<<
@@ -2081,7 +2012,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 4;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":47
+      /* "cysimlidar.pyx":36
  *         if self.y > origin.y:
  *             return 2
  *         elif self.y < origin.y:             # <<<<<<<<<<<<<<
@@ -2090,7 +2021,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":44
+    /* "cysimlidar.pyx":33
  *         else:
  *             return 3
  *     elif self.x == origin.x:             # <<<<<<<<<<<<<<
@@ -2100,8 +2031,8 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":28
- * """
+  /* "cysimlidar.pyx":17
+ * 
  * 
  * cdef int isInQuadrant(Point self, Point origin):             # <<<<<<<<<<<<<<
  *     if self.y == origin.y:
@@ -2115,171 +2046,15 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":51
+/* "cysimlidar.pyx":40
  * 
  * 
- * cdef double yInter(self):             # <<<<<<<<<<<<<<
- *     inter = (-self.slope * self.p1.x) + self.p1.y
- *     return inter
- */
-
-static double __pyx_f_10cysimlidar_yInter(PyObject *__pyx_v_self) {
-  PyObject *__pyx_v_inter = NULL;
-  double __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  double __pyx_t_4;
-  __Pyx_RefNannySetupContext("yInter", 0);
-
-  /* "cysimlidar.pyx":52
- * 
- * cdef double yInter(self):
- *     inter = (-self.slope * self.p1.x) + self.p1.y             # <<<<<<<<<<<<<<
- *     return inter
- * 
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Negative(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 52, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_inter = __pyx_t_3;
-  __pyx_t_3 = 0;
-
-  /* "cysimlidar.pyx":53
- * cdef double yInter(self):
- *     inter = (-self.slope * self.p1.x) + self.p1.y
- *     return inter             # <<<<<<<<<<<<<<
- * 
- * def findSlope(self, p1, p2):
- */
-  __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_v_inter); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 53, __pyx_L1_error)
-  __pyx_r = __pyx_t_4;
-  goto __pyx_L0;
-
-  /* "cysimlidar.pyx":51
- * 
- * 
- * cdef double yInter(self):             # <<<<<<<<<<<<<<
- *     inter = (-self.slope * self.p1.x) + self.p1.y
- *     return inter
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_WriteUnraisable("cysimlidar.yInter", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_inter);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "cysimlidar.pyx":55
- *     return inter
- * 
- * def findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
+ * cdef findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
  *     xdif = p1.x - p2.x
  *     if xdif == 0:
  */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_1findSlope(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_1findSlope = {"findSlope", (PyCFunction)__pyx_pw_10cysimlidar_1findSlope, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_1findSlope(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  CYTHON_UNUSED PyObject *__pyx_v_self = 0;
-  PyObject *__pyx_v_p1 = 0;
-  PyObject *__pyx_v_p2 = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("findSlope (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_self,&__pyx_n_s_p1,&__pyx_n_s_p2,0};
-    PyObject* values[3] = {0,0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        CYTHON_FALLTHROUGH;
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_self)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_p1)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("findSlope", 1, 3, 3, 1); __PYX_ERR(1, 55, __pyx_L3_error)
-        }
-        CYTHON_FALLTHROUGH;
-        case  2:
-        if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_p2)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("findSlope", 1, 3, 3, 2); __PYX_ERR(1, 55, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "findSlope") < 0)) __PYX_ERR(1, 55, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-    }
-    __pyx_v_self = values[0];
-    __pyx_v_p1 = values[1];
-    __pyx_v_p2 = values[2];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("findSlope", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 55, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.findSlope", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_findSlope(__pyx_self, __pyx_v_self, __pyx_v_p1, __pyx_v_p2);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_self, CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
+static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
   PyObject *__pyx_v_xdif = NULL;
   PyObject *__pyx_v_slope = NULL;
   PyObject *__pyx_r = NULL;
@@ -2291,38 +2066,38 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("findSlope", 0);
 
-  /* "cysimlidar.pyx":56
+  /* "cysimlidar.pyx":41
  * 
- * def findSlope(self, p1, p2):
+ * cdef findSlope(self, p1, p2):
  *     xdif = p1.x - p2.x             # <<<<<<<<<<<<<<
  *     if xdif == 0:
  *         slope = None
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 56, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 56, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 56, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_xdif = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "cysimlidar.pyx":57
- * def findSlope(self, p1, p2):
+  /* "cysimlidar.pyx":42
+ * cdef findSlope(self, p1, p2):
  *     xdif = p1.x - p2.x
  *     if xdif == 0:             # <<<<<<<<<<<<<<
  *         slope = None
  *     else:
  */
-  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_xdif, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 57, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_v_xdif, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 57, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 42, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_4) {
 
-    /* "cysimlidar.pyx":58
+    /* "cysimlidar.pyx":43
  *     xdif = p1.x - p2.x
  *     if xdif == 0:
  *         slope = None             # <<<<<<<<<<<<<<
@@ -2332,8 +2107,8 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
     __Pyx_INCREF(Py_None);
     __pyx_v_slope = Py_None;
 
-    /* "cysimlidar.pyx":57
- * def findSlope(self, p1, p2):
+    /* "cysimlidar.pyx":42
+ * cdef findSlope(self, p1, p2):
  *     xdif = p1.x - p2.x
  *     if xdif == 0:             # <<<<<<<<<<<<<<
  *         slope = None
@@ -2342,7 +2117,7 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":60
+  /* "cysimlidar.pyx":45
  *         slope = None
  *     else:
  *         slope = (p1.y - p2.y) / (p1.x - p2.x)             # <<<<<<<<<<<<<<
@@ -2350,23 +2125,23 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
  * 
  */
   /*else*/ {
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyNumber_Subtract(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __pyx_t_1 = PyNumber_Subtract(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = PyNumber_Subtract(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Subtract(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 60, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 45, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -2375,7 +2150,7 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":61
+  /* "cysimlidar.pyx":46
  *     else:
  *         slope = (p1.y - p2.y) / (p1.x - p2.x)
  *     return slope             # <<<<<<<<<<<<<<
@@ -2387,10 +2162,10 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
   __pyx_r = __pyx_v_slope;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":55
- *     return inter
+  /* "cysimlidar.pyx":40
  * 
- * def findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
+ * 
+ * cdef findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
  *     xdif = p1.x - p2.x
  *     if xdif == 0:
  */
@@ -2402,7 +2177,7 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_AddTraceback("cysimlidar.findSlope", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_xdif);
   __Pyx_XDECREF(__pyx_v_slope);
@@ -2411,7 +2186,7 @@ static PyObject *__pyx_pf_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":63
+/* "cysimlidar.pyx":48
  *     return slope
  * 
  * cdef float findXWithY(self, y):             # <<<<<<<<<<<<<<
@@ -2428,33 +2203,33 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
   float __pyx_t_3;
   __Pyx_RefNannySetupContext("findXWithY", 0);
 
-  /* "cysimlidar.pyx":64
+  /* "cysimlidar.pyx":49
  * 
  * cdef float findXWithY(self, y):
  *     x = y - self.inter             # <<<<<<<<<<<<<<
  *     return x
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_inter); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 64, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_inter); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Subtract(__pyx_v_y, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 64, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Subtract(__pyx_v_y, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_x = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":65
+  /* "cysimlidar.pyx":50
  * cdef float findXWithY(self, y):
  *     x = y - self.inter
  *     return x             # <<<<<<<<<<<<<<
  * 
  * cdef float findYWithX(self, x):
  */
-  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_v_x); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 65, __pyx_L1_error)
+  __pyx_t_3 = __pyx_PyFloat_AsFloat(__pyx_v_x); if (unlikely((__pyx_t_3 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 50, __pyx_L1_error)
   __pyx_r = __pyx_t_3;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":63
+  /* "cysimlidar.pyx":48
  *     return slope
  * 
  * cdef float findXWithY(self, y):             # <<<<<<<<<<<<<<
@@ -2474,7 +2249,7 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":67
+/* "cysimlidar.pyx":52
  *     return x
  * 
  * cdef float findYWithX(self, x):             # <<<<<<<<<<<<<<
@@ -2492,39 +2267,39 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
   float __pyx_t_4;
   __Pyx_RefNannySetupContext("findYWithX", 0);
 
-  /* "cysimlidar.pyx":68
+  /* "cysimlidar.pyx":53
  * 
  * cdef float findYWithX(self, x):
  *     y = (self.slope * x) + self.inter             # <<<<<<<<<<<<<<
  *     return y
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 68, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 68, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_inter); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 68, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_inter); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 68, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 53, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_y = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "cysimlidar.pyx":69
+  /* "cysimlidar.pyx":54
  * cdef float findYWithX(self, x):
  *     y = (self.slope * x) + self.inter
  *     return y             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_y); if (unlikely((__pyx_t_4 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 69, __pyx_L1_error)
+  __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_y); if (unlikely((__pyx_t_4 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 54, __pyx_L1_error)
   __pyx_r = __pyx_t_4;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":67
+  /* "cysimlidar.pyx":52
  *     return x
  * 
  * cdef float findYWithX(self, x):             # <<<<<<<<<<<<<<
@@ -2545,7 +2320,7 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":74
+/* "cysimlidar.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
@@ -2588,17 +2363,17 @@ static PyObject *__pyx_pw_10cysimlidar_7LineSeg_1__init__(PyObject *__pyx_self, 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_p1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(1, 74, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(1, 59, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_p2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(1, 74, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(1, 59, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(1, 74, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(1, 59, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -2613,7 +2388,7 @@ static PyObject *__pyx_pw_10cysimlidar_7LineSeg_1__init__(PyObject *__pyx_self, 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 74, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 59, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cysimlidar.LineSeg.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2630,249 +2405,209 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  double __pyx_t_9;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  double __pyx_t_8;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "cysimlidar.pyx":75
+  /* "cysimlidar.pyx":60
  * 
  *     def __init__(self, p1, p2):
  *         self.p1 = p1             # <<<<<<<<<<<<<<
  *         self.p2 = p2
  *         self.slope = findSlope(self, p1, p2)
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p1, __pyx_v_p1) < 0) __PYX_ERR(1, 75, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p1, __pyx_v_p1) < 0) __PYX_ERR(1, 60, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":76
+  /* "cysimlidar.pyx":61
  *     def __init__(self, p1, p2):
  *         self.p1 = p1
  *         self.p2 = p2             # <<<<<<<<<<<<<<
  *         self.slope = findSlope(self, p1, p2)
- *         if self.slope is not None:
+ *         if self.slope is None:
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p2, __pyx_v_p2) < 0) __PYX_ERR(1, 76, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p2, __pyx_v_p2) < 0) __PYX_ERR(1, 61, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":77
+  /* "cysimlidar.pyx":62
  *         self.p1 = p1
  *         self.p2 = p2
  *         self.slope = findSlope(self, p1, p2)             # <<<<<<<<<<<<<<
- *         if self.slope is not None:
- *             self.inter = yInter(self)
- */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_findSlope); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 77, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = NULL;
-  __pyx_t_4 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_4 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_self, __pyx_v_p1, __pyx_v_p2};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 77, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[4] = {__pyx_t_3, __pyx_v_self, __pyx_v_p1, __pyx_v_p2};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 3+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 77, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  {
-    __pyx_t_5 = PyTuple_New(3+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 77, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    if (__pyx_t_3) {
-      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
-    }
-    __Pyx_INCREF(__pyx_v_self);
-    __Pyx_GIVEREF(__pyx_v_self);
-    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_4, __pyx_v_self);
-    __Pyx_INCREF(__pyx_v_p1);
-    __Pyx_GIVEREF(__pyx_v_p1);
-    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_p1);
-    __Pyx_INCREF(__pyx_v_p2);
-    __Pyx_GIVEREF(__pyx_v_p2);
-    PyTuple_SET_ITEM(__pyx_t_5, 2+__pyx_t_4, __pyx_v_p2);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 77, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_1) < 0) __PYX_ERR(1, 77, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":78
- *         self.p2 = p2
- *         self.slope = findSlope(self, p1, p2)
- *         if self.slope is not None:             # <<<<<<<<<<<<<<
- *             self.inter = yInter(self)
- *             self.ang = rad2deg(np.arctan(self.slope / 1))
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 78, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = (__pyx_t_1 != Py_None);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_7 = (__pyx_t_6 != 0);
-  if (__pyx_t_7) {
-
-    /* "cysimlidar.pyx":79
- *         self.slope = findSlope(self, p1, p2)
- *         if self.slope is not None:
- *             self.inter = yInter(self)             # <<<<<<<<<<<<<<
- *             self.ang = rad2deg(np.arctan(self.slope / 1))
- *         else:
- */
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10cysimlidar_yInter(__pyx_v_self)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 79, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_1) < 0) __PYX_ERR(1, 79, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-    /* "cysimlidar.pyx":80
- *         if self.slope is not None:
- *             self.inter = yInter(self)
- *             self.ang = rad2deg(np.arctan(self.slope / 1))             # <<<<<<<<<<<<<<
- *         else:
+ *         if self.slope is None:
  *             self.inter = None
  */
-    __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 80, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_arctan); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 80, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 80, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_int_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 80, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = NULL;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
-      if (likely(__pyx_t_2)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-        __Pyx_INCREF(__pyx_t_2);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_5, function);
-      }
-    }
-    if (!__pyx_t_2) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 80, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_GOTREF(__pyx_t_1);
-    } else {
-      #if CYTHON_FAST_PYCALL
-      if (PyFunction_Check(__pyx_t_5)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_3};
-        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 80, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      } else
-      #endif
-      #if CYTHON_FAST_PYCCALL
-      if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
-        PyObject *__pyx_temp[2] = {__pyx_t_2, __pyx_t_3};
-        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 80, __pyx_L1_error)
-        __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      } else
-      #endif
-      {
-        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 80, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-        __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_2); __pyx_t_2 = NULL;
-        __Pyx_GIVEREF(__pyx_t_3);
-        PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_3);
-        __pyx_t_3 = 0;
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 80, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      }
-    }
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 80, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10cysimlidar_rad2deg(__pyx_t_9)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 80, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_t_1) < 0) __PYX_ERR(1, 80, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __pyx_f_10cysimlidar_findSlope(__pyx_v_self, __pyx_v_p1, __pyx_v_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 62, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_1) < 0) __PYX_ERR(1, 62, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "cysimlidar.pyx":78
+  /* "cysimlidar.pyx":63
  *         self.p2 = p2
  *         self.slope = findSlope(self, p1, p2)
- *         if self.slope is not None:             # <<<<<<<<<<<<<<
- *             self.inter = yInter(self)
- *             self.ang = rad2deg(np.arctan(self.slope / 1))
+ *         if self.slope is None:             # <<<<<<<<<<<<<<
+ *             self.inter = None
+ *             self.x = self.p1.x
  */
-    goto __pyx_L3;
-  }
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 63, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = (__pyx_t_1 == Py_None);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = (__pyx_t_2 != 0);
+  if (__pyx_t_3) {
 
-  /* "cysimlidar.pyx":82
- *             self.ang = rad2deg(np.arctan(self.slope / 1))
- *         else:
+    /* "cysimlidar.pyx":64
+ *         self.slope = findSlope(self, p1, p2)
+ *         if self.slope is None:
  *             self.inter = None             # <<<<<<<<<<<<<<
  *             self.x = self.p1.x
  *             self.ang = 90
  */
-  /*else*/ {
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, Py_None) < 0) __PYX_ERR(1, 82, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, Py_None) < 0) __PYX_ERR(1, 64, __pyx_L1_error)
 
-    /* "cysimlidar.pyx":83
- *         else:
+    /* "cysimlidar.pyx":65
+ *         if self.slope is None:
  *             self.inter = None
  *             self.x = self.p1.x             # <<<<<<<<<<<<<<
  *             self.ang = 90
- *         self.point = self.p1
+ *         else:
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 83, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 65, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 83, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 65, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_x, __pyx_t_5) < 0) __PYX_ERR(1, 83, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_x, __pyx_t_4) < 0) __PYX_ERR(1, 65, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":84
+    /* "cysimlidar.pyx":66
  *             self.inter = None
  *             self.x = self.p1.x
  *             self.ang = 90             # <<<<<<<<<<<<<<
- *         self.point = self.p1
+ *         else:
+ *             self.inter = (-self.slope * self.p1.x) + self.p1.y
+ */
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_int_90) < 0) __PYX_ERR(1, 66, __pyx_L1_error)
+
+    /* "cysimlidar.pyx":63
+ *         self.p2 = p2
+ *         self.slope = findSlope(self, p1, p2)
+ *         if self.slope is None:             # <<<<<<<<<<<<<<
+ *             self.inter = None
+ *             self.x = self.p1.x
+ */
+    goto __pyx_L3;
+  }
+
+  /* "cysimlidar.pyx":68
+ *             self.ang = 90
+ *         else:
+ *             self.inter = (-self.slope * self.p1.x) + self.p1.y             # <<<<<<<<<<<<<<
+ *             self.ang = rad2deg(np.arctan(self.slope / 1))
  * 
  */
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_int_90) < 0) __PYX_ERR(1, 84, __pyx_L1_error)
+  /*else*/ {
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_1 = PyNumber_Negative(__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_x); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = PyNumber_Multiply(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = PyNumber_Add(__pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_5) < 0) __PYX_ERR(1, 68, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+
+    /* "cysimlidar.pyx":69
+ *         else:
+ *             self.inter = (-self.slope * self.p1.x) + self.p1.y
+ *             self.ang = rad2deg(np.arctan(self.slope / 1))             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+    __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 69, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_arctan); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 69, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 69, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_int_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 69, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = NULL;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
+      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_4);
+      if (likely(__pyx_t_1)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
+        __Pyx_INCREF(__pyx_t_1);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_4, function);
+      }
+    }
+    if (!__pyx_t_1) {
+      __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 69, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_GOTREF(__pyx_t_5);
+    } else {
+      #if CYTHON_FAST_PYCALL
+      if (PyFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_t_6};
+        __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 69, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      } else
+      #endif
+      #if CYTHON_FAST_PYCCALL
+      if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
+        PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_t_6};
+        __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 69, __pyx_L1_error)
+        __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      } else
+      #endif
+      {
+        __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 69, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_1); __pyx_t_1 = NULL;
+        __Pyx_GIVEREF(__pyx_t_6);
+        PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_6);
+        __pyx_t_6 = 0;
+        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_7, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 69, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      }
+    }
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 69, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_f_10cysimlidar_rad2deg(__pyx_t_8)); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 69, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_t_5) < 0) __PYX_ERR(1, 69, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":85
- *             self.x = self.p1.x
- *             self.ang = 90
- *         self.point = self.p1             # <<<<<<<<<<<<<<
- * 
- * cdef int segIsReal(self, point):
- */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_point, __pyx_t_5) < 0) __PYX_ERR(1, 85, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-
-  /* "cysimlidar.pyx":74
+  /* "cysimlidar.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
@@ -2885,10 +2620,10 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_AddTraceback("cysimlidar.LineSeg.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -2897,1056 +2632,477 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":87
- *         self.point = self.p1
- * 
- * cdef int segIsReal(self, point):             # <<<<<<<<<<<<<<
- *     if self.p1.x > self.p2.x:
- *         maxx = self.p1.x
- */
-
-static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__pyx_v_point) {
-  PyObject *__pyx_v_maxx = NULL;
-  PyObject *__pyx_v_minx = NULL;
-  PyObject *__pyx_v_maxy = NULL;
-  PyObject *__pyx_v_miny = NULL;
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  int __pyx_t_5;
-  __Pyx_RefNannySetupContext("segIsReal", 0);
-
-  /* "cysimlidar.pyx":88
- * 
- * cdef int segIsReal(self, point):
- *     if self.p1.x > self.p2.x:             # <<<<<<<<<<<<<<
- *         maxx = self.p1.x
- *         minx = self.p2.x
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 88, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 88, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 88, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 88, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyObject_RichCompare(__pyx_t_2, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 88, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 88, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_t_4) {
-
-    /* "cysimlidar.pyx":89
- * cdef int segIsReal(self, point):
- *     if self.p1.x > self.p2.x:
- *         maxx = self.p1.x             # <<<<<<<<<<<<<<
- *         minx = self.p2.x
- *     else:
- */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 89, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 89, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_v_maxx = __pyx_t_3;
-    __pyx_t_3 = 0;
-
-    /* "cysimlidar.pyx":90
- *     if self.p1.x > self.p2.x:
- *         maxx = self.p1.x
- *         minx = self.p2.x             # <<<<<<<<<<<<<<
- *     else:
- *         minx = self.p1.x
- */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 90, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 90, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_minx = __pyx_t_1;
-    __pyx_t_1 = 0;
-
-    /* "cysimlidar.pyx":88
- * 
- * cdef int segIsReal(self, point):
- *     if self.p1.x > self.p2.x:             # <<<<<<<<<<<<<<
- *         maxx = self.p1.x
- *         minx = self.p2.x
- */
-    goto __pyx_L3;
-  }
-
-  /* "cysimlidar.pyx":92
- *         minx = self.p2.x
- *     else:
- *         minx = self.p1.x             # <<<<<<<<<<<<<<
- *         maxx = self.p2.x
- *     if self.p1.y > self.p2.y:
- */
-  /*else*/ {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 92, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_v_minx = __pyx_t_3;
-    __pyx_t_3 = 0;
-
-    /* "cysimlidar.pyx":93
- *     else:
- *         minx = self.p1.x
- *         maxx = self.p2.x             # <<<<<<<<<<<<<<
- *     if self.p1.y > self.p2.y:
- *         maxy = self.p1.y
- */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 93, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 93, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_maxx = __pyx_t_1;
-    __pyx_t_1 = 0;
-  }
-  __pyx_L3:;
-
-  /* "cysimlidar.pyx":94
- *         minx = self.p1.x
- *         maxx = self.p2.x
- *     if self.p1.y > self.p2.y:             # <<<<<<<<<<<<<<
- *         maxy = self.p1.y
- *         miny = self.p2.y
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 94, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 94, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 94, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 94, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_t_2, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 94, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 94, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__pyx_t_4) {
-
-    /* "cysimlidar.pyx":95
- *         maxx = self.p2.x
- *     if self.p1.y > self.p2.y:
- *         maxy = self.p1.y             # <<<<<<<<<<<<<<
- *         miny = self.p2.y
- *     else:
- */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 95, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 95, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_v_maxy = __pyx_t_2;
-    __pyx_t_2 = 0;
-
-    /* "cysimlidar.pyx":96
- *     if self.p1.y > self.p2.y:
- *         maxy = self.p1.y
- *         miny = self.p2.y             # <<<<<<<<<<<<<<
- *     else:
- *         miny = self.p1.y
- */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 96, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 96, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_v_miny = __pyx_t_1;
-    __pyx_t_1 = 0;
-
-    /* "cysimlidar.pyx":94
- *         minx = self.p1.x
- *         maxx = self.p2.x
- *     if self.p1.y > self.p2.y:             # <<<<<<<<<<<<<<
- *         maxy = self.p1.y
- *         miny = self.p2.y
- */
-    goto __pyx_L4;
-  }
-
-  /* "cysimlidar.pyx":98
- *         miny = self.p2.y
- *     else:
- *         miny = self.p1.y             # <<<<<<<<<<<<<<
- *         maxy = self.p2.y
- *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
- */
-  /*else*/ {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 98, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 98, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_v_miny = __pyx_t_2;
-    __pyx_t_2 = 0;
-
-    /* "cysimlidar.pyx":99
- *     else:
- *         miny = self.p1.y
- *         maxy = self.p2.y             # <<<<<<<<<<<<<<
- *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
- *         return 0
- */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 99, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 99, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_v_maxy = __pyx_t_1;
-    __pyx_t_1 = 0;
-  }
-  __pyx_L4:;
-
-  /* "cysimlidar.pyx":100
- *         miny = self.p1.y
- *         maxy = self.p2.y
- *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:             # <<<<<<<<<<<<<<
- *         return 0
- *     else:
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_point, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, __pyx_v_maxx, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!__pyx_t_5) {
-  } else {
-    __pyx_t_4 = __pyx_t_5;
-    goto __pyx_L6_bool_binop_done;
-  }
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_point, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyObject_RichCompare(__pyx_t_2, __pyx_v_minx, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!__pyx_t_5) {
-  } else {
-    __pyx_t_4 = __pyx_t_5;
-    goto __pyx_L6_bool_binop_done;
-  }
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_point, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, __pyx_v_maxy, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!__pyx_t_5) {
-  } else {
-    __pyx_t_4 = __pyx_t_5;
-    goto __pyx_L6_bool_binop_done;
-  }
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_point, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyObject_RichCompare(__pyx_t_2, __pyx_v_miny, Py_LT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __pyx_t_5;
-  __pyx_L6_bool_binop_done:;
-  if (__pyx_t_4) {
-
-    /* "cysimlidar.pyx":101
- *         maxy = self.p2.y
- *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
- *         return 0             # <<<<<<<<<<<<<<
- *     else:
- *         return 1
- */
-    __pyx_r = 0;
-    goto __pyx_L0;
-
-    /* "cysimlidar.pyx":100
- *         miny = self.p1.y
- *         maxy = self.p2.y
- *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:             # <<<<<<<<<<<<<<
- *         return 0
- *     else:
- */
-  }
-
-  /* "cysimlidar.pyx":103
- *         return 0
- *     else:
- *         return 1             # <<<<<<<<<<<<<<
+/* "cysimlidar.pyx":91
  * 
  * 
- */
-  /*else*/ {
-    __pyx_r = 1;
-    goto __pyx_L0;
-  }
-
-  /* "cysimlidar.pyx":87
- *         self.point = self.p1
- * 
- * cdef int segIsReal(self, point):             # <<<<<<<<<<<<<<
- *     if self.p1.x > self.p2.x:
- *         maxx = self.p1.x
+ * cdef findinter(self, obj):             # <<<<<<<<<<<<<<
+ *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
+ *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
  */
 
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_WriteUnraisable("cysimlidar.segIsReal", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_maxx);
-  __Pyx_XDECREF(__pyx_v_minx);
-  __Pyx_XDECREF(__pyx_v_maxy);
-  __Pyx_XDECREF(__pyx_v_miny);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "cysimlidar.pyx":106
- * 
- * 
- * def solveXInter(self, obj):             # <<<<<<<<<<<<<<
- *     """Solves for the x intercept between two lines in slope"""
- *     v = self.slope - obj.slope
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_3solveXInter(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_10cysimlidar_2solveXInter[] = "Solves for the x intercept between two lines in slope";
-static PyMethodDef __pyx_mdef_10cysimlidar_3solveXInter = {"solveXInter", (PyCFunction)__pyx_pw_10cysimlidar_3solveXInter, METH_VARARGS|METH_KEYWORDS, __pyx_doc_10cysimlidar_2solveXInter};
-static PyObject *__pyx_pw_10cysimlidar_3solveXInter(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_self = 0;
-  PyObject *__pyx_v_obj = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("solveXInter (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_self,&__pyx_n_s_obj,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_self)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_obj)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("solveXInter", 1, 2, 2, 1); __PYX_ERR(1, 106, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "solveXInter") < 0)) __PYX_ERR(1, 106, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_self = values[0];
-    __pyx_v_obj = values[1];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("solveXInter", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 106, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.solveXInter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_2solveXInter(__pyx_self, __pyx_v_self, __pyx_v_obj);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_2solveXInter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_obj) {
-  PyObject *__pyx_v_v = NULL;
-  PyObject *__pyx_v_c = NULL;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  __Pyx_RefNannySetupContext("solveXInter", 0);
-
-  /* "cysimlidar.pyx":108
- * def solveXInter(self, obj):
- *     """Solves for the x intercept between two lines in slope"""
- *     v = self.slope - obj.slope             # <<<<<<<<<<<<<<
- *     c = obj.inter - self.inter
- *     c /= v
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 108, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_slope); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 108, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 108, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_v = __pyx_t_3;
-  __pyx_t_3 = 0;
-
-  /* "cysimlidar.pyx":109
- *     """Solves for the x intercept between two lines in slope"""
- *     v = self.slope - obj.slope
- *     c = obj.inter - self.inter             # <<<<<<<<<<<<<<
- *     c /= v
- *     return c
- */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_inter); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 109, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_inter); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 109, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Subtract(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 109, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_c = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":110
- *     v = self.slope - obj.slope
- *     c = obj.inter - self.inter
- *     c /= v             # <<<<<<<<<<<<<<
- *     return c
- * 
- */
-  __pyx_t_1 = __Pyx_PyNumber_InPlaceDivide(__pyx_v_c, __pyx_v_v); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 110, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF_SET(__pyx_v_c, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":111
- *     c = obj.inter - self.inter
- *     c /= v
- *     return c             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_c);
-  __pyx_r = __pyx_v_c;
-  goto __pyx_L0;
-
-  /* "cysimlidar.pyx":106
- * 
- * 
- * def solveXInter(self, obj):             # <<<<<<<<<<<<<<
- *     """Solves for the x intercept between two lines in slope"""
- *     v = self.slope - obj.slope
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("cysimlidar.solveXInter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_v);
-  __Pyx_XDECREF(__pyx_v_c);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "cysimlidar.pyx":114
- * 
- * 
- * cdef Point findValidInter(self, obj):             # <<<<<<<<<<<<<<
- *     x = solveXInter(self, obj)
- *     y = (self.slope * x) + self.inter
- */
-
-static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findValidInter(PyObject *__pyx_v_self, PyObject *__pyx_v_obj) {
-  PyObject *__pyx_v_x = NULL;
-  PyObject *__pyx_v_y = NULL;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_point = NULL;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
-  __Pyx_RefNannySetupContext("findValidInter", 0);
-
-  /* "cysimlidar.pyx":115
- * 
- * cdef Point findValidInter(self, obj):
- *     x = solveXInter(self, obj)             # <<<<<<<<<<<<<<
- *     y = (self.slope * x) + self.inter
- *     point = Point(x, y)
- */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_solveXInter); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 115, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = NULL;
-  __pyx_t_4 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_4 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_self, __pyx_v_obj};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 115, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_self, __pyx_v_obj};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 115, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 115, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    if (__pyx_t_3) {
-      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
-    }
-    __Pyx_INCREF(__pyx_v_self);
-    __Pyx_GIVEREF(__pyx_v_self);
-    PyTuple_SET_ITEM(__pyx_t_5, 0+__pyx_t_4, __pyx_v_self);
-    __Pyx_INCREF(__pyx_v_obj);
-    __Pyx_GIVEREF(__pyx_v_obj);
-    PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_v_obj);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 115, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_x = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":116
- * cdef Point findValidInter(self, obj):
- *     x = solveXInter(self, obj)
- *     y = (self.slope * x) + self.inter             # <<<<<<<<<<<<<<
- *     point = Point(x, y)
- *     return point
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 116, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 116, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_inter); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 116, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 116, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_y = __pyx_t_5;
-  __pyx_t_5 = 0;
-
-  /* "cysimlidar.pyx":117
- *     x = solveXInter(self, obj)
- *     y = (self.slope * x) + self.inter
- *     point = Point(x, y)             # <<<<<<<<<<<<<<
- *     return point
- * 
- */
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 117, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_v_x);
-  __Pyx_GIVEREF(__pyx_v_x);
-  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_x);
-  __Pyx_INCREF(__pyx_v_y);
-  __Pyx_GIVEREF(__pyx_v_y);
-  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_v_y);
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 117, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_v_point = ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":118
- *     y = (self.slope * x) + self.inter
- *     point = Point(x, y)
- *     return point             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __Pyx_INCREF(((PyObject *)__pyx_v_point));
-  __pyx_r = __pyx_v_point;
-  goto __pyx_L0;
-
-  /* "cysimlidar.pyx":114
- * 
- * 
- * cdef Point findValidInter(self, obj):             # <<<<<<<<<<<<<<
- *     x = solveXInter(self, obj)
- *     y = (self.slope * x) + self.inter
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("cysimlidar.findValidInter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = 0;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_x);
-  __Pyx_XDECREF(__pyx_v_y);
-  __Pyx_XDECREF((PyObject *)__pyx_v_point);
-  __Pyx_XGIVEREF((PyObject *)__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "cysimlidar.pyx":121
- * 
- * 
- * def findinter(self, obj):             # <<<<<<<<<<<<<<
- *     if self.slope is None or obj.slope is None:
- *         if self.slope is None:
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_5findinter(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_5findinter = {"findinter", (PyCFunction)__pyx_pw_10cysimlidar_5findinter, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_5findinter(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_self = 0;
-  PyObject *__pyx_v_obj = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("findinter (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_self,&__pyx_n_s_obj,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_self)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_obj)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("findinter", 1, 2, 2, 1); __PYX_ERR(1, 121, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "findinter") < 0)) __PYX_ERR(1, 121, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_self = values[0];
-    __pyx_v_obj = values[1];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("findinter", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 121, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.findinter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_4findinter(__pyx_self, __pyx_v_self, __pyx_v_obj);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_4findinter(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_obj) {
-  PyObject *__pyx_v_objs = NULL;
-  PyObject *__pyx_v_x = NULL;
-  PyObject *__pyx_v_y = NULL;
+static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject *__pyx_v_obj) {
+  PyObject *__pyx_v_X1 = NULL;
+  PyObject *__pyx_v_Y1 = NULL;
+  PyObject *__pyx_v_X2 = NULL;
+  PyObject *__pyx_v_Y2 = NULL;
+  PyObject *__pyx_v_X3 = NULL;
+  PyObject *__pyx_v_Y3 = NULL;
+  PyObject *__pyx_v_X4 = NULL;
+  PyObject *__pyx_v_Y4 = NULL;
+  PyObject *__pyx_v_UaNumerator = NULL;
+  PyObject *__pyx_v_UaDenominator = NULL;
+  PyObject *__pyx_v_UbDenominator = NULL;
+  PyObject *__pyx_v_Ua = NULL;
+  PyObject *__pyx_v_X = NULL;
+  PyObject *__pyx_v_Y = NULL;
   struct __pyx_obj_10cysimlidar_Point *__pyx_v_point = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
+  PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
-  int __pyx_t_3;
-  int __pyx_t_4;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  int __pyx_t_10;
+  int __pyx_t_11;
   __Pyx_RefNannySetupContext("findinter", 0);
 
-  /* "cysimlidar.pyx":122
+  /* "cysimlidar.pyx":92
  * 
- * def findinter(self, obj):
- *     if self.slope is None or obj.slope is None:             # <<<<<<<<<<<<<<
- *         if self.slope is None:
- *             objs = [self, obj]
+ * cdef findinter(self, obj):
+ *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y             # <<<<<<<<<<<<<<
+ *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
+ *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 122, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = (__pyx_t_2 == Py_None);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = (__pyx_t_3 != 0);
-  if (!__pyx_t_4) {
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 92, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_X1 = __pyx_t_2;
+  __pyx_t_2 = 0;
+  __pyx_v_Y1 = __pyx_t_3;
+  __pyx_t_3 = 0;
+  __pyx_v_X2 = __pyx_t_4;
+  __pyx_t_4 = 0;
+  __pyx_v_Y2 = __pyx_t_5;
+  __pyx_t_5 = 0;
+  __pyx_v_X3 = __pyx_t_6;
+  __pyx_t_6 = 0;
+  __pyx_v_Y3 = __pyx_t_7;
+  __pyx_t_7 = 0;
+  __pyx_v_X4 = __pyx_t_8;
+  __pyx_t_8 = 0;
+  __pyx_v_Y4 = __pyx_t_9;
+  __pyx_t_9 = 0;
+
+  /* "cysimlidar.pyx":93
+ * cdef findinter(self, obj):
+ *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
+ *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))             # <<<<<<<<<<<<<<
+ *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ */
+  __pyx_t_9 = PyNumber_Subtract(__pyx_v_X4, __pyx_v_X3); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_8 = PyNumber_Subtract(__pyx_v_Y1, __pyx_v_Y3); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_9, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_8 = PyNumber_Subtract(__pyx_v_Y4, __pyx_v_Y3); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_9 = PyNumber_Subtract(__pyx_v_X1, __pyx_v_X3); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_6 = PyNumber_Multiply(__pyx_t_8, __pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = PyNumber_Subtract(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 93, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_v_UaNumerator = __pyx_t_9;
+  __pyx_t_9 = 0;
+
+  /* "cysimlidar.pyx":94
+ *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
+ *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
+ *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))             # <<<<<<<<<<<<<<
+ *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
+ */
+  __pyx_t_9 = PyNumber_Subtract(__pyx_v_Y4, __pyx_v_Y3); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_6 = PyNumber_Subtract(__pyx_v_X2, __pyx_v_X1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_9, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_6 = PyNumber_Subtract(__pyx_v_X4, __pyx_v_X3); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_9 = PyNumber_Subtract(__pyx_v_Y2, __pyx_v_Y1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_8 = PyNumber_Multiply(__pyx_t_6, __pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = PyNumber_Subtract(__pyx_t_7, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 94, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_v_UaDenominator = __pyx_t_9;
+  __pyx_t_9 = 0;
+
+  /* "cysimlidar.pyx":95
+ *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
+ *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))             # <<<<<<<<<<<<<<
+ *     if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
+ *         return None
+ */
+  __pyx_t_9 = PyNumber_Subtract(__pyx_v_Y4, __pyx_v_Y3); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 95, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_8 = PyNumber_Subtract(__pyx_v_X2, __pyx_v_X1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 95, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_9, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 95, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __pyx_t_8 = PyNumber_Subtract(__pyx_v_X4, __pyx_v_X3); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 95, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_9 = PyNumber_Subtract(__pyx_v_Y2, __pyx_v_Y1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 95, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_6 = PyNumber_Multiply(__pyx_t_8, __pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 95, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = PyNumber_Subtract(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 95, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_v_UbDenominator = __pyx_t_9;
+  __pyx_t_9 = 0;
+
+  /* "cysimlidar.pyx":96
+ *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.             # <<<<<<<<<<<<<<
+ *         return None
+ *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.
+ */
+  __pyx_t_9 = __Pyx_PyInt_EqObjC(__pyx_v_UaNumerator, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  if (__pyx_t_11) {
   } else {
-    __pyx_t_1 = __pyx_t_4;
+    __pyx_t_10 = __pyx_t_11;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_slope); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 122, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = (__pyx_t_2 == Py_None);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = (__pyx_t_4 != 0);
-  __pyx_t_1 = __pyx_t_3;
-  __pyx_L4_bool_binop_done:;
-  if (__pyx_t_1) {
-
-    /* "cysimlidar.pyx":123
- * def findinter(self, obj):
- *     if self.slope is None or obj.slope is None:
- *         if self.slope is None:             # <<<<<<<<<<<<<<
- *             objs = [self, obj]
- *         else:
- */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 123, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = (__pyx_t_2 == Py_None);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_3 = (__pyx_t_1 != 0);
-    if (__pyx_t_3) {
-
-      /* "cysimlidar.pyx":124
- *     if self.slope is None or obj.slope is None:
- *         if self.slope is None:
- *             objs = [self, obj]             # <<<<<<<<<<<<<<
- *         else:
- *             objs = [obj, self]
- */
-      __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 124, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_INCREF(__pyx_v_self);
-      __Pyx_GIVEREF(__pyx_v_self);
-      PyList_SET_ITEM(__pyx_t_2, 0, __pyx_v_self);
-      __Pyx_INCREF(__pyx_v_obj);
-      __Pyx_GIVEREF(__pyx_v_obj);
-      PyList_SET_ITEM(__pyx_t_2, 1, __pyx_v_obj);
-      __pyx_v_objs = ((PyObject*)__pyx_t_2);
-      __pyx_t_2 = 0;
-
-      /* "cysimlidar.pyx":123
- * def findinter(self, obj):
- *     if self.slope is None or obj.slope is None:
- *         if self.slope is None:             # <<<<<<<<<<<<<<
- *             objs = [self, obj]
- *         else:
- */
-      goto __pyx_L6;
-    }
-
-    /* "cysimlidar.pyx":126
- *             objs = [self, obj]
- *         else:
- *             objs = [obj, self]             # <<<<<<<<<<<<<<
- *         x = objs[0].x
- *         if type(x) == int or type(x) == float:
- */
-    /*else*/ {
-      __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 126, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_INCREF(__pyx_v_obj);
-      __Pyx_GIVEREF(__pyx_v_obj);
-      PyList_SET_ITEM(__pyx_t_2, 0, __pyx_v_obj);
-      __Pyx_INCREF(__pyx_v_self);
-      __Pyx_GIVEREF(__pyx_v_self);
-      PyList_SET_ITEM(__pyx_t_2, 1, __pyx_v_self);
-      __pyx_v_objs = ((PyObject*)__pyx_t_2);
-      __pyx_t_2 = 0;
-    }
-    __pyx_L6:;
-
-    /* "cysimlidar.pyx":127
- *         else:
- *             objs = [obj, self]
- *         x = objs[0].x             # <<<<<<<<<<<<<<
- *         if type(x) == int or type(x) == float:
- *             y = findYWithX(objs[1], x)
- */
-    __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_v_objs, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 127, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_x); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 127, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_v_x = __pyx_t_5;
-    __pyx_t_5 = 0;
-
-    /* "cysimlidar.pyx":128
- *             objs = [obj, self]
- *         x = objs[0].x
- *         if type(x) == int or type(x) == float:             # <<<<<<<<<<<<<<
- *             y = findYWithX(objs[1], x)
- *             point = Point(x, y)
- */
-    __pyx_t_5 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_x)), ((PyObject *)(&PyInt_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 128, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(1, 128, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (!__pyx_t_1) {
-    } else {
-      __pyx_t_3 = __pyx_t_1;
-      goto __pyx_L8_bool_binop_done;
-    }
-    __pyx_t_5 = PyObject_RichCompare(((PyObject *)Py_TYPE(__pyx_v_x)), ((PyObject *)(&PyFloat_Type)), Py_EQ); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 128, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(1, 128, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_3 = __pyx_t_1;
-    __pyx_L8_bool_binop_done:;
-    if (__pyx_t_3) {
-
-      /* "cysimlidar.pyx":129
- *         x = objs[0].x
- *         if type(x) == int or type(x) == float:
- *             y = findYWithX(objs[1], x)             # <<<<<<<<<<<<<<
- *             point = Point(x, y)
- *         else:
- */
-      __pyx_t_5 = __Pyx_GetItemInt_List(__pyx_v_objs, 1, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 129, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_2 = PyFloat_FromDouble(__pyx_f_10cysimlidar_findYWithX(__pyx_t_5, __pyx_v_x)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 129, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_v_y = __pyx_t_2;
-      __pyx_t_2 = 0;
-
-      /* "cysimlidar.pyx":130
- *         if type(x) == int or type(x) == float:
- *             y = findYWithX(objs[1], x)
- *             point = Point(x, y)             # <<<<<<<<<<<<<<
- *         else:
- *             return None
- */
-      __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 130, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_INCREF(__pyx_v_x);
-      __Pyx_GIVEREF(__pyx_v_x);
-      PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_x);
-      __Pyx_INCREF(__pyx_v_y);
-      __Pyx_GIVEREF(__pyx_v_y);
-      PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_v_y);
-      __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_2, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 130, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_v_point = ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_5);
-      __pyx_t_5 = 0;
-
-      /* "cysimlidar.pyx":128
- *             objs = [obj, self]
- *         x = objs[0].x
- *         if type(x) == int or type(x) == float:             # <<<<<<<<<<<<<<
- *             y = findYWithX(objs[1], x)
- *             point = Point(x, y)
- */
-      goto __pyx_L7;
-    }
-
-    /* "cysimlidar.pyx":132
- *             point = Point(x, y)
- *         else:
- *             return None             # <<<<<<<<<<<<<<
- *     elif self.slope == obj.slope:
- *         return None
- */
-    /*else*/ {
-      __Pyx_XDECREF(__pyx_r);
-      __Pyx_INCREF(Py_None);
-      __pyx_r = Py_None;
-      goto __pyx_L0;
-    }
-    __pyx_L7:;
-
-    /* "cysimlidar.pyx":122
- * 
- * def findinter(self, obj):
- *     if self.slope is None or obj.slope is None:             # <<<<<<<<<<<<<<
- *         if self.slope is None:
- *             objs = [self, obj]
- */
-    goto __pyx_L3;
+  __pyx_t_9 = __Pyx_PyInt_EqObjC(__pyx_v_UaDenominator, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  if (__pyx_t_11) {
+  } else {
+    __pyx_t_10 = __pyx_t_11;
+    goto __pyx_L4_bool_binop_done;
   }
+  __pyx_t_9 = __Pyx_PyInt_EqObjC(__pyx_v_UaNumerator, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  if (__pyx_t_11) {
+  } else {
+    __pyx_t_10 = __pyx_t_11;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_9 = __Pyx_PyInt_EqObjC(__pyx_v_UbDenominator, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 96, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_10 = __pyx_t_11;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_10) {
 
-  /* "cysimlidar.pyx":133
- *         else:
- *             return None
- *     elif self.slope == obj.slope:             # <<<<<<<<<<<<<<
- *         return None
- *     else:
- */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_obj, __pyx_n_s_slope); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = PyObject_RichCompare(__pyx_t_5, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 133, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(1, 133, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  if (__pyx_t_3) {
-
-    /* "cysimlidar.pyx":134
- *             return None
- *     elif self.slope == obj.slope:
+    /* "cysimlidar.pyx":97
+ *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
  *         return None             # <<<<<<<<<<<<<<
- *     else:
- *         point = findValidInter(self, obj)
+ *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.
+ *         return None
  */
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(Py_None);
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "cysimlidar.pyx":133
- *         else:
- *             return None
- *     elif self.slope == obj.slope:             # <<<<<<<<<<<<<<
+    /* "cysimlidar.pyx":96
+ *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+ *     if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.             # <<<<<<<<<<<<<<
  *         return None
- *     else:
+ *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.
  */
   }
 
-  /* "cysimlidar.pyx":136
+  /* "cysimlidar.pyx":98
+ *     if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
+ *         return None
+ *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.             # <<<<<<<<<<<<<<
  *         return None
  *     else:
- *         point = findValidInter(self, obj)             # <<<<<<<<<<<<<<
- *     if segIsReal(self, point) and rayIsReal(obj, point):
- *         return point
  */
-  /*else*/ {
-    __pyx_t_6 = ((PyObject *)__pyx_f_10cysimlidar_findValidInter(__pyx_v_self, __pyx_v_obj)); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 136, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_v_point = ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_6);
-    __pyx_t_6 = 0;
-  }
-  __pyx_L3:;
-
-  /* "cysimlidar.pyx":137
- *     else:
- *         point = findValidInter(self, obj)
- *     if segIsReal(self, point) and rayIsReal(obj, point):             # <<<<<<<<<<<<<<
- *         return point
- * 
- */
-  __pyx_t_1 = (__pyx_f_10cysimlidar_segIsReal(__pyx_v_self, ((PyObject *)__pyx_v_point)) != 0);
-  if (__pyx_t_1) {
+  __pyx_t_9 = __Pyx_PyInt_EqObjC(__pyx_v_UaDenominator, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 98, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 98, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  if (__pyx_t_11) {
   } else {
-    __pyx_t_3 = __pyx_t_1;
-    goto __pyx_L11_bool_binop_done;
+    __pyx_t_10 = __pyx_t_11;
+    goto __pyx_L8_bool_binop_done;
   }
-  __pyx_t_1 = (__pyx_f_10cysimlidar_rayIsReal(__pyx_v_obj, ((PyObject *)__pyx_v_point)) != 0);
-  __pyx_t_3 = __pyx_t_1;
-  __pyx_L11_bool_binop_done:;
-  if (__pyx_t_3) {
+  __pyx_t_9 = __Pyx_PyInt_EqObjC(__pyx_v_UbDenominator, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 98, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_9); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 98, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_10 = __pyx_t_11;
+  __pyx_L8_bool_binop_done:;
+  if (__pyx_t_10) {
 
-    /* "cysimlidar.pyx":138
- *         point = findValidInter(self, obj)
- *     if segIsReal(self, point) and rayIsReal(obj, point):
- *         return point             # <<<<<<<<<<<<<<
- * 
- * 
+    /* "cysimlidar.pyx":99
+ *         return None
+ *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.
+ *         return None             # <<<<<<<<<<<<<<
+ *     else:
+ *         Ua = UaNumerator / UaDenominator
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(((PyObject *)__pyx_v_point));
-    __pyx_r = ((PyObject *)__pyx_v_point);
+    __Pyx_INCREF(Py_None);
+    __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "cysimlidar.pyx":137
+    /* "cysimlidar.pyx":98
+ *     if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
+ *         return None
+ *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.             # <<<<<<<<<<<<<<
+ *         return None
  *     else:
- *         point = findValidInter(self, obj)
- *     if segIsReal(self, point) and rayIsReal(obj, point):             # <<<<<<<<<<<<<<
- *         return point
- * 
  */
   }
 
-  /* "cysimlidar.pyx":121
+  /* "cysimlidar.pyx":101
+ *         return None
+ *     else:
+ *         Ua = UaNumerator / UaDenominator             # <<<<<<<<<<<<<<
+ *         X = X1 + Ua * (X2 - X1)
+ *         Y = Y1 + Ua * (Y2 - Y1)
+ */
+  /*else*/ {
+    __pyx_t_9 = __Pyx_PyNumber_Divide(__pyx_v_UaNumerator, __pyx_v_UaDenominator); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 101, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_v_Ua = __pyx_t_9;
+    __pyx_t_9 = 0;
+
+    /* "cysimlidar.pyx":102
+ *     else:
+ *         Ua = UaNumerator / UaDenominator
+ *         X = X1 + Ua * (X2 - X1)             # <<<<<<<<<<<<<<
+ *         Y = Y1 + Ua * (Y2 - Y1)
+ *         point = Point(X, Y)
+ */
+    __pyx_t_9 = PyNumber_Subtract(__pyx_v_X2, __pyx_v_X1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_6 = PyNumber_Multiply(__pyx_v_Ua, __pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_t_9 = PyNumber_Add(__pyx_v_X1, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 102, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_v_X = __pyx_t_9;
+    __pyx_t_9 = 0;
+
+    /* "cysimlidar.pyx":103
+ *         Ua = UaNumerator / UaDenominator
+ *         X = X1 + Ua * (X2 - X1)
+ *         Y = Y1 + Ua * (Y2 - Y1)             # <<<<<<<<<<<<<<
+ *         point = Point(X, Y)
+ *         if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
+ */
+    __pyx_t_9 = PyNumber_Subtract(__pyx_v_Y2, __pyx_v_Y1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 103, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __pyx_t_6 = PyNumber_Multiply(__pyx_v_Ua, __pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 103, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_t_9 = PyNumber_Add(__pyx_v_Y1, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 103, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_v_Y = __pyx_t_9;
+    __pyx_t_9 = 0;
+
+    /* "cysimlidar.pyx":104
+ *         X = X1 + Ua * (X2 - X1)
+ *         Y = Y1 + Ua * (Y2 - Y1)
+ *         point = Point(X, Y)             # <<<<<<<<<<<<<<
+ *         if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
+ *         # if segIsReal(self, point) and rayIsReal(obj, point):
+ */
+    __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 104, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_9);
+    __Pyx_INCREF(__pyx_v_X);
+    __Pyx_GIVEREF(__pyx_v_X);
+    PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_v_X);
+    __Pyx_INCREF(__pyx_v_Y);
+    __Pyx_GIVEREF(__pyx_v_Y);
+    PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_v_Y);
+    __pyx_t_6 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 104, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __pyx_v_point = ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_6);
+    __pyx_t_6 = 0;
+
+    /* "cysimlidar.pyx":105
+ *         Y = Y1 + Ua * (Y2 - Y1)
+ *         point = Point(X, Y)
+ *         if Ua > 0 and Ua < 1 and rayIsReal(obj, point):             # <<<<<<<<<<<<<<
+ *         # if segIsReal(self, point) and rayIsReal(obj, point):
+ *             return point
+ */
+    __pyx_t_6 = PyObject_RichCompare(__pyx_v_Ua, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 105, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 105, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (__pyx_t_11) {
+    } else {
+      __pyx_t_10 = __pyx_t_11;
+      goto __pyx_L11_bool_binop_done;
+    }
+    __pyx_t_6 = PyObject_RichCompare(__pyx_v_Ua, __pyx_int_1, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 105, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(1, 105, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    if (__pyx_t_11) {
+    } else {
+      __pyx_t_10 = __pyx_t_11;
+      goto __pyx_L11_bool_binop_done;
+    }
+    __pyx_t_11 = (__pyx_f_10cysimlidar_rayIsReal(__pyx_v_obj, ((PyObject *)__pyx_v_point)) != 0);
+    __pyx_t_10 = __pyx_t_11;
+    __pyx_L11_bool_binop_done:;
+    if (__pyx_t_10) {
+
+      /* "cysimlidar.pyx":107
+ *         if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
+ *         # if segIsReal(self, point) and rayIsReal(obj, point):
+ *             return point             # <<<<<<<<<<<<<<
  * 
  * 
- * def findinter(self, obj):             # <<<<<<<<<<<<<<
- *     if self.slope is None or obj.slope is None:
- *         if self.slope is None:
+ */
+      __Pyx_XDECREF(__pyx_r);
+      __Pyx_INCREF(((PyObject *)__pyx_v_point));
+      __pyx_r = ((PyObject *)__pyx_v_point);
+      goto __pyx_L0;
+
+      /* "cysimlidar.pyx":105
+ *         Y = Y1 + Ua * (Y2 - Y1)
+ *         point = Point(X, Y)
+ *         if Ua > 0 and Ua < 1 and rayIsReal(obj, point):             # <<<<<<<<<<<<<<
+ *         # if segIsReal(self, point) and rayIsReal(obj, point):
+ *             return point
+ */
+    }
+  }
+
+  /* "cysimlidar.pyx":91
+ * 
+ * 
+ * cdef findinter(self, obj):             # <<<<<<<<<<<<<<
+ *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
+ *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
  */
 
   /* function exit code */
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
   __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
   __Pyx_AddTraceback("cysimlidar.findinter", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __pyx_r = 0;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_objs);
-  __Pyx_XDECREF(__pyx_v_x);
-  __Pyx_XDECREF(__pyx_v_y);
+  __Pyx_XDECREF(__pyx_v_X1);
+  __Pyx_XDECREF(__pyx_v_Y1);
+  __Pyx_XDECREF(__pyx_v_X2);
+  __Pyx_XDECREF(__pyx_v_Y2);
+  __Pyx_XDECREF(__pyx_v_X3);
+  __Pyx_XDECREF(__pyx_v_Y3);
+  __Pyx_XDECREF(__pyx_v_X4);
+  __Pyx_XDECREF(__pyx_v_Y4);
+  __Pyx_XDECREF(__pyx_v_UaNumerator);
+  __Pyx_XDECREF(__pyx_v_UaDenominator);
+  __Pyx_XDECREF(__pyx_v_UbDenominator);
+  __Pyx_XDECREF(__pyx_v_Ua);
+  __Pyx_XDECREF(__pyx_v_X);
+  __Pyx_XDECREF(__pyx_v_Y);
   __Pyx_XDECREF((PyObject *)__pyx_v_point);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":142
+/* "cysimlidar.pyx":111
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
  *         self.ang = ang
- *         self.point = point
+ *         self.p1 = point
  */
 
 /* Python wrapper */
@@ -3984,17 +3140,17 @@ static PyObject *__pyx_pw_10cysimlidar_3Ray_1__init__(PyObject *__pyx_self, PyOb
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_ang)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(1, 142, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 1); __PYX_ERR(1, 111, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_point)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(1, 142, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, 2); __PYX_ERR(1, 111, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(1, 142, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(1, 111, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -4004,18 +3160,18 @@ static PyObject *__pyx_pw_10cysimlidar_3Ray_1__init__(PyObject *__pyx_self, PyOb
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
     __pyx_v_self = values[0];
-    __pyx_v_ang = __pyx_PyFloat_AsFloat(values[1]); if (unlikely((__pyx_v_ang == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 142, __pyx_L3_error)
+    __pyx_v_ang = __pyx_PyFloat_AsFloat(values[1]); if (unlikely((__pyx_v_ang == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 111, __pyx_L3_error)
     __pyx_v_point = ((struct __pyx_obj_10cysimlidar_Point *)values[2]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 142, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 111, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cysimlidar.Ray.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_point), __pyx_ptype_10cysimlidar_Point, 1, "point", 0))) __PYX_ERR(1, 142, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_point), __pyx_ptype_10cysimlidar_Point, 1, "point", 0))) __PYX_ERR(1, 111, __pyx_L1_error)
   __pyx_r = __pyx_pf_10cysimlidar_3Ray___init__(__pyx_self, __pyx_v_self, __pyx_v_ang, __pyx_v_point);
 
   /* function exit code */
@@ -4041,98 +3197,98 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "cysimlidar.pyx":143
+  /* "cysimlidar.pyx":112
  * class Ray:
  *     def __init__(self, float ang, Point point):
  *         self.ang = ang             # <<<<<<<<<<<<<<
- *         self.point = point
+ *         self.p1 = point
  *         self.quadrant = int(self.ang / 90) + 1
  */
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_ang); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 143, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_ang); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_t_1) < 0) __PYX_ERR(1, 143, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_t_1) < 0) __PYX_ERR(1, 112, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":144
+  /* "cysimlidar.pyx":113
  *     def __init__(self, float ang, Point point):
  *         self.ang = ang
- *         self.point = point             # <<<<<<<<<<<<<<
+ *         self.p1 = point             # <<<<<<<<<<<<<<
  *         self.quadrant = int(self.ang / 90) + 1
  *         if self.quadrant == 2 or self.quadrant == 4:
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_point, ((PyObject *)__pyx_v_point)) < 0) __PYX_ERR(1, 144, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p1, ((PyObject *)__pyx_v_point)) < 0) __PYX_ERR(1, 113, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":145
+  /* "cysimlidar.pyx":114
  *         self.ang = ang
- *         self.point = point
+ *         self.p1 = point
  *         self.quadrant = int(self.ang / 90) + 1             # <<<<<<<<<<<<<<
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             slopeang = 90 - (self.ang % 90)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ang); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ang); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_int_90); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_int_90); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyNumber_Int(__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 145, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_quadrant, __pyx_t_2) < 0) __PYX_ERR(1, 145, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_quadrant, __pyx_t_2) < 0) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":146
- *         self.point = point
+  /* "cysimlidar.pyx":115
+ *         self.p1 = point
  *         self.quadrant = int(self.ang / 90) + 1
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
  *             slopeang = 90 - (self.ang % 90)
  *         else:
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 146, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_2, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 146, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_2, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 146, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 115, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (!__pyx_t_4) {
   } else {
     __pyx_t_3 = __pyx_t_4;
     goto __pyx_L4_bool_binop_done;
   }
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 146, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_4, 4, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 146, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_4, 4, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 146, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 115, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_3 = __pyx_t_4;
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":147
+    /* "cysimlidar.pyx":116
  *         self.quadrant = int(self.ang / 90) + 1
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             slopeang = 90 - (self.ang % 90)             # <<<<<<<<<<<<<<
  *         else:
  *             slopeang = self.ang % 90
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ang); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 147, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ang); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyInt_RemainderObjC(__pyx_t_2, __pyx_int_90, 90, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 147, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_RemainderObjC(__pyx_t_2, __pyx_int_90, 90, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_SubtractCObj(__pyx_int_90, __pyx_t_1, 90, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 147, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_SubtractCObj(__pyx_int_90, __pyx_t_1, 90, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 116, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_slopeang = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":146
- *         self.point = point
+    /* "cysimlidar.pyx":115
+ *         self.p1 = point
  *         self.quadrant = int(self.ang / 90) + 1
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
  *             slopeang = 90 - (self.ang % 90)
@@ -4141,17 +3297,17 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":149
+  /* "cysimlidar.pyx":118
  *             slopeang = 90 - (self.ang % 90)
  *         else:
  *             slopeang = self.ang % 90             # <<<<<<<<<<<<<<
- *         self.slope = round(np.tan(deg2rad(slopeang)), 5)
+ *         self.slope = round(np.tan(deg2rad(slopeang)), 3)
  *         if self.quadrant == 2 or self.quadrant == 4:
  */
   /*else*/ {
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ang); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 149, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_ang); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 118, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyInt_RemainderObjC(__pyx_t_2, __pyx_int_90, 90, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 149, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_RemainderObjC(__pyx_t_2, __pyx_int_90, 90, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 118, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_slopeang = __pyx_t_1;
@@ -4159,20 +3315,20 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":150
+  /* "cysimlidar.pyx":119
  *         else:
  *             slopeang = self.ang % 90
- *         self.slope = round(np.tan(deg2rad(slopeang)), 5)             # <<<<<<<<<<<<<<
+ *         self.slope = round(np.tan(deg2rad(slopeang)), 3)             # <<<<<<<<<<<<<<
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             self.slope *= -1
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 150, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_tan); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 150, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_tan); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_slopeang); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 150, __pyx_L1_error)
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_f_10cysimlidar_deg2rad(__pyx_t_6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 150, __pyx_L1_error)
+  __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_slopeang); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 119, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_f_10cysimlidar_deg2rad(__pyx_t_6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_7 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -4185,14 +3341,14 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     }
   }
   if (!__pyx_t_7) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 150, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 119, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_2};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 150, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 119, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
@@ -4201,191 +3357,225 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_2};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 150, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 119, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 150, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 119, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
       __Pyx_GIVEREF(__pyx_t_2);
       PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_2);
       __pyx_t_2 = 0;
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 150, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 119, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 150, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
-  __Pyx_INCREF(__pyx_int_5);
-  __Pyx_GIVEREF(__pyx_int_5);
-  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_int_5);
+  __Pyx_INCREF(__pyx_int_3);
+  __Pyx_GIVEREF(__pyx_int_3);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_int_3);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 150, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_round, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_1) < 0) __PYX_ERR(1, 150, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_1) < 0) __PYX_ERR(1, 119, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":151
+  /* "cysimlidar.pyx":120
  *             slopeang = self.ang % 90
- *         self.slope = round(np.tan(deg2rad(slopeang)), 5)
+ *         self.slope = round(np.tan(deg2rad(slopeang)), 3)
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
  *             self.slope *= -1
  *         if self.slope == 0:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 151, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 151, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_EqObjC(__pyx_t_1, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 151, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 120, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   if (!__pyx_t_4) {
   } else {
     __pyx_t_3 = __pyx_t_4;
     goto __pyx_L7_bool_binop_done;
   }
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 151, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_5, __pyx_int_4, 4, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 151, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_5, __pyx_int_4, 4, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 151, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 120, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = __pyx_t_4;
   __pyx_L7_bool_binop_done:;
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":152
- *         self.slope = round(np.tan(deg2rad(slopeang)), 5)
+    /* "cysimlidar.pyx":121
+ *         self.slope = round(np.tan(deg2rad(slopeang)), 3)
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             self.slope *= -1             # <<<<<<<<<<<<<<
  *         if self.slope == 0:
- *             self.inter = self.point.y
+ *             self.inter = self.p1.y
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 152, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 121, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = PyNumber_InPlaceMultiply(__pyx_t_1, __pyx_int_neg_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 152, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_InPlaceMultiply(__pyx_t_1, __pyx_int_neg_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 121, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_5) < 0) __PYX_ERR(1, 152, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_5) < 0) __PYX_ERR(1, 121, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "cysimlidar.pyx":151
+    /* "cysimlidar.pyx":120
  *             slopeang = self.ang % 90
- *         self.slope = round(np.tan(deg2rad(slopeang)), 5)
+ *         self.slope = round(np.tan(deg2rad(slopeang)), 3)
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
  *             self.slope *= -1
  *         if self.slope == 0:
  */
   }
 
-  /* "cysimlidar.pyx":153
+  /* "cysimlidar.pyx":122
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             self.slope *= -1
  *         if self.slope == 0:             # <<<<<<<<<<<<<<
- *             self.inter = self.point.y
- *             self.x = self.point.x
+ *             self.inter = self.p1.y
+ *             self.x = self.p1.x
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 153, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_5, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 153, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_t_5, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(1, 153, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(1, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":154
+    /* "cysimlidar.pyx":123
  *             self.slope *= -1
  *         if self.slope == 0:
- *             self.inter = self.point.y             # <<<<<<<<<<<<<<
- *             self.x = self.point.x
+ *             self.inter = self.p1.y             # <<<<<<<<<<<<<<
+ *             self.x = self.p1.x
  *         else:
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_point); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 154, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 154, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_y); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_5) < 0) __PYX_ERR(1, 154, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_5) < 0) __PYX_ERR(1, 123, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "cysimlidar.pyx":155
+    /* "cysimlidar.pyx":124
  *         if self.slope == 0:
- *             self.inter = self.point.y
- *             self.x = self.point.x             # <<<<<<<<<<<<<<
+ *             self.inter = self.p1.y
+ *             self.x = self.p1.x             # <<<<<<<<<<<<<<
  *         else:
- *             self.inter = (-self.slope * self.point.x) + self.point.y
+ *             self.inter = (-self.slope * self.p1.x) + self.p1.y
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_point); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 155, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 155, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_x, __pyx_t_1) < 0) __PYX_ERR(1, 155, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_x, __pyx_t_1) < 0) __PYX_ERR(1, 124, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "cysimlidar.pyx":153
+    /* "cysimlidar.pyx":122
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             self.slope *= -1
  *         if self.slope == 0:             # <<<<<<<<<<<<<<
- *             self.inter = self.point.y
- *             self.x = self.point.x
+ *             self.inter = self.p1.y
+ *             self.x = self.p1.x
  */
     goto __pyx_L9;
   }
 
-  /* "cysimlidar.pyx":157
- *             self.x = self.point.x
+  /* "cysimlidar.pyx":126
+ *             self.x = self.p1.x
  *         else:
- *             self.inter = (-self.slope * self.point.x) + self.point.y             # <<<<<<<<<<<<<<
+ *             self.inter = (-self.slope * self.p1.x) + self.p1.y             # <<<<<<<<<<<<<<
+ *         self.p2 = Point(point.x + 1, self.p1.y + self.slope)
  * 
- * cdef int rayIsReal(self, point):
  */
   /*else*/ {
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = PyNumber_Negative(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Negative(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_point); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_x); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyNumber_Multiply(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_1 = PyNumber_Multiply(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_point); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_y); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_y); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_8 = PyNumber_Add(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 157, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Add(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_8) < 0) __PYX_ERR(1, 157, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_8) < 0) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
   __pyx_L9:;
 
-  /* "cysimlidar.pyx":142
+  /* "cysimlidar.pyx":127
+ *         else:
+ *             self.inter = (-self.slope * self.p1.x) + self.p1.y
+ *         self.p2 = Point(point.x + 1, self.p1.y + self.slope)             # <<<<<<<<<<<<<<
+ * 
+ * cdef int rayIsReal(self, point):
+ */
+  __pyx_t_8 = PyFloat_FromDouble((__pyx_v_point->x + 1.0)); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_slope); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = PyNumber_Add(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_8);
+  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_8);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_2);
+  __pyx_t_8 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p2, __pyx_t_2) < 0) __PYX_ERR(1, 127, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+  /* "cysimlidar.pyx":111
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
  *         self.ang = ang
- *         self.point = point
+ *         self.p1 = point
  */
 
   /* function exit code */
@@ -4406,11 +3596,11 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":159
- *             self.inter = (-self.slope * self.point.x) + self.point.y
+/* "cysimlidar.pyx":129
+ *         self.p2 = Point(point.x + 1, self.p1.y + self.slope)
  * 
  * cdef int rayIsReal(self, point):             # <<<<<<<<<<<<<<
- *     pointquad = isInQuadrant(point, self.point)
+ *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
  */
 
@@ -4424,40 +3614,40 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("rayIsReal", 0);
 
-  /* "cysimlidar.pyx":160
+  /* "cysimlidar.pyx":130
  * 
  * cdef int rayIsReal(self, point):
- *     pointquad = isInQuadrant(point, self.point)             # <<<<<<<<<<<<<<
+ *     pointquad = isInQuadrant(point, self.p1)             # <<<<<<<<<<<<<<
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
  *         return 1
  */
-  if (!(likely(((__pyx_v_point) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_point, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 160, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_point); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 160, __pyx_L1_error)
+  if (!(likely(((__pyx_v_point) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_point, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 130, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 130, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 160, __pyx_L1_error)
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 130, __pyx_L1_error)
   __pyx_v_pointquad = __pyx_f_10cysimlidar_isInQuadrant(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_point), ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_1));
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":161
+  /* "cysimlidar.pyx":131
  * cdef int rayIsReal(self, point):
- *     pointquad = isInQuadrant(point, self.point)
+ *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:             # <<<<<<<<<<<<<<
  *         return 1
  *     else:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 161, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_quadrant); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_pointquad); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 161, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_pointquad); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 131, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 161, __pyx_L1_error)
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 131, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 161, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(1, 131, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_4) {
 
-    /* "cysimlidar.pyx":162
- *     pointquad = isInQuadrant(point, self.point)
+    /* "cysimlidar.pyx":132
+ *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
  *         return 1             # <<<<<<<<<<<<<<
  *     else:
@@ -4466,16 +3656,16 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "cysimlidar.pyx":161
+    /* "cysimlidar.pyx":131
  * cdef int rayIsReal(self, point):
- *     pointquad = isInQuadrant(point, self.point)
+ *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:             # <<<<<<<<<<<<<<
  *         return 1
  *     else:
  */
   }
 
-  /* "cysimlidar.pyx":164
+  /* "cysimlidar.pyx":134
  *         return 1
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -4487,11 +3677,11 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
     goto __pyx_L0;
   }
 
-  /* "cysimlidar.pyx":159
- *             self.inter = (-self.slope * self.point.x) + self.point.y
+  /* "cysimlidar.pyx":129
+ *         self.p2 = Point(point.x + 1, self.p1.y + self.slope)
  * 
  * cdef int rayIsReal(self, point):             # <<<<<<<<<<<<<<
- *     pointquad = isInQuadrant(point, self.point)
+ *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
  */
 
@@ -4507,7 +3697,7 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":167
+/* "cysimlidar.pyx":137
  * 
  * 
  * cdef double rad2deg(double rad):             # <<<<<<<<<<<<<<
@@ -4522,7 +3712,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("rad2deg", 0);
 
-  /* "cysimlidar.pyx":168
+  /* "cysimlidar.pyx":138
  * 
  * cdef double rad2deg(double rad):
  *     pi = 3.1415926535897932384626433832             # <<<<<<<<<<<<<<
@@ -4531,7 +3721,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
  */
   __pyx_v_pi = 3.1415926535897932384626433832;
 
-  /* "cysimlidar.pyx":169
+  /* "cysimlidar.pyx":139
  * cdef double rad2deg(double rad):
  *     pi = 3.1415926535897932384626433832
  *     deg = rad * (180 / pi)             # <<<<<<<<<<<<<<
@@ -4540,11 +3730,11 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
  */
   if (unlikely(__pyx_v_pi == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(1, 169, __pyx_L1_error)
+    __PYX_ERR(1, 139, __pyx_L1_error)
   }
   __pyx_v_deg = (__pyx_v_rad * (180.0 / __pyx_v_pi));
 
-  /* "cysimlidar.pyx":170
+  /* "cysimlidar.pyx":140
  *     pi = 3.1415926535897932384626433832
  *     deg = rad * (180 / pi)
  *     return deg             # <<<<<<<<<<<<<<
@@ -4554,7 +3744,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
   __pyx_r = __pyx_v_deg;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":167
+  /* "cysimlidar.pyx":137
  * 
  * 
  * cdef double rad2deg(double rad):             # <<<<<<<<<<<<<<
@@ -4571,7 +3761,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":173
+/* "cysimlidar.pyx":143
  * 
  * #-
  * cdef double deg2rad(double deg):             # <<<<<<<<<<<<<<
@@ -4587,7 +3777,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
   double __pyx_t_1;
   __Pyx_RefNannySetupContext("deg2rad", 0);
 
-  /* "cysimlidar.pyx":174
+  /* "cysimlidar.pyx":144
  * #-
  * cdef double deg2rad(double deg):
  *     pi = 3.1415926535897932384626433832             # <<<<<<<<<<<<<<
@@ -4596,7 +3786,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
  */
   __pyx_v_pi = 3.1415926535897932384626433832;
 
-  /* "cysimlidar.pyx":175
+  /* "cysimlidar.pyx":145
  * cdef double deg2rad(double deg):
  *     pi = 3.1415926535897932384626433832
  *     rad = deg / (180 / pi)             # <<<<<<<<<<<<<<
@@ -4605,16 +3795,16 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
  */
   if (unlikely(__pyx_v_pi == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(1, 175, __pyx_L1_error)
+    __PYX_ERR(1, 145, __pyx_L1_error)
   }
   __pyx_t_1 = (180.0 / __pyx_v_pi);
   if (unlikely(__pyx_t_1 == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(1, 175, __pyx_L1_error)
+    __PYX_ERR(1, 145, __pyx_L1_error)
   }
   __pyx_v_rad = (__pyx_v_deg / __pyx_t_1);
 
-  /* "cysimlidar.pyx":176
+  /* "cysimlidar.pyx":146
  *     pi = 3.1415926535897932384626433832
  *     rad = deg / (180 / pi)
  *     return rad             # <<<<<<<<<<<<<<
@@ -4624,7 +3814,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
   __pyx_r = __pyx_v_rad;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":173
+  /* "cysimlidar.pyx":143
  * 
  * #-
  * cdef double deg2rad(double deg):             # <<<<<<<<<<<<<<
@@ -4641,7 +3831,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":179
+/* "cysimlidar.pyx":149
  * 
  * 
  * cdef double dist(p1, p2):             # <<<<<<<<<<<<<<
@@ -4660,66 +3850,66 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   double __pyx_t_4;
   __Pyx_RefNannySetupContext("dist", 0);
 
-  /* "cysimlidar.pyx":180
+  /* "cysimlidar.pyx":150
  * 
  * cdef double dist(p1, p2):
  *     x = (p1.x - p2.x) ** 2             # <<<<<<<<<<<<<<
  *     y = (p1.y - p2.y) ** 2
  *     return (x + y) ** .5
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 180, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_x); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 180, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_x); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 180, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Subtract(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Power(__pyx_t_3, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 180, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Power(__pyx_t_3, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_x = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":181
+  /* "cysimlidar.pyx":151
  * cdef double dist(p1, p2):
  *     x = (p1.x - p2.x) ** 2
  *     y = (p1.y - p2.y) ** 2             # <<<<<<<<<<<<<<
  *     return (x + y) ** .5
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 181, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_p1, __pyx_n_s_y); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 181, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_p2, __pyx_n_s_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Subtract(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 181, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Subtract(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Power(__pyx_t_1, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 181, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Power(__pyx_t_1, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_y = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "cysimlidar.pyx":182
+  /* "cysimlidar.pyx":152
  *     x = (p1.x - p2.x) ** 2
  *     y = (p1.y - p2.y) ** 2
  *     return (x + y) ** .5             # <<<<<<<<<<<<<<
  * 
  * # Function that needs the most optimizing
  */
-  __pyx_t_3 = PyNumber_Add(__pyx_v_x, __pyx_v_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 182, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_v_x, __pyx_v_y); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Power(__pyx_t_3, __pyx_float__5, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 182, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Power(__pyx_t_3, __pyx_float__5, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 152, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 182, __pyx_L1_error)
+  __pyx_t_4 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_4 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 152, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_4;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":179
+  /* "cysimlidar.pyx":149
  * 
  * 
  * cdef double dist(p1, p2):             # <<<<<<<<<<<<<<
@@ -4741,36 +3931,218 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":185
+/* "cysimlidar.pyx":155
  * 
  * # Function that needs the most optimizing
- * def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False):             # <<<<<<<<<<<<<<
+ * cpdef angledRayIntersects(Point robotlocation, robotangle, samplerate = 1):             # <<<<<<<<<<<<<<
  *     rayinters = {}
  *     debuginters = []
  */
 
+static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_10cysimlidar_angledRayIntersects *__pyx_optional_args) {
+  PyObject *__pyx_v_samplerate = ((PyObject *)__pyx_int_1);
+  PyObject *__pyx_v_rayinters = NULL;
+  CYTHON_UNUSED PyObject *__pyx_v_debuginters = NULL;
+  PyObject *__pyx_v_fieldlines = NULL;
+  int __pyx_v_ang;
+  struct __pyx_obj_10cysimlidar_Point *__pyx_v_i = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  int __pyx_t_4;
+  float __pyx_t_5;
+  __Pyx_RefNannySetupContext("angledRayIntersects", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_samplerate = __pyx_optional_args->samplerate;
+    }
+  }
+
+  /* "cysimlidar.pyx":156
+ * # Function that needs the most optimizing
+ * cpdef angledRayIntersects(Point robotlocation, robotangle, samplerate = 1):
+ *     rayinters = {}             # <<<<<<<<<<<<<<
+ *     debuginters = []
+ *     fieldlines = openEnvFile("FRC_Field_2018.map")
+ */
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 156, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_rayinters = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "cysimlidar.pyx":157
+ * cpdef angledRayIntersects(Point robotlocation, robotangle, samplerate = 1):
+ *     rayinters = {}
+ *     debuginters = []             # <<<<<<<<<<<<<<
+ *     fieldlines = openEnvFile("FRC_Field_2018.map")
+ *     cdef int ang = 0
+ */
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 157, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_debuginters = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "cysimlidar.pyx":158
+ *     rayinters = {}
+ *     debuginters = []
+ *     fieldlines = openEnvFile("FRC_Field_2018.map")             # <<<<<<<<<<<<<<
+ *     cdef int ang = 0
+ *     while ang < 360:
+ */
+  __pyx_t_1 = __pyx_f_10cysimlidar_openEnvFile(__pyx_kp_s_FRC_Field_2018_map); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 158, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_fieldlines = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "cysimlidar.pyx":159
+ *     debuginters = []
+ *     fieldlines = openEnvFile("FRC_Field_2018.map")
+ *     cdef int ang = 0             # <<<<<<<<<<<<<<
+ *     while ang < 360:
+ *         i = findLineIntersects(ang, robotlocation, fieldlines)
+ */
+  __pyx_v_ang = 0;
+
+  /* "cysimlidar.pyx":160
+ *     fieldlines = openEnvFile("FRC_Field_2018.map")
+ *     cdef int ang = 0
+ *     while ang < 360:             # <<<<<<<<<<<<<<
+ *         i = findLineIntersects(ang, robotlocation, fieldlines)
+ *         if i:
+ */
+  while (1) {
+    __pyx_t_2 = ((__pyx_v_ang < 0x168) != 0);
+    if (!__pyx_t_2) break;
+
+    /* "cysimlidar.pyx":161
+ *     cdef int ang = 0
+ *     while ang < 360:
+ *         i = findLineIntersects(ang, robotlocation, fieldlines)             # <<<<<<<<<<<<<<
+ *         if i:
+ *             rayinters[ang] = dist(robotlocation, i)
+ */
+    __pyx_t_1 = ((PyObject *)__pyx_f_10cysimlidar_findLineIntersects(__pyx_v_ang, __pyx_v_robotlocation, __pyx_v_fieldlines)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 161, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_XDECREF_SET(__pyx_v_i, ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_1));
+    __pyx_t_1 = 0;
+
+    /* "cysimlidar.pyx":162
+ *     while ang < 360:
+ *         i = findLineIntersects(ang, robotlocation, fieldlines)
+ *         if i:             # <<<<<<<<<<<<<<
+ *             rayinters[ang] = dist(robotlocation, i)
+ *         ang += samplerate
+ */
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_i)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 162, __pyx_L1_error)
+    if (__pyx_t_2) {
+
+      /* "cysimlidar.pyx":163
+ *         i = findLineIntersects(ang, robotlocation, fieldlines)
+ *         if i:
+ *             rayinters[ang] = dist(robotlocation, i)             # <<<<<<<<<<<<<<
+ *         ang += samplerate
+ *     rayinters = compForAngle(rayinters, robotangle)
+ */
+      __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10cysimlidar_dist(((PyObject *)__pyx_v_robotlocation), ((PyObject *)__pyx_v_i))); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 163, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      if (unlikely(__Pyx_SetItemInt(__pyx_v_rayinters, __pyx_v_ang, __pyx_t_1, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(1, 163, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+      /* "cysimlidar.pyx":162
+ *     while ang < 360:
+ *         i = findLineIntersects(ang, robotlocation, fieldlines)
+ *         if i:             # <<<<<<<<<<<<<<
+ *             rayinters[ang] = dist(robotlocation, i)
+ *         ang += samplerate
+ */
+    }
+
+    /* "cysimlidar.pyx":164
+ *         if i:
+ *             rayinters[ang] = dist(robotlocation, i)
+ *         ang += samplerate             # <<<<<<<<<<<<<<
+ *     rayinters = compForAngle(rayinters, robotangle)
+ *     return rayinters
+ */
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_ang); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 164, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_1, __pyx_v_samplerate); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 164, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 164, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_v_ang = __pyx_t_4;
+  }
+
+  /* "cysimlidar.pyx":165
+ *             rayinters[ang] = dist(robotlocation, i)
+ *         ang += samplerate
+ *     rayinters = compForAngle(rayinters, robotangle)             # <<<<<<<<<<<<<<
+ *     return rayinters
+ * 
+ */
+  __pyx_t_5 = __pyx_PyFloat_AsFloat(__pyx_v_robotangle); if (unlikely((__pyx_t_5 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 165, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_10cysimlidar_compForAngle(__pyx_v_rayinters, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 165, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF_SET(__pyx_v_rayinters, __pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "cysimlidar.pyx":166
+ *         ang += samplerate
+ *     rayinters = compForAngle(rayinters, robotangle)
+ *     return rayinters             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_rayinters);
+  __pyx_r = __pyx_v_rayinters;
+  goto __pyx_L0;
+
+  /* "cysimlidar.pyx":155
+ * 
+ * # Function that needs the most optimizing
+ * cpdef angledRayIntersects(Point robotlocation, robotangle, samplerate = 1):             # <<<<<<<<<<<<<<
+ *     rayinters = {}
+ *     debuginters = []
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_AddTraceback("cysimlidar.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_rayinters);
+  __Pyx_XDECREF(__pyx_v_debuginters);
+  __Pyx_XDECREF(__pyx_v_fieldlines);
+  __Pyx_XDECREF((PyObject *)__pyx_v_i);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_7angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_7angledRayIntersects = {"angledRayIntersects", (PyCFunction)__pyx_pw_10cysimlidar_7angledRayIntersects, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_7angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_robotlocation = 0;
+static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation = 0;
   PyObject *__pyx_v_robotangle = 0;
   PyObject *__pyx_v_samplerate = 0;
-  CYTHON_UNUSED PyObject *__pyx_v_debug = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("angledRayIntersects (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_robotlocation,&__pyx_n_s_robotangle,&__pyx_n_s_samplerate,&__pyx_n_s_debug,0};
-    PyObject* values[4] = {0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_robotlocation,&__pyx_n_s_robotangle,&__pyx_n_s_samplerate,0};
+    PyObject* values[3] = {0,0,0};
     values[2] = ((PyObject *)__pyx_int_1);
-    values[3] = ((PyObject *)Py_False);
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
-        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-        CYTHON_FALLTHROUGH;
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
         CYTHON_FALLTHROUGH;
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
@@ -4789,7 +4161,7 @@ static PyObject *__pyx_pw_10cysimlidar_7angledRayIntersects(PyObject *__pyx_self
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_robotangle)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("angledRayIntersects", 0, 2, 4, 1); __PYX_ERR(1, 185, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("angledRayIntersects", 0, 2, 3, 1); __PYX_ERR(1, 155, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -4797,20 +4169,12 @@ static PyObject *__pyx_pw_10cysimlidar_7angledRayIntersects(PyObject *__pyx_self
           PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_samplerate);
           if (value) { values[2] = value; kw_args--; }
         }
-        CYTHON_FALLTHROUGH;
-        case  3:
-        if (kw_args > 0) {
-          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_debug);
-          if (value) { values[3] = value; kw_args--; }
-        }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "angledRayIntersects") < 0)) __PYX_ERR(1, 185, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "angledRayIntersects") < 0)) __PYX_ERR(1, 155, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
-        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-        CYTHON_FALLTHROUGH;
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
         CYTHON_FALLTHROUGH;
         case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
@@ -4819,325 +4183,65 @@ static PyObject *__pyx_pw_10cysimlidar_7angledRayIntersects(PyObject *__pyx_self
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_robotlocation = values[0];
+    __pyx_v_robotlocation = ((struct __pyx_obj_10cysimlidar_Point *)values[0]);
     __pyx_v_robotangle = values[1];
     __pyx_v_samplerate = values[2];
-    __pyx_v_debug = values[3];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("angledRayIntersects", 0, 2, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 185, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("angledRayIntersects", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 155, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("cysimlidar.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_6angledRayIntersects(__pyx_self, __pyx_v_robotlocation, __pyx_v_robotangle, __pyx_v_samplerate, __pyx_v_debug);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_robotlocation), __pyx_ptype_10cysimlidar_Point, 1, "robotlocation", 0))) __PYX_ERR(1, 155, __pyx_L1_error)
+  __pyx_r = __pyx_pf_10cysimlidar_angledRayIntersects(__pyx_self, __pyx_v_robotlocation, __pyx_v_robotangle, __pyx_v_samplerate);
 
   /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_6angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_samplerate, CYTHON_UNUSED PyObject *__pyx_v_debug) {
-  PyObject *__pyx_v_rayinters = NULL;
-  CYTHON_UNUSED PyObject *__pyx_v_debuginters = NULL;
-  PyObject *__pyx_v_fieldlines = NULL;
-  int __pyx_v_ang;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_i = NULL;
+static PyObject *__pyx_pf_10cysimlidar_angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_samplerate) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  int __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
+  struct __pyx_opt_args_10cysimlidar_angledRayIntersects __pyx_t_2;
   __Pyx_RefNannySetupContext("angledRayIntersects", 0);
-
-  /* "cysimlidar.pyx":186
- * # Function that needs the most optimizing
- * def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False):
- *     rayinters = {}             # <<<<<<<<<<<<<<
- *     debuginters = []
- *     fieldlines = openEnvFile("FRC_Field_2018.map")
- */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 186, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_rayinters = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":187
- * def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False):
- *     rayinters = {}
- *     debuginters = []             # <<<<<<<<<<<<<<
- *     fieldlines = openEnvFile("FRC_Field_2018.map")
- *     cdef int ang = 0
- */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 187, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_debuginters = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":188
- *     rayinters = {}
- *     debuginters = []
- *     fieldlines = openEnvFile("FRC_Field_2018.map")             # <<<<<<<<<<<<<<
- *     cdef int ang = 0
- *     while ang < 360:
- */
-  __pyx_t_1 = __pyx_f_10cysimlidar_openEnvFile(__pyx_kp_s_FRC_Field_2018_map); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 188, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_fieldlines = ((PyObject*)__pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":189
- *     debuginters = []
- *     fieldlines = openEnvFile("FRC_Field_2018.map")
- *     cdef int ang = 0             # <<<<<<<<<<<<<<
- *     while ang < 360:
- *         i = findLineIntersects(ang, robotlocation, fieldlines)
- */
-  __pyx_v_ang = 0;
-
-  /* "cysimlidar.pyx":190
- *     fieldlines = openEnvFile("FRC_Field_2018.map")
- *     cdef int ang = 0
- *     while ang < 360:             # <<<<<<<<<<<<<<
- *         i = findLineIntersects(ang, robotlocation, fieldlines)
- *         if i:
- */
-  while (1) {
-    __pyx_t_2 = ((__pyx_v_ang < 0x168) != 0);
-    if (!__pyx_t_2) break;
-
-    /* "cysimlidar.pyx":191
- *     cdef int ang = 0
- *     while ang < 360:
- *         i = findLineIntersects(ang, robotlocation, fieldlines)             # <<<<<<<<<<<<<<
- *         if i:
- *             rayinters[ang] = dist(robotlocation, i)
- */
-    if (!(likely(((__pyx_v_robotlocation) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_robotlocation, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 191, __pyx_L1_error)
-    __pyx_t_1 = ((PyObject *)__pyx_f_10cysimlidar_findLineIntersects(__pyx_v_ang, ((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_robotlocation), __pyx_v_fieldlines)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 191, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_XDECREF_SET(__pyx_v_i, ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_1));
-    __pyx_t_1 = 0;
-
-    /* "cysimlidar.pyx":192
- *     while ang < 360:
- *         i = findLineIntersects(ang, robotlocation, fieldlines)
- *         if i:             # <<<<<<<<<<<<<<
- *             rayinters[ang] = dist(robotlocation, i)
- *         ang += samplerate
- */
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_i)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 192, __pyx_L1_error)
-    if (__pyx_t_2) {
-
-      /* "cysimlidar.pyx":193
- *         i = findLineIntersects(ang, robotlocation, fieldlines)
- *         if i:
- *             rayinters[ang] = dist(robotlocation, i)             # <<<<<<<<<<<<<<
- *         ang += samplerate
- *     rayinters = compForAngle(rayinters, robotangle)
- */
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10cysimlidar_dist(__pyx_v_robotlocation, ((PyObject *)__pyx_v_i))); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 193, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      if (unlikely(__Pyx_SetItemInt(__pyx_v_rayinters, __pyx_v_ang, __pyx_t_1, int, 1, __Pyx_PyInt_From_int, 0, 1, 1) < 0)) __PYX_ERR(1, 193, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-      /* "cysimlidar.pyx":192
- *     while ang < 360:
- *         i = findLineIntersects(ang, robotlocation, fieldlines)
- *         if i:             # <<<<<<<<<<<<<<
- *             rayinters[ang] = dist(robotlocation, i)
- *         ang += samplerate
- */
-    }
-
-    /* "cysimlidar.pyx":194
- *         if i:
- *             rayinters[ang] = dist(robotlocation, i)
- *         ang += samplerate             # <<<<<<<<<<<<<<
- *     rayinters = compForAngle(rayinters, robotangle)
- *     return rayinters
- */
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_ang); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 194, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_t_1, __pyx_v_samplerate); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 194, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 194, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_ang = __pyx_t_4;
-  }
-
-  /* "cysimlidar.pyx":195
- *             rayinters[ang] = dist(robotlocation, i)
- *         ang += samplerate
- *     rayinters = compForAngle(rayinters, robotangle)             # <<<<<<<<<<<<<<
- *     return rayinters
- * 
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_compForAngle); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 195, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = NULL;
-  __pyx_t_4 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
-    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_1);
-    if (likely(__pyx_t_5)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-      __Pyx_INCREF(__pyx_t_5);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_1, function);
-      __pyx_t_4 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_rayinters, __pyx_v_robotangle};
-    __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 195, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_GOTREF(__pyx_t_3);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_5, __pyx_v_rayinters, __pyx_v_robotangle};
-    __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 195, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_GOTREF(__pyx_t_3);
-  } else
-  #endif
-  {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 195, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    if (__pyx_t_5) {
-      __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5); __pyx_t_5 = NULL;
-    }
-    __Pyx_INCREF(__pyx_v_rayinters);
-    __Pyx_GIVEREF(__pyx_v_rayinters);
-    PyTuple_SET_ITEM(__pyx_t_6, 0+__pyx_t_4, __pyx_v_rayinters);
-    __Pyx_INCREF(__pyx_v_robotangle);
-    __Pyx_GIVEREF(__pyx_v_robotangle);
-    PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_4, __pyx_v_robotangle);
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_6, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 195, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF_SET(__pyx_v_rayinters, __pyx_t_3);
-  __pyx_t_3 = 0;
-
-  /* "cysimlidar.pyx":196
- *         ang += samplerate
- *     rayinters = compForAngle(rayinters, robotangle)
- *     return rayinters             # <<<<<<<<<<<<<<
- * 
- * 
- */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_rayinters);
-  __pyx_r = __pyx_v_rayinters;
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.samplerate = __pyx_v_samplerate;
+  __pyx_t_1 = __pyx_f_10cysimlidar_angledRayIntersects(__pyx_v_robotlocation, __pyx_v_robotangle, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 155, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
-
-  /* "cysimlidar.pyx":185
- * 
- * # Function that needs the most optimizing
- * def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False):             # <<<<<<<<<<<<<<
- *     rayinters = {}
- *     debuginters = []
- */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_AddTraceback("cysimlidar.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_rayinters);
-  __Pyx_XDECREF(__pyx_v_debuginters);
-  __Pyx_XDECREF(__pyx_v_fieldlines);
-  __Pyx_XDECREF((PyObject *)__pyx_v_i);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":199
+/* "cysimlidar.pyx":169
  * 
  * 
- * def compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
+ * cdef compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
  *     angles = []
  *     inters = []
  */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_9compForAngle(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_9compForAngle = {"compForAngle", (PyCFunction)__pyx_pw_10cysimlidar_9compForAngle, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_9compForAngle(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_rayinters = 0;
-  float __pyx_v_robotangle;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("compForAngle (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_rayinters,&__pyx_n_s_robotangle,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_rayinters)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_robotangle)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("compForAngle", 1, 2, 2, 1); __PYX_ERR(1, 199, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "compForAngle") < 0)) __PYX_ERR(1, 199, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_rayinters = values[0];
-    __pyx_v_robotangle = __pyx_PyFloat_AsFloat(values[1]); if (unlikely((__pyx_v_robotangle == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 199, __pyx_L3_error)
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("compForAngle", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 199, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.compForAngle", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_8compForAngle(__pyx_self, __pyx_v_rayinters, __pyx_v_robotangle);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_rayinters, float __pyx_v_robotangle) {
+static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, float __pyx_v_robotangle) {
   PyObject *__pyx_v_angles = NULL;
   PyObject *__pyx_v_inters = NULL;
   PyObject *__pyx_v_adjustedinters = NULL;
@@ -5155,43 +4259,43 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("compForAngle", 0);
 
-  /* "cysimlidar.pyx":200
+  /* "cysimlidar.pyx":170
  * 
- * def compForAngle(rayinters, float robotangle):
+ * cdef compForAngle(rayinters, float robotangle):
  *     angles = []             # <<<<<<<<<<<<<<
  *     inters = []
  *     adjustedinters = {}
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 200, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 170, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_angles = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":201
- * def compForAngle(rayinters, float robotangle):
+  /* "cysimlidar.pyx":171
+ * cdef compForAngle(rayinters, float robotangle):
  *     angles = []
  *     inters = []             # <<<<<<<<<<<<<<
  *     adjustedinters = {}
  *     for angle in rayinters:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 201, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_inters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":202
+  /* "cysimlidar.pyx":172
  *     angles = []
  *     inters = []
  *     adjustedinters = {}             # <<<<<<<<<<<<<<
  *     for angle in rayinters:
  *         angles.append(angle)
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 202, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 172, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_adjustedinters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":203
+  /* "cysimlidar.pyx":173
  *     inters = []
  *     adjustedinters = {}
  *     for angle in rayinters:             # <<<<<<<<<<<<<<
@@ -5202,26 +4306,26 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
     __pyx_t_1 = __pyx_v_rayinters; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_rayinters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 203, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_rayinters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 173, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 203, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 173, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 203, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 173, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 203, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 173, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 203, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 173, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 203, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 173, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -5231,7 +4335,7 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 203, __pyx_L1_error)
+          else __PYX_ERR(1, 173, __pyx_L1_error)
         }
         break;
       }
@@ -5240,28 +4344,28 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":204
+    /* "cysimlidar.pyx":174
  *     adjustedinters = {}
  *     for angle in rayinters:
  *         angles.append(angle)             # <<<<<<<<<<<<<<
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):
  */
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_angles, __pyx_v_angle); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 204, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_angles, __pyx_v_angle); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 174, __pyx_L1_error)
 
-    /* "cysimlidar.pyx":205
+    /* "cysimlidar.pyx":175
  *     for angle in rayinters:
  *         angles.append(angle)
  *         inters.append(rayinters[angle])             # <<<<<<<<<<<<<<
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  */
-    __pyx_t_4 = PyObject_GetItem(__pyx_v_rayinters, __pyx_v_angle); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 205, __pyx_L1_error)
+    __pyx_t_4 = PyObject_GetItem(__pyx_v_rayinters, __pyx_v_angle); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 175, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 205, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 175, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":203
+    /* "cysimlidar.pyx":173
  *     inters = []
  *     adjustedinters = {}
  *     for angle in rayinters:             # <<<<<<<<<<<<<<
@@ -5271,7 +4375,7 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":206
+  /* "cysimlidar.pyx":176
  *         angles.append(angle)
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5284,43 +4388,43 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   for (;;) {
     if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_4)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_6 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_2); __Pyx_INCREF(__pyx_t_6); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 206, __pyx_L1_error)
+    __pyx_t_6 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_2); __Pyx_INCREF(__pyx_t_6); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 176, __pyx_L1_error)
     #else
-    __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 206, __pyx_L1_error)
+    __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 176, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_6);
     __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_ind, __pyx_t_1);
-    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 206, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 176, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_6;
     __pyx_t_6 = 0;
 
-    /* "cysimlidar.pyx":207
+    /* "cysimlidar.pyx":177
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360             # <<<<<<<<<<<<<<
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]
  */
-    __pyx_t_6 = PyObject_GetItem(__pyx_v_angles, __pyx_v_ind); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 207, __pyx_L1_error)
+    __pyx_t_6 = PyObject_GetItem(__pyx_v_angles, __pyx_v_ind); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_robotangle); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 207, __pyx_L1_error)
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_robotangle); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_8 = PyNumber_Add(__pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 207, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Add(__pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __Pyx_PyInt_RemainderObjC(__pyx_t_8, __pyx_int_360, 0x168, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 207, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_RemainderObjC(__pyx_t_8, __pyx_int_360, 0x168, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(PyObject_SetItem(__pyx_v_angles, __pyx_v_ind, __pyx_t_7) < 0)) __PYX_ERR(1, 207, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_v_angles, __pyx_v_ind, __pyx_t_7) < 0)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "cysimlidar.pyx":206
+    /* "cysimlidar.pyx":176
  *         angles.append(angle)
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5331,7 +4435,7 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":208
+  /* "cysimlidar.pyx":178
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5344,34 +4448,34 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   for (;;) {
     if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_4)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_7 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_2); __Pyx_INCREF(__pyx_t_7); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 208, __pyx_L1_error)
+    __pyx_t_7 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_2); __Pyx_INCREF(__pyx_t_7); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 178, __pyx_L1_error)
     #else
-    __pyx_t_7 = PySequence_ITEM(__pyx_t_4, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 208, __pyx_L1_error)
+    __pyx_t_7 = PySequence_ITEM(__pyx_t_4, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 178, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_7);
     __pyx_t_7 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_ind, __pyx_t_1);
-    __pyx_t_7 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 208, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 178, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_7;
     __pyx_t_7 = 0;
 
-    /* "cysimlidar.pyx":209
+    /* "cysimlidar.pyx":179
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]             # <<<<<<<<<<<<<<
  *     return adjustedinters
  * 
  */
-    __pyx_t_7 = PyObject_GetItem(__pyx_v_inters, __pyx_v_ind); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 209, __pyx_L1_error)
+    __pyx_t_7 = PyObject_GetItem(__pyx_v_inters, __pyx_v_ind); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 179, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    if (unlikely(PyDict_SetItem(__pyx_v_adjustedinters, __pyx_v_angle, __pyx_t_7) < 0)) __PYX_ERR(1, 209, __pyx_L1_error)
+    if (unlikely(PyDict_SetItem(__pyx_v_adjustedinters, __pyx_v_angle, __pyx_t_7) < 0)) __PYX_ERR(1, 179, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "cysimlidar.pyx":208
+    /* "cysimlidar.pyx":178
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5382,22 +4486,22 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":210
+  /* "cysimlidar.pyx":180
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]
  *     return adjustedinters             # <<<<<<<<<<<<<<
  * 
- * def outputJsonOfInters(rayinters, location):
+ * 
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_adjustedinters);
   __pyx_r = __pyx_v_adjustedinters;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":199
+  /* "cysimlidar.pyx":169
  * 
  * 
- * def compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
+ * cdef compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
  *     angles = []
  *     inters = []
  */
@@ -5410,7 +4514,7 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_AddTraceback("cysimlidar.compForAngle", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_angles);
   __Pyx_XDECREF(__pyx_v_inters);
@@ -5422,225 +4526,10 @@ static PyObject *__pyx_pf_10cysimlidar_8compForAngle(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":212
- *     return adjustedinters
+/* "cysimlidar.pyx":183
  * 
- * def outputJsonOfInters(rayinters, location):             # <<<<<<<<<<<<<<
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_11outputJsonOfInters(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_11outputJsonOfInters = {"outputJsonOfInters", (PyCFunction)__pyx_pw_10cysimlidar_11outputJsonOfInters, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_11outputJsonOfInters(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_rayinters = 0;
-  PyObject *__pyx_v_location = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("outputJsonOfInters (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_rayinters,&__pyx_n_s_location,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_rayinters)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_location)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("outputJsonOfInters", 1, 2, 2, 1); __PYX_ERR(1, 212, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "outputJsonOfInters") < 0)) __PYX_ERR(1, 212, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_rayinters = values[0];
-    __pyx_v_location = values[1];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("outputJsonOfInters", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 212, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.outputJsonOfInters", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_10outputJsonOfInters(__pyx_self, __pyx_v_rayinters, __pyx_v_location);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_10outputJsonOfInters(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_rayinters, PyObject *__pyx_v_location) {
-  PyObject *__pyx_v_lidarsim = NULL;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  __Pyx_RefNannySetupContext("outputJsonOfInters", 0);
-
-  /* "cysimlidar.pyx":213
  * 
- * def outputJsonOfInters(rayinters, location):
- *     lidarsim = open("lidarsim.json", "w")             # <<<<<<<<<<<<<<
- *     json.dump({
- *         "Name": "Lidar Simulation",
- */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 213, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_v_lidarsim = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":214
- * def outputJsonOfInters(rayinters, location):
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({             # <<<<<<<<<<<<<<
- *         "Name": "Lidar Simulation",
- *         "Location": [location.x, location.y],
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 214, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_dump); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 214, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":215
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({
- *         "Name": "Lidar Simulation",             # <<<<<<<<<<<<<<
- *         "Location": [location.x, location.y],
- *         "Distances": rayinters
- */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 215, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Name, __pyx_kp_s_Lidar_Simulation) < 0) __PYX_ERR(1, 215, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":216
- *     json.dump({
- *         "Name": "Lidar Simulation",
- *         "Location": [location.x, location.y],             # <<<<<<<<<<<<<<
- *         "Distances": rayinters
- *     }, lidarsim, indent = 2)
- */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_location, __pyx_n_s_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 216, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_location, __pyx_n_s_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 216, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyList_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 216, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyList_SET_ITEM(__pyx_t_5, 0, __pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyList_SET_ITEM(__pyx_t_5, 1, __pyx_t_4);
-  __pyx_t_3 = 0;
-  __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Location, __pyx_t_5) < 0) __PYX_ERR(1, 215, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-
-  /* "cysimlidar.pyx":217
- *         "Name": "Lidar Simulation",
- *         "Location": [location.x, location.y],
- *         "Distances": rayinters             # <<<<<<<<<<<<<<
- *     }, lidarsim, indent = 2)
- * 
- */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_Distances, __pyx_v_rayinters) < 0) __PYX_ERR(1, 215, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":214
- * def outputJsonOfInters(rayinters, location):
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({             # <<<<<<<<<<<<<<
- *         "Name": "Lidar Simulation",
- *         "Location": [location.x, location.y],
- */
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 214, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
-  __Pyx_INCREF(__pyx_v_lidarsim);
-  __Pyx_GIVEREF(__pyx_v_lidarsim);
-  PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_v_lidarsim);
-  __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":218
- *         "Location": [location.x, location.y],
- *         "Distances": rayinters
- *     }, lidarsim, indent = 2)             # <<<<<<<<<<<<<<
- * 
- * cdef Point findLineIntersects(float ang, Point location, fieldlines):
- */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 218, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_indent, __pyx_int_2) < 0) __PYX_ERR(1, 218, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":214
- * def outputJsonOfInters(rayinters, location):
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({             # <<<<<<<<<<<<<<
- *         "Name": "Lidar Simulation",
- *         "Location": [location.x, location.y],
- */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 214, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cysimlidar.pyx":212
- *     return adjustedinters
- * 
- * def outputJsonOfInters(rayinters, location):             # <<<<<<<<<<<<<<
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({
- */
-
-  /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("cysimlidar.outputJsonOfInters", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_lidarsim);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "cysimlidar.pyx":220
- *     }, lidarsim, indent = 2)
- * 
- * cdef Point findLineIntersects(float ang, Point location, fieldlines):             # <<<<<<<<<<<<<<
+ * cdef Point findLineIntersects(float ang, Point location, list fieldlines):             # <<<<<<<<<<<<<<
  *     inters = []
  *     ray = Ray(ang, location)
  */
@@ -5660,32 +4549,31 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   int __pyx_t_5;
   PyObject *__pyx_t_6 = NULL;
   Py_ssize_t __pyx_t_7;
-  PyObject *(*__pyx_t_8)(PyObject *);
-  int __pyx_t_9;
+  int __pyx_t_8;
   __Pyx_RefNannySetupContext("findLineIntersects", 0);
 
-  /* "cysimlidar.pyx":221
+  /* "cysimlidar.pyx":184
  * 
- * cdef Point findLineIntersects(float ang, Point location, fieldlines):
+ * cdef Point findLineIntersects(float ang, Point location, list fieldlines):
  *     inters = []             # <<<<<<<<<<<<<<
  *     ray = Ray(ang, location)
  *     for line in fieldlines:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 221, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 184, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_inters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":222
- * cdef Point findLineIntersects(float ang, Point location, fieldlines):
+  /* "cysimlidar.pyx":185
+ * cdef Point findLineIntersects(float ang, Point location, list fieldlines):
  *     inters = []
  *     ray = Ray(ang, location)             # <<<<<<<<<<<<<<
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_Ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 222, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_Ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_ang); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 222, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_ang); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -5702,7 +4590,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, ((PyObject *)__pyx_v_location)};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 222, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 185, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -5711,14 +4599,14 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, ((PyObject *)__pyx_v_location)};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 222, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 185, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 222, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -5729,7 +4617,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
     __Pyx_GIVEREF(((PyObject *)__pyx_v_location));
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, ((PyObject *)__pyx_v_location));
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 222, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
@@ -5737,113 +4625,42 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   __pyx_v_ray = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":223
+  /* "cysimlidar.pyx":186
  *     inters = []
  *     ray = Ray(ang, location)
  *     for line in fieldlines:             # <<<<<<<<<<<<<<
  *         inters.append(findinter(line, ray))
  *     inters = filterNone(inters)
  */
-  if (likely(PyList_CheckExact(__pyx_v_fieldlines)) || PyTuple_CheckExact(__pyx_v_fieldlines)) {
-    __pyx_t_1 = __pyx_v_fieldlines; __Pyx_INCREF(__pyx_t_1); __pyx_t_7 = 0;
-    __pyx_t_8 = NULL;
-  } else {
-    __pyx_t_7 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_fieldlines); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 223, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 223, __pyx_L1_error)
+  if (unlikely(__pyx_v_fieldlines == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
+    __PYX_ERR(1, 186, __pyx_L1_error)
   }
+  __pyx_t_1 = __pyx_v_fieldlines; __Pyx_INCREF(__pyx_t_1); __pyx_t_7 = 0;
   for (;;) {
-    if (likely(!__pyx_t_8)) {
-      if (likely(PyList_CheckExact(__pyx_t_1))) {
-        if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_1)) break;
-        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(1, 223, __pyx_L1_error)
-        #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 223, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        #endif
-      } else {
-        if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
-        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(1, 223, __pyx_L1_error)
-        #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 223, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_2);
-        #endif
-      }
-    } else {
-      __pyx_t_2 = __pyx_t_8(__pyx_t_1);
-      if (unlikely(!__pyx_t_2)) {
-        PyObject* exc_type = PyErr_Occurred();
-        if (exc_type) {
-          if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 223, __pyx_L1_error)
-        }
-        break;
-      }
-      __Pyx_GOTREF(__pyx_t_2);
-    }
+    if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_1)) break;
+    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(1, 186, __pyx_L1_error)
+    #else
+    __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 186, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    #endif
     __Pyx_XDECREF_SET(__pyx_v_line, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":224
+    /* "cysimlidar.pyx":187
  *     ray = Ray(ang, location)
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))             # <<<<<<<<<<<<<<
  *     inters = filterNone(inters)
  *     dists = makeDictOfDists(inters, location)
  */
-    __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_findinter); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 224, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_3 = NULL;
-    __pyx_t_5 = 0;
-    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
-      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_6);
-      if (likely(__pyx_t_3)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-        __Pyx_INCREF(__pyx_t_3);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_6, function);
-        __pyx_t_5 = 1;
-      }
-    }
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_6)) {
-      PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_line, __pyx_v_ray};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 224, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_GOTREF(__pyx_t_2);
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
-      PyObject *__pyx_temp[3] = {__pyx_t_3, __pyx_v_line, __pyx_v_ray};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 224, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_GOTREF(__pyx_t_2);
-    } else
-    #endif
-    {
-      __pyx_t_4 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 224, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      if (__pyx_t_3) {
-        __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
-      }
-      __Pyx_INCREF(__pyx_v_line);
-      __Pyx_GIVEREF(__pyx_v_line);
-      PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_5, __pyx_v_line);
-      __Pyx_INCREF(__pyx_v_ray);
-      __Pyx_GIVEREF(__pyx_v_ray);
-      PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_5, __pyx_v_ray);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 224, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    }
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_2); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(1, 224, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_10cysimlidar_findinter(__pyx_v_line, __pyx_v_ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 187, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 187, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":223
+    /* "cysimlidar.pyx":186
  *     inters = []
  *     ray = Ray(ang, location)
  *     for line in fieldlines:             # <<<<<<<<<<<<<<
@@ -5853,98 +4670,53 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":225
+  /* "cysimlidar.pyx":188
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))
  *     inters = filterNone(inters)             # <<<<<<<<<<<<<<
  *     dists = makeDictOfDists(inters, location)
  *     # try:
  */
-  __pyx_t_1 = __pyx_f_10cysimlidar_filterNone(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 225, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10cysimlidar_filterNone(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_inters, ((PyObject*)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":226
+  /* "cysimlidar.pyx":189
  *         inters.append(findinter(line, ray))
  *     inters = filterNone(inters)
  *     dists = makeDictOfDists(inters, location)             # <<<<<<<<<<<<<<
  *     # try:
  *     closestpoint = sorted(dists)[0]
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_makeDictOfDists); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 226, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = NULL;
-  __pyx_t_5 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-    __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_2);
-    if (likely(__pyx_t_6)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-      __Pyx_INCREF(__pyx_t_6);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_2, function);
-      __pyx_t_5 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_v_inters, ((PyObject *)__pyx_v_location)};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 226, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_v_inters, ((PyObject *)__pyx_v_location)};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 226, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  {
-    __pyx_t_4 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 226, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    if (__pyx_t_6) {
-      __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_6); __pyx_t_6 = NULL;
-    }
-    __Pyx_INCREF(__pyx_v_inters);
-    __Pyx_GIVEREF(__pyx_v_inters);
-    PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_5, __pyx_v_inters);
-    __Pyx_INCREF(((PyObject *)__pyx_v_location));
-    __Pyx_GIVEREF(((PyObject *)__pyx_v_location));
-    PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_5, ((PyObject *)__pyx_v_location));
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 226, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_dists = __pyx_t_1;
+  __pyx_t_1 = __pyx_f_10cysimlidar_makeDictOfDists(__pyx_v_inters, __pyx_v_location); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 189, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_dists = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":228
+  /* "cysimlidar.pyx":191
  *     dists = makeDictOfDists(inters, location)
  *     # try:
  *     closestpoint = sorted(dists)[0]             # <<<<<<<<<<<<<<
  *     return dists[closestpoint]
  *     # except IndexError:
  */
-  __pyx_t_2 = PySequence_List(__pyx_v_dists); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 228, __pyx_L1_error)
+  __pyx_t_2 = PySequence_List(__pyx_v_dists); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 191, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_1 = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_9 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(1, 228, __pyx_L1_error)
+  __pyx_t_8 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 191, __pyx_L1_error)
   if (unlikely(__pyx_t_1 == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(1, 228, __pyx_L1_error)
+    __PYX_ERR(1, 191, __pyx_L1_error)
   }
-  __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 228, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 191, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_closestpoint = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":229
+  /* "cysimlidar.pyx":192
  *     # try:
  *     closestpoint = sorted(dists)[0]
  *     return dists[closestpoint]             # <<<<<<<<<<<<<<
@@ -5952,17 +4724,21 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
  *     #     return None
  */
   __Pyx_XDECREF(((PyObject *)__pyx_r));
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_dists, __pyx_v_closestpoint); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 229, __pyx_L1_error)
+  if (unlikely(__pyx_v_dists == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+    __PYX_ERR(1, 192, __pyx_L1_error)
+  }
+  __pyx_t_2 = __Pyx_PyDict_GetItem(__pyx_v_dists, __pyx_v_closestpoint); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 192, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 229, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 192, __pyx_L1_error)
   __pyx_r = ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":220
- *     }, lidarsim, indent = 2)
+  /* "cysimlidar.pyx":183
  * 
- * cdef Point findLineIntersects(float ang, Point location, fieldlines):             # <<<<<<<<<<<<<<
+ * 
+ * cdef Point findLineIntersects(float ang, Point location, list fieldlines):             # <<<<<<<<<<<<<<
  *     inters = []
  *     ray = Ray(ang, location)
  */
@@ -5987,77 +4763,15 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":234
+/* "cysimlidar.pyx":197
  * 
  * 
- * def makeDictOfDists(inters, location):             # <<<<<<<<<<<<<<
+ * cdef dict makeDictOfDists(inters, Point location):             # <<<<<<<<<<<<<<
  *     dists = {}
  *     for point in inters:
  */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_13makeDictOfDists(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_13makeDictOfDists = {"makeDictOfDists", (PyCFunction)__pyx_pw_10cysimlidar_13makeDictOfDists, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_13makeDictOfDists(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyObject *__pyx_v_inters = 0;
-  PyObject *__pyx_v_location = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("makeDictOfDists (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_inters,&__pyx_n_s_location,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_inters)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_location)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("makeDictOfDists", 1, 2, 2, 1); __PYX_ERR(1, 234, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "makeDictOfDists") < 0)) __PYX_ERR(1, 234, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_inters = values[0];
-    __pyx_v_location = values[1];
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("makeDictOfDists", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 234, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.makeDictOfDists", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_12makeDictOfDists(__pyx_self, __pyx_v_inters, __pyx_v_location);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_inters, PyObject *__pyx_v_location) {
+static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, struct __pyx_obj_10cysimlidar_Point *__pyx_v_location) {
   PyObject *__pyx_v_dists = NULL;
   PyObject *__pyx_v_point = NULL;
   PyObject *__pyx_r = NULL;
@@ -6068,20 +4782,20 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("makeDictOfDists", 0);
 
-  /* "cysimlidar.pyx":235
+  /* "cysimlidar.pyx":198
  * 
- * def makeDictOfDists(inters, location):
+ * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}             # <<<<<<<<<<<<<<
  *     for point in inters:
  *         dists[dist(location, point)] = point
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 235, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_dists = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":236
- * def makeDictOfDists(inters, location):
+  /* "cysimlidar.pyx":199
+ * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}
  *     for point in inters:             # <<<<<<<<<<<<<<
  *         dists[dist(location, point)] = point
@@ -6091,26 +4805,26 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
     __pyx_t_1 = __pyx_v_inters; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 236, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 236, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 199, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 236, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 199, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 236, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 199, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 236, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 199, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 236, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 199, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -6120,7 +4834,7 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 236, __pyx_L1_error)
+          else __PYX_ERR(1, 199, __pyx_L1_error)
         }
         break;
       }
@@ -6129,20 +4843,20 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
     __Pyx_XDECREF_SET(__pyx_v_point, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":237
+    /* "cysimlidar.pyx":200
  *     dists = {}
  *     for point in inters:
  *         dists[dist(location, point)] = point             # <<<<<<<<<<<<<<
  *     return dists
  * 
  */
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_10cysimlidar_dist(__pyx_v_location, __pyx_v_point)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 237, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_10cysimlidar_dist(((PyObject *)__pyx_v_location), __pyx_v_point)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 200, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (unlikely(PyDict_SetItem(__pyx_v_dists, __pyx_t_4, __pyx_v_point) < 0)) __PYX_ERR(1, 237, __pyx_L1_error)
+    if (unlikely(PyDict_SetItem(__pyx_v_dists, __pyx_t_4, __pyx_v_point) < 0)) __PYX_ERR(1, 200, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":236
- * def makeDictOfDists(inters, location):
+    /* "cysimlidar.pyx":199
+ * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}
  *     for point in inters:             # <<<<<<<<<<<<<<
  *         dists[dist(location, point)] = point
@@ -6151,7 +4865,7 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":238
+  /* "cysimlidar.pyx":201
  *     for point in inters:
  *         dists[dist(location, point)] = point
  *     return dists             # <<<<<<<<<<<<<<
@@ -6163,10 +4877,10 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
   __pyx_r = __pyx_v_dists;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":234
+  /* "cysimlidar.pyx":197
  * 
  * 
- * def makeDictOfDists(inters, location):             # <<<<<<<<<<<<<<
+ * cdef dict makeDictOfDists(inters, Point location):             # <<<<<<<<<<<<<<
  *     dists = {}
  *     for point in inters:
  */
@@ -6176,7 +4890,7 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_AddTraceback("cysimlidar.makeDictOfDists", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_dists);
   __Pyx_XDECREF(__pyx_v_point);
@@ -6185,7 +4899,7 @@ static PyObject *__pyx_pf_10cysimlidar_12makeDictOfDists(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":241
+/* "cysimlidar.pyx":204
  * 
  * 
  * cdef list filterNone(filtered):             # <<<<<<<<<<<<<<
@@ -6207,19 +4921,19 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   int __pyx_t_7;
   __Pyx_RefNannySetupContext("filterNone", 0);
 
-  /* "cysimlidar.pyx":242
+  /* "cysimlidar.pyx":205
  * 
  * cdef list filterNone(filtered):
  *     res = []             # <<<<<<<<<<<<<<
  *     for item in filtered:
  *         if item is not None:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 242, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 205, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":243
+  /* "cysimlidar.pyx":206
  * cdef list filterNone(filtered):
  *     res = []
  *     for item in filtered:             # <<<<<<<<<<<<<<
@@ -6230,26 +4944,26 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
     __pyx_t_1 = __pyx_v_filtered; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_filtered); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 243, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_filtered); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 206, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 243, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 206, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 243, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 206, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 243, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 206, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 243, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 206, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 243, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 206, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -6259,7 +4973,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 243, __pyx_L1_error)
+          else __PYX_ERR(1, 206, __pyx_L1_error)
         }
         break;
       }
@@ -6268,7 +4982,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
     __Pyx_XDECREF_SET(__pyx_v_item, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":244
+    /* "cysimlidar.pyx":207
  *     res = []
  *     for item in filtered:
  *         if item is not None:             # <<<<<<<<<<<<<<
@@ -6279,16 +4993,16 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
     __pyx_t_6 = (__pyx_t_5 != 0);
     if (__pyx_t_6) {
 
-      /* "cysimlidar.pyx":245
+      /* "cysimlidar.pyx":208
  *     for item in filtered:
  *         if item is not None:
  *             res.append(item)             # <<<<<<<<<<<<<<
  *     return res
  * 
  */
-      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_res, __pyx_v_item); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(1, 245, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_res, __pyx_v_item); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(1, 208, __pyx_L1_error)
 
-      /* "cysimlidar.pyx":244
+      /* "cysimlidar.pyx":207
  *     res = []
  *     for item in filtered:
  *         if item is not None:             # <<<<<<<<<<<<<<
@@ -6297,7 +5011,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
  */
     }
 
-    /* "cysimlidar.pyx":243
+    /* "cysimlidar.pyx":206
  * cdef list filterNone(filtered):
  *     res = []
  *     for item in filtered:             # <<<<<<<<<<<<<<
@@ -6307,7 +5021,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":246
+  /* "cysimlidar.pyx":209
  *         if item is not None:
  *             res.append(item)
  *     return res             # <<<<<<<<<<<<<<
@@ -6319,7 +5033,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":241
+  /* "cysimlidar.pyx":204
  * 
  * 
  * cdef list filterNone(filtered):             # <<<<<<<<<<<<<<
@@ -6341,7 +5055,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":249
+/* "cysimlidar.pyx":212
  * 
  * 
  * cdef list openEnvFile(env):             # <<<<<<<<<<<<<<
@@ -6365,35 +5079,34 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
   Py_ssize_t __pyx_t_5;
   PyObject *(*__pyx_t_6)(PyObject *);
   int __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
+  Py_ssize_t __pyx_t_8;
   PyObject *__pyx_t_9 = NULL;
-  Py_ssize_t __pyx_t_10;
-  PyObject *(*__pyx_t_11)(PyObject *);
+  PyObject *__pyx_t_10 = NULL;
+  PyObject *__pyx_t_11 = NULL;
   PyObject *__pyx_t_12 = NULL;
-  PyObject *__pyx_t_13 = NULL;
-  int __pyx_t_14;
+  int __pyx_t_13;
   __Pyx_RefNannySetupContext("openEnvFile", 0);
 
-  /* "cysimlidar.pyx":250
+  /* "cysimlidar.pyx":213
  * 
  * cdef list openEnvFile(env):
  *     lines = []             # <<<<<<<<<<<<<<
  *     file = open(env, "r")
  *     field = json.load(file)
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 250, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 213, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_lines = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":251
+  /* "cysimlidar.pyx":214
  * cdef list openEnvFile(env):
  *     lines = []
  *     file = open(env, "r")             # <<<<<<<<<<<<<<
  *     field = json.load(file)
  *     file.close()
  */
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 251, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_env);
   __Pyx_GIVEREF(__pyx_v_env);
@@ -6401,22 +5114,22 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
   __Pyx_INCREF(__pyx_n_s_r);
   __Pyx_GIVEREF(__pyx_n_s_r);
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_r);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 251, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_file = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":252
+  /* "cysimlidar.pyx":215
  *     lines = []
  *     file = open(env, "r")
  *     field = json.load(file)             # <<<<<<<<<<<<<<
  *     file.close()
  *     elements = field["Elements"]
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 252, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_load); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 252, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_load); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = NULL;
@@ -6430,13 +5143,13 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
     }
   }
   if (!__pyx_t_1) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_file); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 252, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_file); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 215, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_v_file};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 252, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 215, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -6444,19 +5157,19 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_v_file};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 252, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 215, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 252, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 215, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1); __pyx_t_1 = NULL;
       __Pyx_INCREF(__pyx_v_file);
       __Pyx_GIVEREF(__pyx_v_file);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_file);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 252, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 215, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -6465,14 +5178,14 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
   __pyx_v_field = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":253
+  /* "cysimlidar.pyx":216
  *     file = open(env, "r")
  *     field = json.load(file)
  *     file.close()             # <<<<<<<<<<<<<<
  *     elements = field["Elements"]
  *     for e in elements:
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 253, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6485,28 +5198,28 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 253, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 216, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 253, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 216, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":254
+  /* "cysimlidar.pyx":217
  *     field = json.load(file)
  *     file.close()
  *     elements = field["Elements"]             # <<<<<<<<<<<<<<
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  */
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_field, __pyx_n_s_Elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 254, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_field, __pyx_n_s_Elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 217, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_elements = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":255
+  /* "cysimlidar.pyx":218
  *     file.close()
  *     elements = field["Elements"]
  *     for e in elements:             # <<<<<<<<<<<<<<
@@ -6517,26 +5230,26 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
     __pyx_t_2 = __pyx_v_elements; __Pyx_INCREF(__pyx_t_2); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 255, __pyx_L1_error)
+    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 218, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 255, __pyx_L1_error)
+    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 218, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_6)) {
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 255, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 218, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 255, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 218, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 255, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 218, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 255, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 218, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -6546,7 +5259,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 255, __pyx_L1_error)
+          else __PYX_ERR(1, 218, __pyx_L1_error)
         }
         break;
       }
@@ -6555,237 +5268,166 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
     __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "cysimlidar.pyx":256
+    /* "cysimlidar.pyx":219
  *     elements = field["Elements"]
  *     for e in elements:
  *         if elements[e]["Solidity"]:             # <<<<<<<<<<<<<<
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]
  */
-    __pyx_t_3 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 256, __pyx_L1_error)
+    __pyx_t_3 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 219, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_Solidity); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 256, __pyx_L1_error)
+    __pyx_t_4 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_Solidity); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 219, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(1, 256, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(1, 219, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_7) {
 
-      /* "cysimlidar.pyx":257
+      /* "cysimlidar.pyx":220
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):             # <<<<<<<<<<<<<<
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]
  *     return lines
  */
-      __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_findLinesFromPoints); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 257, __pyx_L1_error)
+      __pyx_t_4 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 220, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = PyObject_GetItem(__pyx_t_4, __pyx_n_s_Points); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 220, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_1 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 257, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_8 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_Points); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 257, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = NULL;
-      if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-        __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_3);
-        if (likely(__pyx_t_1)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-          __Pyx_INCREF(__pyx_t_1);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_3, function);
-        }
-      }
-      if (!__pyx_t_1) {
-        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 257, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __Pyx_GOTREF(__pyx_t_4);
-      } else {
-        #if CYTHON_FAST_PYCALL
-        if (PyFunction_Check(__pyx_t_3)) {
-          PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_t_8};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 257, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __Pyx_GOTREF(__pyx_t_4);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        } else
-        #endif
-        #if CYTHON_FAST_PYCCALL
-        if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-          PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_t_8};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 257, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-          __Pyx_GOTREF(__pyx_t_4);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        } else
-        #endif
-        {
-          __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 257, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_9);
-          __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_1); __pyx_t_1 = NULL;
-          __Pyx_GIVEREF(__pyx_t_8);
-          PyTuple_SET_ITEM(__pyx_t_9, 0+1, __pyx_t_8);
-          __pyx_t_8 = 0;
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_9, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 257, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        }
-      }
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __pyx_t_4 = __pyx_f_10cysimlidar_findLinesFromPoints(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 220, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (likely(PyList_CheckExact(__pyx_t_4)) || PyTuple_CheckExact(__pyx_t_4)) {
-        __pyx_t_3 = __pyx_t_4; __Pyx_INCREF(__pyx_t_3); __pyx_t_10 = 0;
-        __pyx_t_11 = NULL;
-      } else {
-        __pyx_t_10 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 257, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_11 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 257, __pyx_L1_error)
+      if (unlikely(__pyx_t_4 == Py_None)) {
+        PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
+        __PYX_ERR(1, 220, __pyx_L1_error)
       }
+      __pyx_t_3 = __pyx_t_4; __Pyx_INCREF(__pyx_t_3); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       for (;;) {
-        if (likely(!__pyx_t_11)) {
-          if (likely(PyList_CheckExact(__pyx_t_3))) {
-            if (__pyx_t_10 >= PyList_GET_SIZE(__pyx_t_3)) break;
-            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_10); __Pyx_INCREF(__pyx_t_4); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(1, 257, __pyx_L1_error)
-            #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 257, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_4);
-            #endif
-          } else {
-            if (__pyx_t_10 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
-            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_10); __Pyx_INCREF(__pyx_t_4); __pyx_t_10++; if (unlikely(0 < 0)) __PYX_ERR(1, 257, __pyx_L1_error)
-            #else
-            __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_10); __pyx_t_10++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 257, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_4);
-            #endif
-          }
-        } else {
-          __pyx_t_4 = __pyx_t_11(__pyx_t_3);
-          if (unlikely(!__pyx_t_4)) {
-            PyObject* exc_type = PyErr_Occurred();
-            if (exc_type) {
-              if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(1, 257, __pyx_L1_error)
-            }
-            break;
-          }
-          __Pyx_GOTREF(__pyx_t_4);
-        }
+        if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_3)) break;
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(1, 220, __pyx_L1_error)
+        #else
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 220, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
+        #endif
         __Pyx_XDECREF_SET(__pyx_v_l, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "cysimlidar.pyx":258
+        /* "cysimlidar.pyx":221
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]             # <<<<<<<<<<<<<<
  *     return lines
  * 
  */
-        __pyx_t_9 = __Pyx_GetModuleGlobalName(__pyx_n_s_LineSeg); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 258, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_LineSeg); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_12 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 258, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_GetItemInt(__pyx_t_9, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_10);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_11 = __Pyx_GetItemInt(__pyx_t_9, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __Pyx_GIVEREF(__pyx_t_10);
+        PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_10);
+        __Pyx_GIVEREF(__pyx_t_11);
+        PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_11);
+        __pyx_t_10 = 0;
+        __pyx_t_11 = 0;
+        __pyx_t_11 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_11);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_10 = __Pyx_GetItemInt(__pyx_t_9, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_10);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_12 = __Pyx_GetItemInt(__pyx_t_9, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-        __Pyx_GIVEREF(__pyx_t_1);
-        PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1);
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __Pyx_GIVEREF(__pyx_t_10);
+        PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_10);
         __Pyx_GIVEREF(__pyx_t_12);
-        PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_12);
-        __pyx_t_1 = 0;
+        PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_12);
+        __pyx_t_10 = 0;
         __pyx_t_12 = 0;
-        __pyx_t_12 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_8, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 258, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_1 = __Pyx_GetItemInt(__pyx_t_8, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_1);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __pyx_t_8 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-        __pyx_t_13 = __Pyx_GetItemInt(__pyx_t_8, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_13)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __pyx_t_8 = PyTuple_New(2); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
-        __Pyx_GIVEREF(__pyx_t_1);
-        PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1);
-        __Pyx_GIVEREF(__pyx_t_13);
-        PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_13);
-        __pyx_t_1 = 0;
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __pyx_t_9 = NULL;
         __pyx_t_13 = 0;
-        __pyx_t_13 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_8, NULL); if (unlikely(!__pyx_t_13)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_13);
-        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-        __pyx_t_8 = NULL;
-        __pyx_t_14 = 0;
-        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_9))) {
-          __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_9);
-          if (likely(__pyx_t_8)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
-            __Pyx_INCREF(__pyx_t_8);
+        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_1))) {
+          __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_1);
+          if (likely(__pyx_t_9)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+            __Pyx_INCREF(__pyx_t_9);
             __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_9, function);
-            __pyx_t_14 = 1;
+            __Pyx_DECREF_SET(__pyx_t_1, function);
+            __pyx_t_13 = 1;
           }
         }
         #if CYTHON_FAST_PYCALL
-        if (PyFunction_Check(__pyx_t_9)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_t_12, __pyx_t_13};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 258, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        if (PyFunction_Check(__pyx_t_1)) {
+          PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_11, __pyx_t_12};
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 221, __pyx_L1_error)
+          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_4);
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-          __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
         } else
         #endif
         #if CYTHON_FAST_PYCCALL
-        if (__Pyx_PyFastCFunction_Check(__pyx_t_9)) {
-          PyObject *__pyx_temp[3] = {__pyx_t_8, __pyx_t_12, __pyx_t_13};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_9, __pyx_temp+1-__pyx_t_14, 2+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 258, __pyx_L1_error)
-          __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
+        if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
+          PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_11, __pyx_t_12};
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 221, __pyx_L1_error)
+          __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_4);
+          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-          __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
         } else
         #endif
         {
-          __pyx_t_1 = PyTuple_New(2+__pyx_t_14); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 258, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_1);
-          if (__pyx_t_8) {
-            __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_8); __pyx_t_8 = NULL;
+          __pyx_t_10 = PyTuple_New(2+__pyx_t_13); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 221, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_10);
+          if (__pyx_t_9) {
+            __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_9); __pyx_t_9 = NULL;
           }
+          __Pyx_GIVEREF(__pyx_t_11);
+          PyTuple_SET_ITEM(__pyx_t_10, 0+__pyx_t_13, __pyx_t_11);
           __Pyx_GIVEREF(__pyx_t_12);
-          PyTuple_SET_ITEM(__pyx_t_1, 0+__pyx_t_14, __pyx_t_12);
-          __Pyx_GIVEREF(__pyx_t_13);
-          PyTuple_SET_ITEM(__pyx_t_1, 1+__pyx_t_14, __pyx_t_13);
+          PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_13, __pyx_t_12);
+          __pyx_t_11 = 0;
           __pyx_t_12 = 0;
-          __pyx_t_13 = 0;
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_1, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 258, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_10, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 221, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+          __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         }
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = PyList_New(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 258, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_9);
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 221, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_1);
         __Pyx_GIVEREF(__pyx_t_4);
-        PyList_SET_ITEM(__pyx_t_9, 0, __pyx_t_4);
+        PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_v_lines, __pyx_t_9); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 258, __pyx_L1_error)
+        __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_v_lines, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF_SET(__pyx_v_lines, ((PyObject*)__pyx_t_4));
         __pyx_t_4 = 0;
 
-        /* "cysimlidar.pyx":257
+        /* "cysimlidar.pyx":220
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):             # <<<<<<<<<<<<<<
@@ -6795,7 +5437,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "cysimlidar.pyx":256
+      /* "cysimlidar.pyx":219
  *     elements = field["Elements"]
  *     for e in elements:
  *         if elements[e]["Solidity"]:             # <<<<<<<<<<<<<<
@@ -6804,7 +5446,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
  */
     }
 
-    /* "cysimlidar.pyx":255
+    /* "cysimlidar.pyx":218
  *     file.close()
  *     elements = field["Elements"]
  *     for e in elements:             # <<<<<<<<<<<<<<
@@ -6814,7 +5456,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":259
+  /* "cysimlidar.pyx":222
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]
  *     return lines             # <<<<<<<<<<<<<<
@@ -6826,7 +5468,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
   __pyx_r = __pyx_v_lines;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":249
+  /* "cysimlidar.pyx":212
  * 
  * 
  * cdef list openEnvFile(env):             # <<<<<<<<<<<<<<
@@ -6840,10 +5482,10 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_XDECREF(__pyx_t_13);
   __Pyx_AddTraceback("cysimlidar.openEnvFile", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
@@ -6858,29 +5500,15 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env) {
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":262
+/* "cysimlidar.pyx":225
  * 
  * 
- * def findLinesFromPoints(points):             # <<<<<<<<<<<<<<
+ * cdef list findLinesFromPoints(points):             # <<<<<<<<<<<<<<
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):
  */
 
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_15findLinesFromPoints(PyObject *__pyx_self, PyObject *__pyx_v_points); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_15findLinesFromPoints = {"findLinesFromPoints", (PyCFunction)__pyx_pw_10cysimlidar_15findLinesFromPoints, METH_O, 0};
-static PyObject *__pyx_pw_10cysimlidar_15findLinesFromPoints(PyObject *__pyx_self, PyObject *__pyx_v_points) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("findLinesFromPoints (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_14findLinesFromPoints(__pyx_self, ((PyObject *)__pyx_v_points));
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_points) {
+static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_points) {
   PyObject *__pyx_v_ret = NULL;
   PyObject *__pyx_v_ind = NULL;
   CYTHON_UNUSED PyObject *__pyx_v_point = NULL;
@@ -6897,20 +5525,20 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("findLinesFromPoints", 0);
 
-  /* "cysimlidar.pyx":263
+  /* "cysimlidar.pyx":226
  * 
- * def findLinesFromPoints(points):
+ * cdef list findLinesFromPoints(points):
  *     ret = []             # <<<<<<<<<<<<<<
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 263, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 226, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":264
- * def findLinesFromPoints(points):
+  /* "cysimlidar.pyx":227
+ * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
  *         pair = [points[ind], points[ind + 1]]
@@ -6918,15 +5546,15 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
  */
   __Pyx_INCREF(__pyx_int_0);
   __pyx_t_1 = __pyx_int_0;
-  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_points, 0, -1L, NULL, NULL, &__pyx_slice__4, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 264, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_points, 0, -1L, NULL, NULL, &__pyx_slice__3, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 227, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
     __pyx_t_3 = __pyx_t_2; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 264, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 227, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 264, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 227, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -6934,17 +5562,17 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 264, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 227, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 264, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 227, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 264, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 227, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 264, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 227, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -6954,7 +5582,7 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 264, __pyx_L1_error)
+          else __PYX_ERR(1, 227, __pyx_L1_error)
         }
         break;
       }
@@ -6964,27 +5592,27 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
     __pyx_t_2 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_ind, __pyx_t_1);
-    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 264, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 227, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":265
+    /* "cysimlidar.pyx":228
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]             # <<<<<<<<<<<<<<
  *         ret.append(pair)
  *     return ret
  */
-    __pyx_t_2 = PyObject_GetItem(__pyx_v_points, __pyx_v_ind); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 265, __pyx_L1_error)
+    __pyx_t_2 = PyObject_GetItem(__pyx_v_points, __pyx_v_ind); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 228, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_v_ind, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 265, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_v_ind, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 228, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = PyObject_GetItem(__pyx_v_points, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 265, __pyx_L1_error)
+    __pyx_t_7 = PyObject_GetItem(__pyx_v_points, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 228, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyList_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 265, __pyx_L1_error)
+    __pyx_t_6 = PyList_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 228, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_2);
     PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_2);
@@ -6995,17 +5623,16 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
     __Pyx_XDECREF_SET(__pyx_v_pair, ((PyObject*)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "cysimlidar.pyx":266
+    /* "cysimlidar.pyx":229
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)             # <<<<<<<<<<<<<<
  *     return ret
- * 
  */
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_v_pair); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 266, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_v_pair); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 229, __pyx_L1_error)
 
-    /* "cysimlidar.pyx":264
- * def findLinesFromPoints(points):
+    /* "cysimlidar.pyx":227
+ * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
  *         pair = [points[ind], points[ind + 1]]
@@ -7015,22 +5642,20 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":267
+  /* "cysimlidar.pyx":230
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)
  *     return ret             # <<<<<<<<<<<<<<
- * 
- * 
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v_ret);
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":262
+  /* "cysimlidar.pyx":225
  * 
  * 
- * def findLinesFromPoints(points):             # <<<<<<<<<<<<<<
+ * cdef list findLinesFromPoints(points):             # <<<<<<<<<<<<<<
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):
  */
@@ -7043,99 +5668,12 @@ static PyObject *__pyx_pf_10cysimlidar_14findLinesFromPoints(CYTHON_UNUSED PyObj
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_AddTraceback("cysimlidar.findLinesFromPoints", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
+  __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_ret);
   __Pyx_XDECREF(__pyx_v_ind);
   __Pyx_XDECREF(__pyx_v_point);
   __Pyx_XDECREF(__pyx_v_pair);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "cysimlidar.pyx":270
- * 
- * 
- * def main():             # <<<<<<<<<<<<<<
- *     angledRayIntersects(Point(250, 350), 0, 1, debug = False)
- * 
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_17main(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_17main = {"main", (PyCFunction)__pyx_pw_10cysimlidar_17main, METH_NOARGS, 0};
-static PyObject *__pyx_pw_10cysimlidar_17main(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("main (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_16main(__pyx_self);
-
-  /* function exit code */
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10cysimlidar_16main(CYTHON_UNUSED PyObject *__pyx_self) {
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  __Pyx_RefNannySetupContext("main", 0);
-
-  /* "cysimlidar.pyx":271
- * 
- * def main():
- *     angledRayIntersects(Point(250, 350), 0, 1, debug = False)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_angledRayIntersects); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 271, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 271, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 271, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-  __Pyx_INCREF(__pyx_int_0);
-  __Pyx_GIVEREF(__pyx_int_0);
-  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_int_0);
-  __Pyx_INCREF(__pyx_int_1);
-  __Pyx_GIVEREF(__pyx_int_1);
-  PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_int_1);
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 271, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_debug, Py_False) < 0) __PYX_ERR(1, 271, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 271, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "cysimlidar.pyx":270
- * 
- * 
- * def main():             # <<<<<<<<<<<<<<
- *     angledRayIntersects(Point(250, 350), 0, 1, debug = False)
- * 
- */
-
-  /* function exit code */
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("cysimlidar.main", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -7264,6 +5802,7 @@ static PyTypeObject __pyx_type_10cysimlidar_Point = {
 };
 
 static PyMethodDef __pyx_methods[] = {
+  {"angledRayIntersects", (PyCFunction)__pyx_pw_10cysimlidar_1angledRayIntersects, METH_VARARGS|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
@@ -7300,81 +5839,47 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_n_s_Distances, __pyx_k_Distances, sizeof(__pyx_k_Distances), 0, 0, 1, 1},
   {&__pyx_n_s_Elements, __pyx_k_Elements, sizeof(__pyx_k_Elements), 0, 0, 1, 1},
   {&__pyx_kp_s_FRC_Field_2018_map, __pyx_k_FRC_Field_2018_map, sizeof(__pyx_k_FRC_Field_2018_map), 0, 0, 1, 0},
-  {&__pyx_kp_s_Lidar_Simulation, __pyx_k_Lidar_Simulation, sizeof(__pyx_k_Lidar_Simulation), 0, 0, 1, 0},
   {&__pyx_n_s_LineSeg, __pyx_k_LineSeg, sizeof(__pyx_k_LineSeg), 0, 0, 1, 1},
   {&__pyx_n_s_LineSeg___init, __pyx_k_LineSeg___init, sizeof(__pyx_k_LineSeg___init), 0, 0, 1, 1},
-  {&__pyx_n_s_Location, __pyx_k_Location, sizeof(__pyx_k_Location), 0, 0, 1, 1},
-  {&__pyx_n_s_Name, __pyx_k_Name, sizeof(__pyx_k_Name), 0, 0, 1, 1},
   {&__pyx_n_s_Points, __pyx_k_Points, sizeof(__pyx_k_Points), 0, 0, 1, 1},
   {&__pyx_n_s_Ray, __pyx_k_Ray, sizeof(__pyx_k_Ray), 0, 0, 1, 1},
   {&__pyx_n_s_Ray___init, __pyx_k_Ray___init, sizeof(__pyx_k_Ray___init), 0, 0, 1, 1},
   {&__pyx_n_s_Solidity, __pyx_k_Solidity, sizeof(__pyx_k_Solidity), 0, 0, 1, 1},
   {&__pyx_n_s_TypeError, __pyx_k_TypeError, sizeof(__pyx_k_TypeError), 0, 0, 1, 1},
-  {&__pyx_n_s_adjustedinters, __pyx_k_adjustedinters, sizeof(__pyx_k_adjustedinters), 0, 0, 1, 1},
   {&__pyx_n_s_ang, __pyx_k_ang, sizeof(__pyx_k_ang), 0, 0, 1, 1},
-  {&__pyx_n_s_angle, __pyx_k_angle, sizeof(__pyx_k_angle), 0, 0, 1, 1},
-  {&__pyx_n_s_angledRayIntersects, __pyx_k_angledRayIntersects, sizeof(__pyx_k_angledRayIntersects), 0, 0, 1, 1},
-  {&__pyx_n_s_angles, __pyx_k_angles, sizeof(__pyx_k_angles), 0, 0, 1, 1},
   {&__pyx_n_s_arctan, __pyx_k_arctan, sizeof(__pyx_k_arctan), 0, 0, 1, 1},
-  {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_close, __pyx_k_close, sizeof(__pyx_k_close), 0, 0, 1, 1},
-  {&__pyx_n_s_compForAngle, __pyx_k_compForAngle, sizeof(__pyx_k_compForAngle), 0, 0, 1, 1},
   {&__pyx_n_s_cysimlidar, __pyx_k_cysimlidar, sizeof(__pyx_k_cysimlidar), 0, 0, 1, 1},
   {&__pyx_kp_s_cysimlidar_pyx, __pyx_k_cysimlidar_pyx, sizeof(__pyx_k_cysimlidar_pyx), 0, 0, 1, 0},
-  {&__pyx_n_s_debug, __pyx_k_debug, sizeof(__pyx_k_debug), 0, 0, 1, 1},
-  {&__pyx_n_s_debuginters, __pyx_k_debuginters, sizeof(__pyx_k_debuginters), 0, 0, 1, 1},
-  {&__pyx_n_s_dists, __pyx_k_dists, sizeof(__pyx_k_dists), 0, 0, 1, 1},
   {&__pyx_n_s_doc, __pyx_k_doc, sizeof(__pyx_k_doc), 0, 0, 1, 1},
-  {&__pyx_n_s_dump, __pyx_k_dump, sizeof(__pyx_k_dump), 0, 0, 1, 1},
   {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
-  {&__pyx_n_s_fieldlines, __pyx_k_fieldlines, sizeof(__pyx_k_fieldlines), 0, 0, 1, 1},
-  {&__pyx_n_s_findLinesFromPoints, __pyx_k_findLinesFromPoints, sizeof(__pyx_k_findLinesFromPoints), 0, 0, 1, 1},
-  {&__pyx_n_s_findSlope, __pyx_k_findSlope, sizeof(__pyx_k_findSlope), 0, 0, 1, 1},
-  {&__pyx_n_s_findinter, __pyx_k_findinter, sizeof(__pyx_k_findinter), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
-  {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
-  {&__pyx_n_s_ind, __pyx_k_ind, sizeof(__pyx_k_ind), 0, 0, 1, 1},
-  {&__pyx_n_s_indent, __pyx_k_indent, sizeof(__pyx_k_indent), 0, 0, 1, 1},
   {&__pyx_n_s_init, __pyx_k_init, sizeof(__pyx_k_init), 0, 0, 1, 1},
   {&__pyx_n_s_inter, __pyx_k_inter, sizeof(__pyx_k_inter), 0, 0, 1, 1},
-  {&__pyx_n_s_inters, __pyx_k_inters, sizeof(__pyx_k_inters), 0, 0, 1, 1},
   {&__pyx_n_s_json, __pyx_k_json, sizeof(__pyx_k_json), 0, 0, 1, 1},
-  {&__pyx_n_s_lidarsim, __pyx_k_lidarsim, sizeof(__pyx_k_lidarsim), 0, 0, 1, 1},
-  {&__pyx_kp_s_lidarsim_json, __pyx_k_lidarsim_json, sizeof(__pyx_k_lidarsim_json), 0, 0, 1, 0},
   {&__pyx_n_s_load, __pyx_k_load, sizeof(__pyx_k_load), 0, 0, 1, 1},
-  {&__pyx_n_s_location, __pyx_k_location, sizeof(__pyx_k_location), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-  {&__pyx_n_s_main_2, __pyx_k_main_2, sizeof(__pyx_k_main_2), 0, 0, 1, 1},
-  {&__pyx_n_s_makeDictOfDists, __pyx_k_makeDictOfDists, sizeof(__pyx_k_makeDictOfDists), 0, 0, 1, 1},
   {&__pyx_n_s_metaclass, __pyx_k_metaclass, sizeof(__pyx_k_metaclass), 0, 0, 1, 1},
   {&__pyx_n_s_module, __pyx_k_module, sizeof(__pyx_k_module), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
   {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
-  {&__pyx_n_s_obj, __pyx_k_obj, sizeof(__pyx_k_obj), 0, 0, 1, 1},
-  {&__pyx_n_s_objs, __pyx_k_objs, sizeof(__pyx_k_objs), 0, 0, 1, 1},
   {&__pyx_n_s_open, __pyx_k_open, sizeof(__pyx_k_open), 0, 0, 1, 1},
-  {&__pyx_n_s_outputJsonOfInters, __pyx_k_outputJsonOfInters, sizeof(__pyx_k_outputJsonOfInters), 0, 0, 1, 1},
   {&__pyx_n_s_p1, __pyx_k_p1, sizeof(__pyx_k_p1), 0, 0, 1, 1},
   {&__pyx_n_s_p2, __pyx_k_p2, sizeof(__pyx_k_p2), 0, 0, 1, 1},
-  {&__pyx_n_s_pair, __pyx_k_pair, sizeof(__pyx_k_pair), 0, 0, 1, 1},
   {&__pyx_n_s_point, __pyx_k_point, sizeof(__pyx_k_point), 0, 0, 1, 1},
-  {&__pyx_n_s_points, __pyx_k_points, sizeof(__pyx_k_points), 0, 0, 1, 1},
   {&__pyx_n_s_prepare, __pyx_k_prepare, sizeof(__pyx_k_prepare), 0, 0, 1, 1},
   {&__pyx_n_s_quadrant, __pyx_k_quadrant, sizeof(__pyx_k_quadrant), 0, 0, 1, 1},
   {&__pyx_n_s_qualname, __pyx_k_qualname, sizeof(__pyx_k_qualname), 0, 0, 1, 1},
   {&__pyx_n_s_r, __pyx_k_r, sizeof(__pyx_k_r), 0, 0, 1, 1},
-  {&__pyx_n_s_rayinters, __pyx_k_rayinters, sizeof(__pyx_k_rayinters), 0, 0, 1, 1},
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
-  {&__pyx_n_s_ret, __pyx_k_ret, sizeof(__pyx_k_ret), 0, 0, 1, 1},
   {&__pyx_n_s_robotangle, __pyx_k_robotangle, sizeof(__pyx_k_robotangle), 0, 0, 1, 1},
   {&__pyx_n_s_robotlocation, __pyx_k_robotlocation, sizeof(__pyx_k_robotlocation), 0, 0, 1, 1},
   {&__pyx_n_s_round, __pyx_k_round, sizeof(__pyx_k_round), 0, 0, 1, 1},
@@ -7384,21 +5889,17 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
   {&__pyx_n_s_slope, __pyx_k_slope, sizeof(__pyx_k_slope), 0, 0, 1, 1},
   {&__pyx_n_s_slopeang, __pyx_k_slopeang, sizeof(__pyx_k_slopeang), 0, 0, 1, 1},
-  {&__pyx_n_s_solveXInter, __pyx_k_solveXInter, sizeof(__pyx_k_solveXInter), 0, 0, 1, 1},
   {&__pyx_n_s_tan, __pyx_k_tan, sizeof(__pyx_k_tan), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
-  {&__pyx_n_s_v, __pyx_k_v, sizeof(__pyx_k_v), 0, 0, 1, 1},
-  {&__pyx_n_s_w, __pyx_k_w, sizeof(__pyx_k_w), 0, 0, 1, 1},
   {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
-  {&__pyx_n_s_xdif, __pyx_k_xdif, sizeof(__pyx_k_xdif), 0, 0, 1, 1},
   {&__pyx_n_s_y, __pyx_k_y, sizeof(__pyx_k_y), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(0, 2, __pyx_L1_error)
-  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(1, 150, __pyx_L1_error)
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 206, __pyx_L1_error)
-  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(1, 213, __pyx_L1_error)
+  __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(1, 119, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 176, __pyx_L1_error)
+  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(1, 214, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -7427,167 +5928,40 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "cysimlidar.pyx":213
- * 
- * def outputJsonOfInters(rayinters, location):
- *     lidarsim = open("lidarsim.json", "w")             # <<<<<<<<<<<<<<
- *     json.dump({
- *         "Name": "Lidar Simulation",
- */
-  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_kp_s_lidarsim_json, __pyx_n_s_w); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(1, 213, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
-
-  /* "cysimlidar.pyx":264
- * def findLinesFromPoints(points):
+  /* "cysimlidar.pyx":227
+ * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)
  */
-  __pyx_slice__4 = PySlice_New(Py_None, __pyx_int_neg_1, Py_None); if (unlikely(!__pyx_slice__4)) __PYX_ERR(1, 264, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__4);
-  __Pyx_GIVEREF(__pyx_slice__4);
+  __pyx_slice__3 = PySlice_New(Py_None, __pyx_int_neg_1, Py_None); if (unlikely(!__pyx_slice__3)) __PYX_ERR(1, 227, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__3);
+  __Pyx_GIVEREF(__pyx_slice__3);
 
-  /* "cysimlidar.pyx":271
- * 
- * def main():
- *     angledRayIntersects(Point(250, 350), 0, 1, debug = False)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_int_250, __pyx_int_350); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(1, 271, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__5);
-  __Pyx_GIVEREF(__pyx_tuple__5);
-
-  /* "cysimlidar.pyx":55
- *     return inter
- * 
- * def findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
- *     xdif = p1.x - p2.x
- *     if xdif == 0:
- */
-  __pyx_tuple__6 = PyTuple_Pack(5, __pyx_n_s_self, __pyx_n_s_p1, __pyx_n_s_p2, __pyx_n_s_xdif, __pyx_n_s_slope); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(1, 55, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
-  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(3, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_findSlope, 55, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 55, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":74
+  /* "cysimlidar.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
  *         self.p1 = p1
  *         self.p2 = p2
  */
-  __pyx_tuple__8 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_p1, __pyx_n_s_p2); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(1, 74, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_init, 74, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(1, 74, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_p1, __pyx_n_s_p2); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(1, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_init, 59, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 59, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":106
- * 
- * 
- * def solveXInter(self, obj):             # <<<<<<<<<<<<<<
- *     """Solves for the x intercept between two lines in slope"""
- *     v = self.slope - obj.slope
- */
-  __pyx_tuple__10 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_obj, __pyx_n_s_v, __pyx_n_s_c); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(1, 106, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_solveXInter, 106, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(1, 106, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":121
- * 
- * 
- * def findinter(self, obj):             # <<<<<<<<<<<<<<
- *     if self.slope is None or obj.slope is None:
- *         if self.slope is None:
- */
-  __pyx_tuple__12 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_obj, __pyx_n_s_objs, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_point); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(1, 121, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_findinter, 121, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(1, 121, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":142
+  /* "cysimlidar.pyx":111
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
  *         self.ang = ang
- *         self.point = point
+ *         self.p1 = point
  */
-  __pyx_tuple__14 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_ang, __pyx_n_s_point, __pyx_n_s_slopeang); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(1, 142, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(3, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_init, 142, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(1, 142, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":185
- * 
- * # Function that needs the most optimizing
- * def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False):             # <<<<<<<<<<<<<<
- *     rayinters = {}
- *     debuginters = []
- */
-  __pyx_tuple__16 = PyTuple_Pack(9, __pyx_n_s_robotlocation, __pyx_n_s_robotangle, __pyx_n_s_samplerate, __pyx_n_s_debug, __pyx_n_s_rayinters, __pyx_n_s_debuginters, __pyx_n_s_fieldlines, __pyx_n_s_ang, __pyx_n_s_i); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(1, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__16);
-  __Pyx_GIVEREF(__pyx_tuple__16);
-  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(4, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_angledRayIntersects, 185, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(1, 185, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":199
- * 
- * 
- * def compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
- *     angles = []
- *     inters = []
- */
-  __pyx_tuple__18 = PyTuple_Pack(7, __pyx_n_s_rayinters, __pyx_n_s_robotangle, __pyx_n_s_angles, __pyx_n_s_inters, __pyx_n_s_adjustedinters, __pyx_n_s_angle, __pyx_n_s_ind); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(1, 199, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
-  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_compForAngle, 199, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(1, 199, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":212
- *     return adjustedinters
- * 
- * def outputJsonOfInters(rayinters, location):             # <<<<<<<<<<<<<<
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({
- */
-  __pyx_tuple__20 = PyTuple_Pack(3, __pyx_n_s_rayinters, __pyx_n_s_location, __pyx_n_s_lidarsim); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(1, 212, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_outputJsonOfInters, 212, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(1, 212, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":234
- * 
- * 
- * def makeDictOfDists(inters, location):             # <<<<<<<<<<<<<<
- *     dists = {}
- *     for point in inters:
- */
-  __pyx_tuple__22 = PyTuple_Pack(4, __pyx_n_s_inters, __pyx_n_s_location, __pyx_n_s_dists, __pyx_n_s_point); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(1, 234, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(2, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_makeDictOfDists, 234, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(1, 234, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":262
- * 
- * 
- * def findLinesFromPoints(points):             # <<<<<<<<<<<<<<
- *     ret = []
- *     for ind, point in enumerate(points[:-1]):
- */
-  __pyx_tuple__24 = PyTuple_Pack(5, __pyx_n_s_points, __pyx_n_s_ret, __pyx_n_s_ind, __pyx_n_s_point, __pyx_n_s_pair); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(1, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_findLinesFromPoints, 262, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(1, 262, __pyx_L1_error)
-
-  /* "cysimlidar.pyx":270
- * 
- * 
- * def main():             # <<<<<<<<<<<<<<
- *     angledRayIntersects(Point(250, 350), 0, 1, debug = False)
- * 
- */
-  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_main_2, 270, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(1, 270, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_ang, __pyx_n_s_point, __pyx_n_s_slopeang); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(1, 111, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__6);
+  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(3, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_init, 111, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 111, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7601,11 +5975,9 @@ static int __Pyx_InitGlobals(void) {
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_int_4 = PyInt_FromLong(4); if (unlikely(!__pyx_int_4)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __pyx_int_5 = PyInt_FromLong(5); if (unlikely(!__pyx_int_5)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_int_90 = PyInt_FromLong(90); if (unlikely(!__pyx_int_90)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __pyx_int_250 = PyInt_FromLong(250); if (unlikely(!__pyx_int_250)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __pyx_int_350 = PyInt_FromLong(350); if (unlikely(!__pyx_int_350)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_int_360 = PyInt_FromLong(360); if (unlikely(!__pyx_int_360)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_int_neg_1 = PyInt_FromLong(-1); if (unlikely(!__pyx_int_neg_1)) __PYX_ERR(1, 1, __pyx_L1_error)
   return 0;
@@ -7751,10 +6123,10 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 7, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
   __pyx_type_10cysimlidar_Point.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Point", (PyObject *)&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 7, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 7, __pyx_L1_error)
+  if (PyObject_SetAttrString(__pyx_m, "Point", (PyObject *)&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
   __pyx_ptype_10cysimlidar_Point = &__pyx_type_10cysimlidar_Point;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
@@ -7764,206 +6136,98 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
 
-  /* "cysimlidar.pyx":4
- * # 1-6-2018
+  /* "cysimlidar.pyx":5
  * #
+ * 
  * import json             # <<<<<<<<<<<<<<
  * import numpy as np
  * 
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_json, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 4, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_json, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_json, __pyx_t_1) < 0) __PYX_ERR(1, 4, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_json, __pyx_t_1) < 0) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":5
- * #
+  /* "cysimlidar.pyx":6
+ * 
  * import json
  * import numpy as np             # <<<<<<<<<<<<<<
  * 
  * cdef class Point:
  */
-  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(1, 5, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(1, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":55
- *     return inter
- * 
- * def findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
- *     xdif = p1.x - p2.x
- *     if xdif == 0:
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_1findSlope, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 55, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_findSlope, __pyx_t_1) < 0) __PYX_ERR(1, 55, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":72
+  /* "cysimlidar.pyx":57
  * 
  * 
  * class LineSeg:             # <<<<<<<<<<<<<<
  * 
  *     def __init__(self, p1, p2):
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_LineSeg, __pyx_n_s_LineSeg, (PyObject *) NULL, __pyx_n_s_cysimlidar, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 72, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_LineSeg, __pyx_n_s_LineSeg, (PyObject *) NULL, __pyx_n_s_cysimlidar, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "cysimlidar.pyx":74
+  /* "cysimlidar.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
  *         self.p1 = p1
  *         self.p2 = p2
  */
-  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10cysimlidar_7LineSeg_1__init__, 0, __pyx_n_s_LineSeg___init, NULL, __pyx_n_s_cysimlidar, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 74, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10cysimlidar_7LineSeg_1__init__, 0, __pyx_n_s_LineSeg___init, NULL, __pyx_n_s_cysimlidar, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(1, 74, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(1, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":72
+  /* "cysimlidar.pyx":57
  * 
  * 
  * class LineSeg:             # <<<<<<<<<<<<<<
  * 
  *     def __init__(self, p1, p2):
  */
-  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_LineSeg, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 72, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_LineSeg, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_LineSeg, __pyx_t_2) < 0) __PYX_ERR(1, 72, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_LineSeg, __pyx_t_2) < 0) __PYX_ERR(1, 57, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":106
- * 
- * 
- * def solveXInter(self, obj):             # <<<<<<<<<<<<<<
- *     """Solves for the x intercept between two lines in slope"""
- *     v = self.slope - obj.slope
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_3solveXInter, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 106, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_solveXInter, __pyx_t_1) < 0) __PYX_ERR(1, 106, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":121
- * 
- * 
- * def findinter(self, obj):             # <<<<<<<<<<<<<<
- *     if self.slope is None or obj.slope is None:
- *         if self.slope is None:
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_5findinter, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 121, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_findinter, __pyx_t_1) < 0) __PYX_ERR(1, 121, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":141
+  /* "cysimlidar.pyx":110
  * 
  * 
  * class Ray:             # <<<<<<<<<<<<<<
  *     def __init__(self, float ang, Point point):
  *         self.ang = ang
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Ray, __pyx_n_s_Ray, (PyObject *) NULL, __pyx_n_s_cysimlidar, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 141, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Ray, __pyx_n_s_Ray, (PyObject *) NULL, __pyx_n_s_cysimlidar, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "cysimlidar.pyx":142
+  /* "cysimlidar.pyx":111
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
  *         self.ang = ang
- *         self.point = point
+ *         self.p1 = point
  */
-  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10cysimlidar_3Ray_1__init__, 0, __pyx_n_s_Ray___init, NULL, __pyx_n_s_cysimlidar, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 142, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10cysimlidar_3Ray_1__init__, 0, __pyx_n_s_Ray___init, NULL, __pyx_n_s_cysimlidar, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(1, 142, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(1, 111, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":141
+  /* "cysimlidar.pyx":110
  * 
  * 
  * class Ray:             # <<<<<<<<<<<<<<
  *     def __init__(self, float ang, Point point):
  *         self.ang = ang
  */
-  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_Ray, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 141, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_Ray, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Ray, __pyx_t_2) < 0) __PYX_ERR(1, 141, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Ray, __pyx_t_2) < 0) __PYX_ERR(1, 110, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":185
- * 
- * # Function that needs the most optimizing
- * def angledRayIntersects(robotlocation, robotangle, samplerate = 1, debug = False):             # <<<<<<<<<<<<<<
- *     rayinters = {}
- *     debuginters = []
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_7angledRayIntersects, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 185, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_angledRayIntersects, __pyx_t_1) < 0) __PYX_ERR(1, 185, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":199
- * 
- * 
- * def compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
- *     angles = []
- *     inters = []
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_9compForAngle, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 199, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_compForAngle, __pyx_t_1) < 0) __PYX_ERR(1, 199, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":212
- *     return adjustedinters
- * 
- * def outputJsonOfInters(rayinters, location):             # <<<<<<<<<<<<<<
- *     lidarsim = open("lidarsim.json", "w")
- *     json.dump({
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_11outputJsonOfInters, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 212, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_outputJsonOfInters, __pyx_t_1) < 0) __PYX_ERR(1, 212, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":234
- * 
- * 
- * def makeDictOfDists(inters, location):             # <<<<<<<<<<<<<<
- *     dists = {}
- *     for point in inters:
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_13makeDictOfDists, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 234, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_makeDictOfDists, __pyx_t_1) < 0) __PYX_ERR(1, 234, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":262
- * 
- * 
- * def findLinesFromPoints(points):             # <<<<<<<<<<<<<<
- *     ret = []
- *     for ind, point in enumerate(points[:-1]):
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_15findLinesFromPoints, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_findLinesFromPoints, __pyx_t_1) < 0) __PYX_ERR(1, 262, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "cysimlidar.pyx":270
- * 
- * 
- * def main():             # <<<<<<<<<<<<<<
- *     angledRayIntersects(Point(250, 350), 0, 1, debug = False)
- * 
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10cysimlidar_17main, NULL, __pyx_n_s_cysimlidar); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 270, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_main_2, __pyx_t_1) < 0) __PYX_ERR(1, 270, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "cysimlidar.pyx":1
@@ -8378,48 +6642,6 @@ bad:
 }
 #endif
 
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
-}
-
 /* PyIntBinop */
 #if !CYTHON_COMPILING_IN_PYPY
 static PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED long intval, CYTHON_UNUSED int inplace) {
@@ -8505,6 +6727,48 @@ static PyObject* __Pyx_PyInt_EqObjC(PyObject *op1, PyObject *op2, CYTHON_UNUSED 
 }
 #endif
 
+/* WriteUnraisableException */
+static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
+    }
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
+}
+
 /* GetModuleGlobalName */
 static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
     PyObject *result;
@@ -8522,6 +6786,29 @@ static CYTHON_INLINE PyObject *__Pyx_GetModuleGlobalName(PyObject *name) {
     }
     return result;
 }
+
+/* PyCFunctionFastCall */
+  #if CYTHON_FAST_PYCCALL
+static CYTHON_INLINE PyObject * __Pyx_PyCFunction_FastCall(PyObject *func_obj, PyObject **args, Py_ssize_t nargs) {
+    PyCFunctionObject *func = (PyCFunctionObject*)func_obj;
+    PyCFunction meth = PyCFunction_GET_FUNCTION(func);
+    PyObject *self = PyCFunction_GET_SELF(func);
+    int flags = PyCFunction_GET_FLAGS(func);
+    assert(PyCFunction_Check(func));
+    assert(METH_FASTCALL == (flags & ~(METH_CLASS | METH_STATIC | METH_COEXIST | METH_KEYWORDS)));
+    assert(nargs >= 0);
+    assert(nargs == 0 || args != NULL);
+    /* _PyCFunction_FastCallDict() must not be called with an exception set,
+       because it may clear it (directly or indirectly) and so the
+       caller loses its exception */
+    assert(!PyErr_Occurred());
+    if ((PY_VERSION_HEX < 0x030700A0) || unlikely(flags & METH_KEYWORDS)) {
+        return (*((__Pyx_PyCFunctionFastWithKeywords)meth)) (self, args, nargs, NULL);
+    } else {
+        return (*((__Pyx_PyCFunctionFast)meth)) (self, args, nargs);
+    }
+}
+#endif
 
 /* PyFunctionFastCall */
   #if CYTHON_FAST_PYCALL
@@ -8643,29 +6930,6 @@ done:
 #endif
 #endif
 
-/* PyCFunctionFastCall */
-  #if CYTHON_FAST_PYCCALL
-static CYTHON_INLINE PyObject * __Pyx_PyCFunction_FastCall(PyObject *func_obj, PyObject **args, Py_ssize_t nargs) {
-    PyCFunctionObject *func = (PyCFunctionObject*)func_obj;
-    PyCFunction meth = PyCFunction_GET_FUNCTION(func);
-    PyObject *self = PyCFunction_GET_SELF(func);
-    int flags = PyCFunction_GET_FLAGS(func);
-    assert(PyCFunction_Check(func));
-    assert(METH_FASTCALL == (flags & ~(METH_CLASS | METH_STATIC | METH_COEXIST | METH_KEYWORDS)));
-    assert(nargs >= 0);
-    assert(nargs == 0 || args != NULL);
-    /* _PyCFunction_FastCallDict() must not be called with an exception set,
-       because it may clear it (directly or indirectly) and so the
-       caller loses its exception */
-    assert(!PyErr_Occurred());
-    if ((PY_VERSION_HEX < 0x030700A0) || unlikely(flags & METH_KEYWORDS)) {
-        return (*((__Pyx_PyCFunctionFastWithKeywords)meth)) (self, args, nargs, NULL);
-    } else {
-        return (*((__Pyx_PyCFunctionFast)meth)) (self, args, nargs);
-    }
-}
-#endif
-
 /* PyObjectCallMethO */
   #if CYTHON_COMPILING_IN_CPYTHON
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject *arg) {
@@ -8725,93 +6989,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
     return result;
 }
 #endif
-
-/* GetItemInt */
-  static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j) {
-    PyObject *r;
-    if (!j) return NULL;
-    r = PyObject_GetItem(o, j);
-    Py_DECREF(j);
-    return r;
-}
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
-                                                              CYTHON_NCP_UNUSED int wraparound,
-                                                              CYTHON_NCP_UNUSED int boundscheck) {
-#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    Py_ssize_t wrapped_i = i;
-    if (wraparound & unlikely(i < 0)) {
-        wrapped_i += PyList_GET_SIZE(o);
-    }
-    if ((!boundscheck) || likely((0 <= wrapped_i) & (wrapped_i < PyList_GET_SIZE(o)))) {
-        PyObject *r = PyList_GET_ITEM(o, wrapped_i);
-        Py_INCREF(r);
-        return r;
-    }
-    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
-#else
-    return PySequence_GetItem(o, i);
-#endif
-}
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
-                                                              CYTHON_NCP_UNUSED int wraparound,
-                                                              CYTHON_NCP_UNUSED int boundscheck) {
-#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    Py_ssize_t wrapped_i = i;
-    if (wraparound & unlikely(i < 0)) {
-        wrapped_i += PyTuple_GET_SIZE(o);
-    }
-    if ((!boundscheck) || likely((0 <= wrapped_i) & (wrapped_i < PyTuple_GET_SIZE(o)))) {
-        PyObject *r = PyTuple_GET_ITEM(o, wrapped_i);
-        Py_INCREF(r);
-        return r;
-    }
-    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
-#else
-    return PySequence_GetItem(o, i);
-#endif
-}
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, int is_list,
-                                                     CYTHON_NCP_UNUSED int wraparound,
-                                                     CYTHON_NCP_UNUSED int boundscheck) {
-#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS && CYTHON_USE_TYPE_SLOTS
-    if (is_list || PyList_CheckExact(o)) {
-        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyList_GET_SIZE(o);
-        if ((!boundscheck) || (likely((n >= 0) & (n < PyList_GET_SIZE(o))))) {
-            PyObject *r = PyList_GET_ITEM(o, n);
-            Py_INCREF(r);
-            return r;
-        }
-    }
-    else if (PyTuple_CheckExact(o)) {
-        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyTuple_GET_SIZE(o);
-        if ((!boundscheck) || likely((n >= 0) & (n < PyTuple_GET_SIZE(o)))) {
-            PyObject *r = PyTuple_GET_ITEM(o, n);
-            Py_INCREF(r);
-            return r;
-        }
-    } else {
-        PySequenceMethods *m = Py_TYPE(o)->tp_as_sequence;
-        if (likely(m && m->sq_item)) {
-            if (wraparound && unlikely(i < 0) && likely(m->sq_length)) {
-                Py_ssize_t l = m->sq_length(o);
-                if (likely(l >= 0)) {
-                    i += l;
-                } else {
-                    if (!PyErr_ExceptionMatches(PyExc_OverflowError))
-                        return NULL;
-                    PyErr_Clear();
-                }
-            }
-            return m->sq_item(o, i);
-        }
-    }
-#else
-    if (is_list || PySequence_Check(o)) {
-        return PySequence_GetItem(o, i);
-    }
-#endif
-    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
-}
 
 /* ArgTypeTest */
   static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact)
@@ -9233,6 +7410,93 @@ static CYTHON_INLINE int __Pyx_SetItemInt_Fast(PyObject *o, Py_ssize_t i, PyObje
     }
 #endif
     return __Pyx_SetItemInt_Generic(o, PyInt_FromSsize_t(i), v);
+}
+
+/* GetItemInt */
+    static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j) {
+    PyObject *r;
+    if (!j) return NULL;
+    r = PyObject_GetItem(o, j);
+    Py_DECREF(j);
+    return r;
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
+                                                              CYTHON_NCP_UNUSED int wraparound,
+                                                              CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    Py_ssize_t wrapped_i = i;
+    if (wraparound & unlikely(i < 0)) {
+        wrapped_i += PyList_GET_SIZE(o);
+    }
+    if ((!boundscheck) || likely((0 <= wrapped_i) & (wrapped_i < PyList_GET_SIZE(o)))) {
+        PyObject *r = PyList_GET_ITEM(o, wrapped_i);
+        Py_INCREF(r);
+        return r;
+    }
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+#else
+    return PySequence_GetItem(o, i);
+#endif
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
+                                                              CYTHON_NCP_UNUSED int wraparound,
+                                                              CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    Py_ssize_t wrapped_i = i;
+    if (wraparound & unlikely(i < 0)) {
+        wrapped_i += PyTuple_GET_SIZE(o);
+    }
+    if ((!boundscheck) || likely((0 <= wrapped_i) & (wrapped_i < PyTuple_GET_SIZE(o)))) {
+        PyObject *r = PyTuple_GET_ITEM(o, wrapped_i);
+        Py_INCREF(r);
+        return r;
+    }
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+#else
+    return PySequence_GetItem(o, i);
+#endif
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, int is_list,
+                                                     CYTHON_NCP_UNUSED int wraparound,
+                                                     CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS && CYTHON_USE_TYPE_SLOTS
+    if (is_list || PyList_CheckExact(o)) {
+        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyList_GET_SIZE(o);
+        if ((!boundscheck) || (likely((n >= 0) & (n < PyList_GET_SIZE(o))))) {
+            PyObject *r = PyList_GET_ITEM(o, n);
+            Py_INCREF(r);
+            return r;
+        }
+    }
+    else if (PyTuple_CheckExact(o)) {
+        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyTuple_GET_SIZE(o);
+        if ((!boundscheck) || likely((n >= 0) & (n < PyTuple_GET_SIZE(o)))) {
+            PyObject *r = PyTuple_GET_ITEM(o, n);
+            Py_INCREF(r);
+            return r;
+        }
+    } else {
+        PySequenceMethods *m = Py_TYPE(o)->tp_as_sequence;
+        if (likely(m && m->sq_item)) {
+            if (wraparound && unlikely(i < 0) && likely(m->sq_length)) {
+                Py_ssize_t l = m->sq_length(o);
+                if (likely(l >= 0)) {
+                    i += l;
+                } else {
+                    if (!PyErr_ExceptionMatches(PyExc_OverflowError))
+                        return NULL;
+                    PyErr_Clear();
+                }
+            }
+            return m->sq_item(o, i);
+        }
+    }
+#else
+    if (is_list || PySequence_Check(o)) {
+        return PySequence_GetItem(o, i);
+    }
+#endif
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
 }
 
 /* PyObjectCallNoArg */
@@ -10435,37 +8699,6 @@ bad:
 }
 
 /* CIntToPy */
-          static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
-    const long neg_one = (long) -1, const_zero = (long) 0;
-    const int is_unsigned = neg_one > const_zero;
-    if (is_unsigned) {
-        if (sizeof(long) < sizeof(long)) {
-            return PyInt_FromLong((long) value);
-        } else if (sizeof(long) <= sizeof(unsigned long)) {
-            return PyLong_FromUnsignedLong((unsigned long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
-            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
-#endif
-        }
-    } else {
-        if (sizeof(long) <= sizeof(long)) {
-            return PyInt_FromLong((long) value);
-#ifdef HAVE_LONG_LONG
-        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
-            return PyLong_FromLongLong((PY_LONG_LONG) value);
-#endif
-        }
-    }
-    {
-        int one = 1; int little = (int)*(unsigned char *)&one;
-        unsigned char *bytes = (unsigned char *)&value;
-        return _PyLong_FromByteArray(bytes, sizeof(long),
-                                     little, !is_unsigned);
-    }
-}
-
-/* CIntToPy */
           static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
     const int neg_one = (int) -1, const_zero = (int) 0;
     const int is_unsigned = neg_one > const_zero;
@@ -10492,6 +8725,37 @@ bad:
         int one = 1; int little = (int)*(unsigned char *)&one;
         unsigned char *bytes = (unsigned char *)&value;
         return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
+
+/* CIntToPy */
+          static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
+    const long neg_one = (long) -1, const_zero = (long) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(long) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(long) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(long) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(long) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(long) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(long),
                                      little, !is_unsigned);
     }
 }
