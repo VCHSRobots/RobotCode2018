@@ -14,3 +14,6 @@ Paths are bright green lines.
 Anomolous Elements are shown in red, and are given a solidity of "2".
 Virtual Elements are shown in white, and are given a solidity of "3". These are elements used in the PathFinding process. They are simply larger outlines of existing solid elements.
 
+Pathin' around elements:
+
+ Pathfinding algorithms: Theta* < Lazy Theta* with Optimizations < Anya

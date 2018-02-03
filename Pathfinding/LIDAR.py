@@ -22,22 +22,32 @@ Config = Configuration.LoadConfig()
 # Functions.
 #
 
-def Compare():
+def Compare(CurrentData, ExpectedData):
+    if len(CurrentData) > len(ExpectedData):
+        ExpectedData = ExpandExpectedData(ExpectedData) # Expand ExpectedData to the size of the observed CurrentData. This preserves the higher data density of CurrentData, which will be usefull if any AnomalousElements are detected.
+    elif len(CurrentData) < len(ExpectedData):
+        ExpectedData = CompressCurrentData(ExpectedData) # Compress ExpectedData to the size of the observed CurrentData. This at least preserves the original data density of CurrentData.
+    # TODO: Calculate difference in angle, (X, Y). Use Dot-Product multiplication? Also detect any AnomalousElements.
     pass
 
-def CompressCurrentData(Data):
-    pass
+def CompressExpectedData(ExpectedData):
+    # TODO: Compress.
+    return ExpectedData
+
+def ExpandExpectedData(ExpectedData):
+    # TODO: Expand.
+    return ExpectedData
 
 def GetCurrentData():
     FOV = Config["LIDARFOV"]
-    CurrentPosition = None
-    CurrentRotation = None
-    AnomalousElements = None
-    # TODO: Get latest LIDAR sweep data, parse. Get position data, rotation data, and any anomalous elements using the dot products of two lists (MapData and lidar measurements). 
-    return CurrentPosition, CurrentRotation, AnomalousElements
+    CurrentData = None
+    # TODO: Get latest LIDAR sweep data, parse.
+    return CurrentData
 
-def GetExpectedData():
-    return ExpectedPosition, ExpectedRotation # We already know the expected map elements via MapData["Elements"].
+def GetExpectedData(CurrentPosition, CurrentRotation):
+    FOV = Config["LIDARFOV"]
+    ExpectedData = None
+    return ExpectedData
 
 #
 # Mainline code.
