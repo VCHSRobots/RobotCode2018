@@ -94,6 +94,11 @@ def Anya(GridData, StartPoint, EndPoint):
     #
 
     StepPathData = []
+    StartInterval = [True, StartPoint, True] # True = Closed, False = Open
+    StartRoot = [-1, -1]
+    Open = [[StartInterval, StartRoot]]
+    while Open is not None:
+        [Interval, Root]
     return StepPathData
 
 def ExpandMapElements(MapData):
@@ -298,6 +303,7 @@ def RasterizeMapData(MapData):
     def BresenhamLinePoints(StartPoint, EndPoint):
         """
         Returns every point that lies along the line created by the StartPoint and the EndPoint.
+        Algorithm based on the example at http://www.roguebasin.com/index.php?title=Bresenham%27s_Line_Algorithm#Python.
         """
         X1, Y1 = [int(round(Number)) for Number in StartPoint]
         X2, Y2 = [int(round(Number)) for Number in EndPoint]
