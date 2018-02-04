@@ -55,7 +55,7 @@ def Anya(GridData, StartPoint, EndPoint):
             A, B, C, D = C, D, (K * C - A), (K * D - B)
             FareySequence.append(A, B)
         return FareySequence
-    def GenerateSuccessors(SearchNode):
+    def GenerateSuccessors(Node):
         """
         Generates the successors of an Anya search node.
         """
@@ -64,7 +64,7 @@ def Anya(GridData, StartPoint, EndPoint):
             Generates the successors of a cone search node.
             """
             pass
-        def GenerateFlatSuccessors(Point, Root):
+        def GenerateFlatSuccessors(PointOne, Root):
             """
             Generates the successors of a flat search node.
             """
@@ -80,14 +80,45 @@ def Anya(GridData, StartPoint, EndPoint):
         """
         Determines whether two points have a line-of-sight; that is, if a line drawn between them does not intersect with any solid elements.
         """
-        LineOfSight = False
-        return LineOfSight
+        LinePoints = BresenhamLinePoints(PointOne, PointTwo)
+        if any(GridData(Point[1][Point[0]]) for Point in LinePoints) == 1:
+            return False
+        else:
+            return True
     def NodeType(Node):
         """
         Determines and returns the type of an Anya search node.
         """
-        NodeType = "" # "START" = Start Node; "CONE" = Cone Node; "FLAT" = Flat Node
-        return NodeType
+        Interval, Root = Node
+        if Root == [-1, -1]: # If the root of the node is off the map.
+            return "START"
+        elif Root[1] != Interval[1][1] and Root[1] != Interval[len(Interval) - 2][1]: # If the root of the node is not on the same line (does not have the same Y value) as the points contained in the Interval.
+            return "CONE"
+        elif Root[1] == Interval[1][1] and Root[1] == Interval[len(Interval) - 2][1]: # If the root of the node is on the same line as the (has the same Y value) as the points contained in the Interval.
+            return "FLAT"
+    def ProjectNode(Node):
+        """
+        Computes and returns interval projection for the node.
+        """
+        pass
+    def ShouldPrune(Node):
+        """
+        Determines whether an Anya search node should be pruned.
+        """
+        def IsCulDeSac(Node):
+            """
+            Determines if an Anya search node is a "Cul De Sac".
+            """
+            pass
+        def IsIntermediate(Node):
+            """
+            Determines if an Anya search node is an intermediate node.
+            """
+            pass
+        if IsCulDeSac(Node) or IsIntermediate(Node):
+            return True
+        else:
+            return False # Redundant, but explicit! :)
 
     #
     # Mainline function code.
@@ -96,10 +127,50 @@ def Anya(GridData, StartPoint, EndPoint):
     StepPathData = []
     StartInterval = [True, StartPoint, True] # True = Closed, False = Open
     StartRoot = [-1, -1]
-    Open = [[StartInterval, StartRoot]]
+    Open = [[StartInterval, StartRoot]] # The start search node's root is located off the grid.
     while Open is not None:
-        [Interval, Root]
+        [Interval, Root] = Open.pop()
+        if EndPoint in Interval:
+            return PathTo(Interval)
+        for all([Interval, Root] in GenerateSuccessors([Interval, Root])):
+            if not ShouldPrune([Interval, Root]): # Successor pruning.
+                Open = set().union([Open, [[Interval, Root]]])
     return StepPathData
+
+def BresenhamLinePoints(StartPoint, EndPoint):
+        """
+        Returns every point that lies along the line created by the StartPoint and the EndPoint.
+        Algorithm based on the example at http://www.roguebasin.com/index.php?title=Bresenham%27s_Line_Algorithm#Python.
+        """
+        X1, Y1 = [int(round(Number)) for Number in StartPoint]
+        X2, Y2 = [int(round(Number)) for Number in EndPoint]
+        DX = X2 - X1
+        DY = Y2 - Y1
+        IsSteep = abs(DY) > abs(DX)
+        if IsSteep:
+            X1, Y1 = Y1, X1
+            X2, Y2 = Y2, X2
+        Swapped = False
+        if X1 > X2:
+            X1, X2 = X2, X1
+            Y1, Y2 = Y2, Y1
+            Swapped = True
+        DX = X2 - X1
+        DY = Y2 - Y1
+        Error = int(DX / 2.0)
+        YStep = 1 if Y1 < Y2 else -1
+        Y = Y1
+        Points = []
+        for X in range(X1, X2 + 1):
+            Coordinate = (Y, X) if IsSteep else (X, Y)
+            Points.append(Coordinate)
+            Error -= abs(DY)
+            if Error < 0:
+                Y += YStep
+                Error += DX
+        if Swapped:
+            Points.reverse()
+        return Points
 
 def ExpandMapElements(MapData):
     """
@@ -300,40 +371,6 @@ def RasterizeMapData(MapData):
     """
     Converts MapData to raster format. Every point in the element is described, as opposed to the original format containing just corners.
     """
-    def BresenhamLinePoints(StartPoint, EndPoint):
-        """
-        Returns every point that lies along the line created by the StartPoint and the EndPoint.
-        Algorithm based on the example at http://www.roguebasin.com/index.php?title=Bresenham%27s_Line_Algorithm#Python.
-        """
-        X1, Y1 = [int(round(Number)) for Number in StartPoint]
-        X2, Y2 = [int(round(Number)) for Number in EndPoint]
-        DX = X2 - X1
-        DY = Y2 - Y1
-        IsSteep = abs(DY) > abs(DX)
-        if IsSteep:
-            X1, Y1 = Y1, X1
-            X2, Y2 = Y2, X2
-        Swapped = False
-        if X1 > X2:
-            X1, X2 = X2, X1
-            Y1, Y2 = Y2, Y1
-            Swapped = True
-        DX = X2 - X1
-        DY = Y2 - Y1
-        Error = int(DX / 2.0)
-        YStep = 1 if Y1 < Y2 else -1
-        Y = Y1
-        Points = []
-        for X in range(X1, X2 + 1):
-            Coordinate = (Y, X) if IsSteep else (X, Y)
-            Points.append(Coordinate)
-            Error -= abs(DY)
-            if Error < 0:
-                Y += YStep
-                Error += DX
-        if Swapped:
-            Points.reverse()
-        return Points
     Log("Converting MapData from Vector to Raster format.", 0)
     RasterMapData = [] # Grid. Dimensions are [W] * H. To get map height, do len(RasterMapData). To get map width, just get the len() of any one of the elements.
     # Create blank grid.
