@@ -7,6 +7,10 @@ import cysimlidar
 import time
 import json
 
+
+size = [324, 360]
+
+
 def catctMyDrift(lidarid, location, robotangle):
     lidardists = parseLidar(lidarid)
     idealdists = cysimlidar.angledRayIntersects(cysimlidar.Point(location[0], location[1]), robotangle)
@@ -16,17 +20,30 @@ def catctMyDrift(lidarid, location, robotangle):
 
 def findBestLocation(lidardists, location, testingrange, angoffsetrange):
     difvsret = {}
-    xs = tuple(range(location[0] - testingrange, location[0] + (testingrange + 1)))
-    ys = tuple(range(location[1] - testingrange, location[1] + (testingrange + 1)))
-    angs = tuple(range(angoffsetrange[0], angoffsetrange[1] + 1))
+    # xs = tuple(range(location[0] - testingrange, location[0] + (testingrange + 1)))
+    # ys = tuple(range(location[1] - testingrange, location[1] + (testingrange + 1)))
+    # angs = tuple(range(location[2] - angoffsetrange, location[2] + angoffsetrange + 1))
+    cordrange = np.array([[location[0] - testingrange, location[0] + testingrange],
+                          [location[1] - testingrange, location[1] + testingrange]])
+    cordrange[cordrange <= 0] = 1
+    cordx = cordrange[0]
+    cordy = cordrange[1]
+    cordx[cordx >= size[0]] = size[0] - 1
+    cordy[cordy >= size[1]] = size[1] - 1
+    cordrange = np.array([cordx[0], cordx[1], cordy[0], cordy[1]])
+    xs = tuple(range(cordrange[0], cordrange[1] + 1))
+    ys = tuple(range(cordrange[2], cordrange[3] + 1))
+    angs = tuple(range(location[2] - angoffsetrange, location[2] + angoffsetrange + 1))
+    fieldlines = cysimlidar.openEnvFile("FRC_Field_2018.map")
     for x in xs:
         for y in ys:
+            postdata = cysimlidar.angledRayIntersects(cysimlidar.Point(x, y), 0, fieldlines)
             for angle in angs:
-                idealdists = cysimlidar.angledRayIntersects(cysimlidar.Point(x, y), angle)
+                idealdists = shiftInds(postdata, angle)
                 # distdifs = findDistDifs(lidardists, idealdists)
                 # lidardists = accountForObstacles(lidardists, measureObstacles(distdifs, sensitivity = 20))
                 difvsret[findDotDif(lidardists, idealdists)] = [(x, y), angle]
-    bestdotdif = difvsret[sorted(difvsret)[-1]]
+    bestdotdif = difvsret[sorted(difvsret)[0]]
     reallocation = [bestdotdif[0]]
     ang = bestdotdif[1]
     return (reallocation, ang), difvsret
@@ -78,22 +95,11 @@ def parseLidar(lidarid):
 
 def findDotDif(lidardists, idealdists):
     #- Uncoment out
-    idealdists = np.array(list(sortDictByVal(findKeysInCommon(idealdists, lidardists)).values()))
-    lidardists = np.array(list(sortDictByVal(lidardists).values()))
-    # idealsum = np.dot(idealdists, idealdists)
+    # idealdists = np.array(idealdists)
+    # lidardists = np.array(lidardists)
+    csum = np.dot(lidardists, lidardists)
     realsum = np.dot(idealdists, lidardists)
-    # Keep comented out
-    # # idealsum = calcDotSum(idealdists, idealdists)
-    # # realsum = calcDotSum(lidardists, idealdists)
-    # End keep comented out
-    # sumdif = idealsum - realsum
-    # if sumdif < 0:
-    #     print("Smaller:", sumdif)
-    # elif sumdif > 0:
-    #     print("Bigger:", sumdif)
-    # return abs(sumdif)
-    #- End uncoment out
-    return realsum
+    return abs(csum - realsum)
 
 
 def findDistDifs(lidardists, idealdists):
@@ -217,6 +223,10 @@ def speedThisProgramUpDramatically():
     json.dump(postpoints, "postpoints.json")
 
 
+def shiftInds(itershift, offset):
+    return np.concatenate((itershift[offset:], itershift[:offset]))
+    # return itershift[offset:] + itershift[:offset]
+
 def measureTime(func):
     start = time.time()
     func()
@@ -226,8 +236,8 @@ def measureTime(func):
 
 def main():
     realpoints = [50, 48]
-    testval = cysimlidar.angledRayIntersects(cysimlidar.Point(realpoints[0], realpoints[1]), 7)
-    printinfo, pointvals = findBestLocation(testval, [49, 49], 2, [-10, 10])
+    testval = shiftInds(cysimlidar.angledRayIntersects(cysimlidar.Point(realpoints[0], realpoints[1]), 0, cysimlidar.openEnvFile("FRC_Field_2018.map")), 7,)
+    printinfo, pointvals = findBestLocation(testval, [49, 49, 2], 5, 10)
     print(printinfo)
     dotSvg(findLargestPointPerAngle(pointvals), realpoints)
 

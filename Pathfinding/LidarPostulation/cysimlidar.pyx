@@ -69,41 +69,44 @@ class LineSeg:
             self.ang = rad2deg(np.arctan(self.slope / 1))
 
 
-# cdef int segIsReal(self, point):
-#     if self.p1.x > self.p2.x:
-#         maxx = self.p1.x
-#         minx = self.p2.x
-#     else:
-#         minx = self.p1.x
-#         maxx = self.p2.x
-#     if self.p1.y > self.p2.y:
-#         maxy = self.p1.y
-#         miny = self.p2.y
-#     else:
-#         miny = self.p1.y
-#         maxy = self.p2.y
-#     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
-#         return 0
-#     else:
-#         return 1
+cdef int segIsReal(self, point):
+    if self.p1.x > self.p2.x:
+        maxx = self.p1.x
+        minx = self.p2.x
+    else:
+        minx = self.p1.x
+        maxx = self.p2.x
+    if self.p1.y > self.p2.y:
+        maxy = self.p1.y
+        miny = self.p2.y
+    else:
+        miny = self.p1.y
+        maxy = self.p2.y
+    if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
+        return 0
+    else:
+        return 1
 
 
 cdef findinter(self, obj):
     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+    UbNumerator = ((X2 - X1) * (Y1 - Y3) - (Y2 - Y1) * (X1 - X3))
     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
-    if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
+    if UaNumerator == 0 and UaDenominator == 0 and UbNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
         return None
     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.
         return None
     else:
         Ua = UaNumerator / UaDenominator
+        Ub = UbNumerator / UbDenominator
         X = X1 + Ua * (X2 - X1)
         Y = Y1 + Ua * (Y2 - Y1)
         point = Point(X, Y)
-        if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
+        # if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
         # if segIsReal(self, point) and rayIsReal(obj, point):
+        if 0 <= Ua <= 1 and 0 <= Ub <= 1:
             return point
 
 
@@ -124,7 +127,11 @@ class Ray:
             self.x = self.p1.x
         else:
             self.inter = (-self.slope * self.p1.x) + self.p1.y
-        self.p2 = Point(point.x + 1, self.p1.y + self.slope)
+        if self.quadrant is 1 or self.quadrant is 4:
+            self.p2 = Point(point.x + 500, point.y + (500 * self.slope))
+        else:
+            self.p2 = Point(point.x - 500, point.y - (500 * self.slope))
+
 
 cdef int rayIsReal(self, point):
     pointquad = isInQuadrant(point, self.p1)
@@ -152,17 +159,15 @@ cdef double dist(p1, p2):
     return (x + y) ** .5
 
 # Function that needs the most optimizing
-cpdef angledRayIntersects(Point robotlocation, robotangle, samplerate = 1):
-    rayinters = {}
-    debuginters = []
-    fieldlines = openEnvFile("FRC_Field_2018.map")
+cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerate = 1):
+    rayinters = []
     cdef int ang = 0
     while ang < 360:
         i = findLineIntersects(ang, robotlocation, fieldlines)
         if i:
-            rayinters[ang] = dist(robotlocation, i)
+            rayinters.append(dist(robotlocation, i))
         ang += samplerate
-    rayinters = compForAngle(rayinters, robotangle)
+    # rayinters = compForAngle(rayinters, robotangle)
     return rayinters
 
 
@@ -209,7 +214,7 @@ cdef list filterNone(filtered):
     return res
 
 
-cdef list openEnvFile(env):
+cpdef list openEnvFile(env):
     lines = []
     file = open(env, "r")
     field = json.load(file)

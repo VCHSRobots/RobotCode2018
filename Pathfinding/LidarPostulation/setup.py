@@ -3,7 +3,7 @@ from Cython.Build import cythonize
 
 
 setup(
-  ext_modules = cythonize("tester.pyx")
+  ext_modules = cythonize("cysimlidar.pyx")
 )
 
 # python setup.py build_ext --inplace

@@ -103,18 +103,15 @@ def findDistDifs(lidardists, idealdists):
 
 
 def shiftInds(itershift, offset):
-    return itershift[offset:] + itershift[:offset]
+    return np.concatenate((itershift[offset:], itershift[:offset]))
+    # return itershift[offset:] + itershift[:offset]
 
 
 def calcDotSum(ideal, real):
     # dotsum = 0
     # for key in ideal:
     #     dotsum += ideal[key] * real[key]
-    ideal = sortDictByVal(ideal)
-    real = sortDictByVal(real)
-    ideals = np.array(list(ideal.values()))
-    reals = np.array(list(real.values()))
-    dotsum = (ideals * reals).sum()
+    dotsum = (ideal * real).sum()
     return dotsum
 
 
@@ -198,7 +195,7 @@ def main():
     testfile = open("postulations{0}.json".format(realpoints[0]))
     testval = json.load(testfile)["({0}, {1})".format(realpoints[0], realpoints[1])]
     testfile.close()
-    printinfo, pointvals = findBestLocation(testval, [49, 49, 30], 10, 30)
+    printinfo, pointvals = findBestLocation(np.array(testval), [49, 49, 30], 10, 30)
     print(printinfo)
     # dotSvg(findLargestPointPerAngle(pointvals), realpoints)
 
