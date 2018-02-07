@@ -98,7 +98,8 @@ def Anya(GridData, StartPoint, EndPoint):
             return "FLAT"
     def ProjectNode(Node):
         """
-        Computes and returns interval projection for the node.
+        Computes and returns the maximum observable interval projection for the node passed.
+        If the projection is invalid, returns False.
         """
         pass
     def ShouldPrune(Node):
@@ -174,7 +175,7 @@ def BresenhamLinePoints(StartPoint, EndPoint):
 
 def ExpandMapElements(MapData):
     """
-    Creates a large "virtual element" around specified solid map elements, and append it to the MapData["Elements"] list. Return the modified MapData.
+    Creates a large "virtual element" around specified solid map elements, and appends it to the MapData["Elements"] list. Return the modified MapData.
     """
     CopiedMapData = deepcopy(MapData)
     RobotRadius = max(Config["RobotDimensions"]) / 2
