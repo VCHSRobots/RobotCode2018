@@ -40,6 +40,30 @@ def Anya(GridData, StartPoint, EndPoint):
     # Sub-functions.
     #
 
+    def IsSurroundedBy(Point):
+        """
+        Return the states of the 8 surrounding points
+        """
+        Status = []
+        for X in range(-1, 2):
+            for Y in range(-1, 2):
+                if X or Y:
+                    if GridData[Point[0] + X, Point[1] + Y]:
+                        Status.append(1)
+                    else:
+                        Status.append(0)
+        return Status
+    def ExtractCorners(MapData):
+        """
+        Create a list of the corners in the Map MapData
+        """
+        Corners = []
+        for Element in MapData["Elements"]:
+            if MapData["Elements"][Element]["Solidity"] > 0:
+                for Point in Element["Points"]:
+                    if sum(IsSurroundedBy(Point)) >= 5: # Checks whether the point is a valid corner
+                        Corners.Append(Point)
+        return Corners
     def FareySequence(N, Descending = False):
         """
         Calculate the Farey Sequence of order N.
@@ -59,6 +83,7 @@ def Anya(GridData, StartPoint, EndPoint):
         """
         Generates the successors of an Anya search node.
         """
+        pass
         def GenerateConeSuccessors(PointOne, PointTwo, Root):
             """
             Generates the successors of a cone search node.
@@ -75,6 +100,12 @@ def Anya(GridData, StartPoint, EndPoint):
             """
             pass
         Successors = []
+        if NodeType(Node) == "CONE":
+            Successors = GenerateConeSuccessors(Node[0][1], Node[0][-2], Node[1])
+        elif NodeType(Node) == "FLAT":
+            Succesors = GenerateFlatSuccessors(Node[0][1], Node[1])
+        elif NodeType(Node) == "START":
+            Successors = GenerateStartSuccessors(Node[0][1:-1])
         return Successors
     def LineOfSight(PointOne, PointTwo):
         """
@@ -92,9 +123,9 @@ def Anya(GridData, StartPoint, EndPoint):
         Interval, Root = Node
         if Root == [-1, -1]: # If the root of the node is off the map.
             return "START"
-        elif Root[1] != Interval[1][1] and Root[1] != Interval[len(Interval) - 2][1]: # If the root of the node is not on the same line (does not have the same Y value) as the points contained in the Interval.
+        elif Root[1] != Interval[1][1] and Root[1] != Interval[-2][1]: # If the root of the node is not on the same line (does not have the same Y value) as the points contained in the Interval.
             return "CONE"
-        elif Root[1] == Interval[1][1] and Root[1] == Interval[len(Interval) - 2][1]: # If the root of the node is on the same line as the (has the same Y value) as the points contained in the Interval.
+        elif Root[1] == Interval[1][1] and Root[1] == Interval[-2][1]: # If the root of the node is on the same line as the (has the same Y value) as the points contained in the Interval.
             return "FLAT"
     def ProjectNode(Node):
         """
@@ -102,6 +133,11 @@ def Anya(GridData, StartPoint, EndPoint):
         If the projection is invalid, returns False.
         """
         pass
+    def IntervalIsTaught(Node):
+        if union(BresenhamLinePoints(StartPoint, EndPoint), BresenhamLinePoints(Node[0][1], Node[0][-2]):
+            return False
+        else:
+            return True
     def ShouldPrune(Node):
         """
         Determines whether an Anya search node should be pruned.
@@ -110,12 +146,18 @@ def Anya(GridData, StartPoint, EndPoint):
             """
             Determines if an Anya search node is a "Cul De Sac".
             """
-            pass
+            for Point in Node[1:-1]:
+                if not LineOfSight(Point, Root):
+                    return False
+            return True
         def IsIntermediate(Node):
             """
             Determines if an Anya search node is an intermediate node.
             """
-            pass
+            if any(point in Node[1:-1] is in Corners):
+                return False
+            else:
+                return True
         if IsCulDeSac(Node) or IsIntermediate(Node):
             return True
         else:
