@@ -35,6 +35,11 @@ def Anya(GridData, StartPoint, EndPoint):
     Find the optimal path between two points on a grid. Returns tuple with each point in the path. Returns False if no path exists.
     Anya implementation based on the paper "Optimal Any-angle Pathfinding in Practice", published in the Journal of Artificial Intelligence Research (JAIR); written by D. Harabor, A. Grastien, D. Oz and V. Aksakalli, 2016.
     """
+    #
+    # Function variables.
+    #
+
+    RootHistory = []
 
     #
     # Sub-functions.
@@ -132,12 +137,10 @@ def Anya(GridData, StartPoint, EndPoint):
         Computes and returns the maximum observable interval projection for the node passed.
         If the projection is invalid, returns False.
         """
-        pass
-    def IntervalIsTaught(Node):
-        if union(BresenhamLinePoints(StartPoint, EndPoint), BresenhamLinePoints(Node[0][1], Node[0][-2]):
-            return False
-        else:
-            return True
+        if NodeType(Node) == "FLAT":
+            pass
+        elif NodeType(Node) == "CONE":
+            pass
     def ShouldPrune(Node):
         """
         Determines whether an Anya search node should be pruned.
@@ -154,7 +157,7 @@ def Anya(GridData, StartPoint, EndPoint):
             """
             Determines if an Anya search node is an intermediate node.
             """
-            if any(point in Node[1:-1] is in Corners):
+            if any(point in Node[1:-1] in Corners):
                 return False
             else:
                 return True

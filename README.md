@@ -31,6 +31,6 @@ Pathfinding uses LIDAR to continually report and correct the robot's orientation
  4. Pi: "`NearSwitch,Deliver,Collect,Scale,Deliver` is the pathing instruction set".
  5. Pi: Calculate optimal route.
  6. Proceed along route, and observe offset between expected and actual LIDAR measurements caused by motor drift.
- 7. Pi > Rio: `X,Y,D`
- 8. Rio: "`X, Y` are the offset in inches."
+ 7. Pi > Rio: `X,D`
+ 8. Rio: "`X` is the target distance and direction."
  9. Rio: "`D` is the offset rotation in degrees."
