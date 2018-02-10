@@ -77,8 +77,8 @@ def Move(Instructions):
             NumberOfPositionEvaluations += 1
     CurrentPosition, CurrentRotation, AnomalousElements = LIDAR.GetCurrentData()
     if AnomalousElements: # If any anomalous elements were detected in the LIDAR scans.
-        pass # Append them to the list of elements on the map.
-    # TODO: For efficiency reasons, only re-path if CurrentPosition and/or CurrentRotation exceed the expected values by a margin greater than the variance described in the configuration file.
+        MapData["Elements"].extend(AnomalousElements)
+        MapData = Pathfinding.ExpandMapElements(MapData)
     PathInformation = Pathfinding.Path(MapData, ParsedInstructions["CurrentPosition"], ParsedInstructions["ElementDistribution"], ParsedInstructions["PathList"])
     Render(MapData, None, PathInformation)
     for Item in PathInformation:
@@ -91,7 +91,6 @@ def Move(Instructions):
                 PathInformation = Pathfinding.VectorizePathInformation(PathInformation)
                 DistanceTraversed += 1
                 # Communicate.Send("") # Send direction command to RoboRio.
-
 
 def ParseUserInput():
     Input = [X.lower() for X in sys.argv[1:]]

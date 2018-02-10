@@ -35,6 +35,9 @@ RenderBorder = Config["RenderImageBorder"]
 #
 
 def Render(MapData, FileName = None, PathInformation = None): # TODO: Simplify FOR statements.
+    """
+    Saves an image with colored lines representing any passed MapData and PathInformation.
+    """
     RenderMapData = deepcopy(MapData) # Make a copy of MapData so that we don't modify the original variable's value.
     # Create blank image.
     Image = np.zeros((RenderMapData["Size"][1] + RenderBorder * 2, RenderMapData["Size"][0] + RenderBorder * 2, 3), np.uint8)

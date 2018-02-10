@@ -16,6 +16,9 @@ import json
 #
 
 def LoadConfig():
+    """
+    Loads configuration data from the file Pathfinding.cfg.
+    """
     with open("Pathfinding.cfg", "r") as File:
         Config = json.load(File)
     return Config
