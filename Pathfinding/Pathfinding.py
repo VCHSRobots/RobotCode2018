@@ -1,4 +1,4 @@
- # -*- coding: utf8 -*-
+# -*- coding: utf8 -*-
 
 """Pathfinding.py
 
@@ -9,6 +9,8 @@ Pathfinding.py calculates the shortest path for the robot between it's current l
 # Built-in imports.
 #
 
+from anya import Anya
+from collections import namedtuple
 from copy import deepcopy
 import math
 from operator import itemgetter
@@ -30,197 +32,44 @@ Config = Configuration.LoadConfig()
 # Functions.
 #
 
-def Anya(GridData, StartPoint, EndPoint):
-    """
-    Find the optimal path between two points on a grid. Returns tuple with each point in the path. Returns False if no path exists.
-    Anya implementation based on the paper "Optimal Any-angle Pathfinding in Practice", published in the Journal of Artificial Intelligence Research (JAIR); written by D. Harabor, A. Grastien, D. Oz and V. Aksakalli, 2016.
-    """
-    #
-    # Function variables.
-    #
-
-    RootHistory = []
-
-    #
-    # Sub-functions.
-    #
-
-    def IsSurroundedBy(Point):
-        """
-        Return the states of the 8 surrounding points
-        """
-        Status = []
-        for X in range(-1, 2):
-            for Y in range(-1, 2):
-                if X or Y:
-                    if GridData[Point[0] + X, Point[1] + Y]:
-                        Status.append(1)
-                    else:
-                        Status.append(0)
-        return Status
-    def ExtractCorners(MapData):
-        """
-        Create a list of the corners in the Map MapData
-        """
-        Corners = []
-        for Element in MapData["Elements"]:
-            if MapData["Elements"][Element]["Solidity"] > 0:
-                for Point in Element["Points"]:
-                    if sum(IsSurroundedBy(Point)) >= 5: # Checks whether the point is a valid corner
-                        Corners.Append(Point)
-        return Corners
-    def FareySequence(N, Descending = False):
-        """
-        Calculate the Farey Sequence of order N.
-        """
-        # N needs to be min(Width, Height)
-        FareySequence = []
-        A, B, C, D = 0, 1, 1, N
-        if Descending:
-            A, C = 1, N - 1
-        FareySequence.append(A, C)
-        while (C <= N and not Descending) or (A > 0 and Descending):
-            K = int((N + B) / D)
-            A, B, C, D = C, D, (K * C - A), (K * D - B)
-            FareySequence.append(A, B)
-        return FareySequence
-    def GenerateSuccessors(Node):
-        """
-        Generates the successors of an Anya search node.
-        """
-        pass
-        def GenerateConeSuccessors(PointOne, PointTwo, Root):
-            """
-            Generates the successors of a cone search node.
-            """
-            pass
-        def GenerateFlatSuccessors(PointOne, Root):
-            """
-            Generates the successors of a flat search node.
-            """
-            pass
-        def GenerateStartSuccessors(Interval):
-            """
-            Generates the successors for the start search node.
-            """
-            pass
-        Successors = []
-        if NodeType(Node) == "CONE":
-            Successors = GenerateConeSuccessors(Node[0][1], Node[0][-2], Node[1])
-        elif NodeType(Node) == "FLAT":
-            Succesors = GenerateFlatSuccessors(Node[0][1], Node[1])
-        elif NodeType(Node) == "START":
-            Successors = GenerateStartSuccessors(Node[0][1:-1])
-        return Successors
-    def LineOfSight(PointOne, PointTwo):
-        """
-        Determines whether two points have a line-of-sight; that is, if a line drawn between them does not intersect with any solid elements.
-        """
-        LinePoints = BresenhamLinePoints(PointOne, PointTwo)
-        if any(GridData(Point[1][Point[0]]) for Point in LinePoints) == 1:
-            return False
-        else:
-            return True
-    def NodeType(Node):
-        """
-        Determines and returns the type of an Anya search node.
-        """
-        Interval, Root = Node
-        if Root == [-1, -1]: # If the root of the node is off the map.
-            return "START"
-        elif Root[1] != Interval[1][1] and Root[1] != Interval[-2][1]: # If the root of the node is not on the same line (does not have the same Y value) as the points contained in the Interval.
-            return "CONE"
-        elif Root[1] == Interval[1][1] and Root[1] == Interval[-2][1]: # If the root of the node is on the same line as the (has the same Y value) as the points contained in the Interval.
-            return "FLAT"
-    def ProjectNode(Node):
-        """
-        Computes and returns the maximum observable interval projection for the node passed.
-        If the projection is invalid, returns False.
-        """
-        if NodeType(Node) == "FLAT":
-            pass
-        elif NodeType(Node) == "CONE":
-            pass
-    def ShouldPrune(Node):
-        """
-        Determines whether an Anya search node should be pruned.
-        """
-        def IsCulDeSac(Node):
-            """
-            Determines if an Anya search node is a "Cul De Sac".
-            """
-            for Point in Node[1:-1]:
-                if not LineOfSight(Point, Root):
-                    return False
-            return True
-        def IsIntermediate(Node):
-            """
-            Determines if an Anya search node is an intermediate node.
-            """
-            if any(point in Node[1:-1] in Corners):
-                return False
-            else:
-                return True
-        if IsCulDeSac(Node) or IsIntermediate(Node):
-            return True
-        else:
-            return False # Redundant, but explicit! :)
-
-    #
-    # Mainline function code.
-    #
-
-    StepPathData = []
-    StartInterval = [True, StartPoint, True] # True = Closed, False = Open
-    StartRoot = [-1, -1]
-    Open = [[StartInterval, StartRoot]] # The start search node's root is located off the grid.
-    while Open is not None:
-        [Interval, Root] = Open.pop()
-        if EndPoint in Interval:
-            return PathTo(Interval)
-        for all([Interval, Root] in GenerateSuccessors([Interval, Root])):
-            if not ShouldPrune([Interval, Root]): # Successor pruning.
-                Open = set().union([Open, [[Interval, Root]]])
-    return StepPathData
-
 def BresenhamLinePoints(StartPoint, EndPoint):
-        """
-        Returns every point that lies along the line created by the StartPoint and the EndPoint.
-        Algorithm based on the example at http://www.roguebasin.com/index.php?title=Bresenham%27s_Line_Algorithm#Python.
-        """
-        X1, Y1 = [int(round(Number)) for Number in StartPoint]
-        X2, Y2 = [int(round(Number)) for Number in EndPoint]
-        DX = X2 - X1
-        DY = Y2 - Y1
-        IsSteep = abs(DY) > abs(DX)
-        if IsSteep:
-            X1, Y1 = Y1, X1
-            X2, Y2 = Y2, X2
-        Swapped = False
-        if X1 > X2:
-            X1, X2 = X2, X1
-            Y1, Y2 = Y2, Y1
-            Swapped = True
-        DX = X2 - X1
-        DY = Y2 - Y1
-        Error = int(DX / 2.0)
-        YStep = 1 if Y1 < Y2 else -1
-        Y = Y1
-        Points = []
-        for X in range(X1, X2 + 1):
-            Coordinate = (Y, X) if IsSteep else (X, Y)
-            Points.append(Coordinate)
-            Error -= abs(DY)
-            if Error < 0:
-                Y += YStep
-                Error += DX
-        if Swapped:
-            Points.reverse()
-        return Points
+    """
+    Returns every point that lies along the line created by the StartPoint and the EndPoint.
+    Algorithm based on the example at http://www.roguebasin.com/index.php?title=Bresenham%27s_Line_Algorithm#Python.
+    """
+    X1, Y1 = [int(round(Number)) for Number in StartPoint]
+    X2, Y2 = [int(round(Number)) for Number in EndPoint]
+    DX = X2 - X1
+    DY = Y2 - Y1
+    IsSteep = abs(DY) > abs(DX)
+    if IsSteep:
+        X1, Y1 = Y1, X1
+        X2, Y2 = Y2, X2
+    Swapped = False
+    if X1 > X2:
+        X1, X2 = X2, X1
+        Y1, Y2 = Y2, Y1
+        Swapped = True
+    DX = X2 - X1
+    DY = Y2 - Y1
+    Error = int(DX / 2.0)
+    YStep = 1 if Y1 < Y2 else -1
+    Y = Y1
+    Points = []
+    for X in range(X1, X2 + 1):
+        Coordinate = (Y, X) if IsSteep else (X, Y)
+        Points.append(Coordinate)
+        Error -= abs(DY)
+        if Error < 0:
+            Y += YStep
+            Error += DX
+    if Swapped:
+        Points.reverse()
+    return Points
 
 def ExpandMapElements(MapData):
     """
-    Creates a large "virtual element" around specified solid map elements, and appends it to the MapData["Elements"] list. Return the modified MapData.
+    Creates a large "virtual element" around specified solid map elements, and appends it to the MapData["Elements"] list. Returns the modified MapData.
     """
     CopiedMapData = deepcopy(MapData)
     RobotRadius = max(Config["RobotDimensions"]) / 2
@@ -251,8 +100,7 @@ def ExpandMapElements(MapData):
                     VirtualElement["InteractiveFaces"] = []
                     for Face in CopiedMapData["Elements"][Element]["InteractiveFaces"]:
                         VirtualFace = []
-                        for Point in Face: # TODO: Simplify FOR statements.
-                            # TODO: Do this!
+                        for Point in Face:
                             VirtualFace.append(Point)
                         VirtualElement["InteractiveFaces"].append(VirtualFace)
                 if "InteractiveSides" in CopiedMapData["Elements"][Element]:
@@ -289,29 +137,6 @@ def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True):
             return IntersectionPoint
         else: # If they are line segments or lines and they do not intersect:
             return False
-
-def GetQuadrants(Angle):
-    """
-    Returns the quadrants that an angle extends into.
-    """
-    StepQuadrants = []
-    if Angle == 0:
-        StepQuadrants = [1, 4]
-    elif 0 < Angle < 90:
-        StepQuadrants = [1]
-    elif Angle == 90:
-        StepQuadrants = [1, 2]
-    elif 90 < Angle < 180:
-        StepQuadrants = [2]
-    elif Angle == 180:
-        StepQuadrants = [2, 3]
-    elif 180 < Angle < 270:
-        StepQuadrants = [3]
-    elif Angle == 270:
-        StepQuadrants = [3, 4]
-    elif 270 < Angle < 360:
-        StepQuadrants = [4]
-    return StepQuadrants
 
 def ParseInstructions(Instructions):
     """
@@ -390,7 +215,6 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
     if len(TargetPoints) == 0: # If no TargetPoints were specified in the PathList:
         Log("No targeted locations were specified in the PathList passed to Pathfinding.Path.", 4)
         raise ValueError("TargetPoints count out-of-bounds.")
-        return
     # Convert TargetPoints into proper path steps.
     PathSteps = [[TargetPoints[0][1], [CurrentPosition, [round(Point) for Point in TargetPoints[0][0]]]]] # [[PathInformationIndex, [Point1, Point2]], ...]
     TargetPointsEvaluated = 1
@@ -404,7 +228,7 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
         StartPoint = PathSteps[StepsEvaluated][1][0]
         EndPoint = PathSteps[StepsEvaluated][1][1]
         StepPoints = [StartPoint]
-        #StepPoints.extend(Anya(GridData, StartPoint, EndPoint)) # TODO: Un-comment this line once Anya is complete.
+        StepPoints.extend(Anya(GridData, StartPoint, EndPoint))
         StepPoints.append(EndPoint)
         StepsEvaluated += 1
         Log("Pathfinding complete for step {0} of {1}.".format(StepsEvaluated, len(PathSteps)), 0)
@@ -418,13 +242,13 @@ def RasterizeMapData(MapData):
     Converts MapData to raster format. Every point in the element is described, as opposed to the original format containing just corners.
     """
     Log("Converting MapData from Vector to Raster format.", 0)
-    RasterMapData = [] # Grid. Dimensions are [W] * H. To get map height, do len(RasterMapData). To get map width, just get the len() of any one of the elements.
+    RasterMapData = []
     # Create blank grid.
     I = 0
     while I != MapData["Size"][1] + 1:
         RasterMapData.append([0, ] * (MapData["Size"][0] + 1))
         I += 1
-    # Add polygonal MapData elements to grid.
+    # Add polygonal MapData elements to the grid.
     for Element in  MapData["Elements"]:
         if MapData["Elements"][Element]["Solidity"] > 0:
             Log("Rasterizing element \"{0}\".".format(Element), 0)

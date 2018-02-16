@@ -17,3 +17,13 @@ Virtual Elements are shown in white, and are given a solidity of "3". These are 
 Pathin' around elements:
 
  Pathfinding algorithms: Theta* < Lazy Theta* with Optimizations < Anya
+
+ Anya search node information:
+
+ [[False, [Xs, Ys], [Xe, Ye], True], [Xr, Yr]] --> [[False, StartPoint, EndPoint, True], Root] --> [Interval, Root]
+
+
+ False = Open (does not contain point) at this end
+ True = Closed (contains point) at this end
+
+ The described search node's **interval** contains the point "Xe, Ye", but does not contain the point "Xs, Ys".
