@@ -1,0 +1,5 @@
+0. Complete basic Pathfinding functions:
+- Pathfinding,
+- Interfacing with RobotCode,
+- Interfacing with LIDAR (Scanse Sweep)
+1. Convert math functions throughout Pathfinding to utilize Numpy wherever possible, and if it presents a possible optimization.

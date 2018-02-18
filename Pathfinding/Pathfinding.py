@@ -9,7 +9,6 @@ Pathfinding.py calculates the shortest path for the robot between it's current l
 # Built-in imports.
 #
 
-from anya import Anya
 from collections import namedtuple
 from copy import deepcopy
 import math
@@ -19,6 +18,7 @@ from operator import itemgetter
 # Custom imports.
 #
 
+from Anya import Anya
 import Configuration
 from Log import Log
 
@@ -110,7 +110,7 @@ def ExpandMapElements(MapData):
         MapData["Elements"][Element] = VirtualElements[Element]
     return MapData
 
-def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True):
+def GetIntersectionPoint(LineOne, LineTwo, LineSegments=True):
     """
     Determines and returns the intersection point of two line segments.
     Returns False if the line segments do not intersect.
@@ -135,8 +135,6 @@ def GetIntersectionPoint(LineOne, LineTwo, LineSegments = True):
             return IntersectionPoint
         elif 0 <= Ua <= 1 and 0 <= Ub <= 1: # If they are line segments and they intersect:
             return IntersectionPoint
-        else: # If they are line segments or lines and they do not intersect:
-            return False
 
 def ParseInstructions(Instructions):
     """
@@ -212,7 +210,7 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
                 X, Y = zip(*PathfindingMapData["Elements"][Item]["Points"])
                 Length = len(X)
                 TargetPoints.append(((sum(X) / Length, sum(Y) / Length), PathIndex))
-    if len(TargetPoints) == 0: # If no TargetPoints were specified in the PathList:
+    if not TargetPoints: # If no TargetPoints were specified in the PathList:
         Log("No targeted locations were specified in the PathList passed to Pathfinding.Path.", 4)
         raise ValueError("TargetPoints count out-of-bounds.")
     # Convert TargetPoints into proper path steps.
@@ -276,3 +274,5 @@ def VectorizePathInformation(PathInformation):
 
 if __name__ == "__main__":
     sys.exit("This file may not be run as a standalone.")
+
+# TODO: ALL of this program should eventually be converted to use the "Point" namedtuple!!! See Anya.py for more information on that variable.
