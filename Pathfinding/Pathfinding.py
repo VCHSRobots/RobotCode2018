@@ -57,7 +57,7 @@ def BresenhamLinePoints(StartPoint, EndPoint):
     Y = Y1
     Points = []
     for X in range(X1, X2 + 1):
-        Coordinate = (Y, X) if IsSteep else (X, Y)
+        Coordinate = Point(Y, X) if IsSteep else Point(X, Y)
         Points.append(Coordinate)
         Error -= abs(DY)
         if Error < 0:

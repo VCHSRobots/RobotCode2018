@@ -67,16 +67,33 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
         """
         Returns the Point which is farthest from the ReferencePoint passed.
         """
-        for Point in OtherPoints:
-            MaximumValueIndex, MaximumValue = max(enumerate([hypot(Point.X - ReferencePoint.X, Point.Y - ReferencePoint.Y) for Point in OtherPoints]), key=operator.itemgetter(0))
-            return OtherPoints[MaximumValueIndex], MaximumValue
+        MaximumDistanceIndex, MaximumDistance = max(enumerate([hypot(Point.X - ReferencePoint.X, Point.Y - ReferencePoint.Y) for Point in OtherPoints]), key=operator.itemgetter(0))
+        return OtherPoints[MaximumDistanceIndex], MaximumDistance
 
-
-    def FValue(Node): # TODO: Complete this function.
+    def FValue(Node): # TODO: Simplify this function! We don't need to repeat the code for "FValueEstimate" so many times! Also remove unnecessary / redundant value checks in IF statements! (╯°□°）╯︵ ┻━┻
         """
-        Calculate the F value of a Node.
+        Calculate the "F Value" of a Node.
         """
-
+        Line = namedtuple("Line", "PointOne PointTwo")
+        IntersectionPoint = GetIntersectionPoint(Line(Node.Root, EndPoint, Line(Node.Interval.PointOne, Node.Interval.PointTwo)):
+        if IntersectionPoint:
+            FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(IntersectionPoint.X - Node.Root.X, IntersectionPoint.Y - Node.Root.Y) + hypot(EndPoint.X - IntersectionPoint.X, EndPoint.Y - IntersectionPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
+        else: # The path from the Root to the EndPoint does not pass through the interval.
+            if # If the Root and the EndPoint are both below (or above) the interval.
+                if Node.Interval.PointOne.Y - TargetPoint.Y > 0 and Node.Interval.PointOne.Y - Node.Root.Y > 0: # If they are above the Interval.
+                    YDifference = TargetPoint.Y - Node.Interval.PointOne.Y
+                    MirroredEndPoint = Point(EndPoint.X, Node.Interval.PointOne.Y - YDifference)
+                else: # If they are below the Interval.
+                    YDifference = Node.Interval.PointOne.Y - TargetPoint.Y
+                    MirroredEndPoint = Point(EndPoint.X, Node.Interval.PointOne.Y + YDifference)
+                FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(IntersectionPoint.X - Node.Root.X, IntersectionPoint.Y - Node.Root.Y) + hypot(MirroredEndPoint.X - IntersectionPoint.X, MirroredEndPoint.Y - IntersectionPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
+            else: # Otherwise, they are on opposite sides of the interval. (This should be the norm.)
+                IntersectionPoint = GetIntersectionPoint(Line(Node.Root, EndPoint), Line(Node.Interval.PointOne, Node.Interval.PointTwo), False): # Where would they intersect if they were lines; not line-segments?
+                if IntersectionPoint.X < Node.Interval.PointOne.X and IntersectionPoint.X < Node.Interval.PointTwo.X: # If the Root-EndPoint line travels to the left of the interval.
+                    FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(Node.Interval.PointOne.X - Node.Root.X, Node.Interval.PointOne.Y - Node.Root.Y) + hypot(EndPoint.X - Node.Interval.PointOne.X, EndPoint.Y - Node.Interval.PointOne.Y) # Distance from Source-Root + Root-Point + Point-Target.
+                elif IntersectionPoint.X > Node.Interval.PointOne.X and IntersectionPoint.X > Node.Interval.PointTwo.X: # If the Root-EndPoint line travels to the right of the interval.
+                    FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(Node.Interval.PointTwo.X - Node.Root.X, Node.Interval.PointTwo.Y - Node.Root.Y) + hypot(EndPoint.X - Node.Interval.PointTwo.X, EndPoint.Y - Node.Interval.PointTwo.Y) # Distance from Source-Root + Root-Point + Point-Target.
+        return FValueEstimate
 
     def GenerateSuccessors(Node):
         """
@@ -131,7 +148,7 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
                 for Point, PointIndex in enumerate(UpperRightPoints):
                     if not LineOfSight(StartPoint, Point):
                         UpperStartIntervalRight = [UpperRightPoints[PointIndex - 1], True]
-            UpperStartInterval = Interval(UpperStartIntervalLeft + UpperStartIntervalRight) # TODO: Determine if this unpacks naturally into StartFlag, StartPoint, EndPoint, EndFlag...
+            UpperStartInterval = Interval(UpperStartIntervalLeft[0], UpperStartIntervalLeft[1], UpperStartIntervalRight[0], UpperStartIntervalRight[1])
             # Construct a maximal half-closed interval containing all points observable and from the row below StartPoint.
             LowerLeftPoints = BresenhamLinePoints(Point(0, StartPoint.Y - 1), Point(StartPoint.X, StartPoint.Y - 1))
             LowerRightPoints = BresenhamLinePoints(Point(StartPoint.X, StartPoint.Y - 1), Point(GridWidth, StartPoint.Y - 1))
@@ -147,7 +164,7 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
                 for Point, PointIndex in enumerate(LowerRightPoints):
                     if not LineOfSight(StartPoint, Point):
                         LowerStartIntervalRight = [LowerRightPoints[PointIndex - 1], True]
-            LowerStartInterval = Interval(LowerStartIntervalLeft + LowerStartIntervalRight) # TODO: Determine if this unpacks naturally into StartFlag, StartPoint, EndPoint, EndFlag...
+            LowerStartInterval = Interval(LowerStartIntervalLeft[0], LowerStartIntervalLeft[1], LowerStartIntervalRight[0], LowerStartIntervalRight[1])
             # Split each interval at any corner points.
             Intervals = [SplitInterval(LeftStartInterval), SplitInterval(RightStartInterval), SplitInterval(UpperStartInterval), SplitInterval(LowerStartInterval)]
             Log("Anya Intervals for Root {0} created at {1}.".format(Root, Intervals), 0)
@@ -167,7 +184,7 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
 
     def GridData(X, Y):
         """
-        Provides an easy to determine the value of a specific coordinate in the grid.
+        Provides an easy to determine the value of a specific coordinate in the grid. Note that the coordinates run *between* the lines; so 
         """
         return GridData[Y][X]
 
@@ -248,7 +265,7 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
                     FarPoint = None # TODO: Determine which Point in the Interval is farthest from the Node's Root.
                     if IsTurningPoint(FarPoint): # If FarPoint is a turning point for a taut local path with prefix (Root, Point), then the Node must have at least one non-observable successor; it cannot be intermediate.
                         return False
-                else: # The Node is not a flat node; therefore it must be a cone noe.
+                else: # The Node is not a flat node; therefore it must be a cone node.
                     if Interval: # TODO: "If Interval has a closed endpoint that is also a corner point..."
                         return False
                     ProjectedInterval = ProjectNode(Node)
@@ -258,9 +275,15 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
 
         def SplitInterval(Interval, ReturnUnsplitInterval=False): # TODO: Complete this function.
             """
-            Splits an Interval at any corner points into a new interval. Returns a tuple containing any new intervals. If no new intervals were created, returns False. (Call with "ReturnUnsplitInterval" = "True" to return the original interval if it was not split.)
+            Splits an Interval at any corner points into a new interval. Returns a tuple containing any new intervals. If no new intervals were created, returns False. (Call with "ReturnUnsplitInterval=True" to return the original interval if it was not split.)
             """
             Intervals = []
+            I = 0
+            while I != Interval.EndPoint.X - Interval.StartPoint.X: # From left to right, scan each point along the interval for a corner.
+
+                I += 1
+            if not Intervals and ReturnUnsplitInterval == True:
+                return Interval
             return Intervals
 
     #
@@ -270,6 +293,22 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
     StepPathData = []
     StartInterval = Interval(True, StartPoint, StartPoint, True)
     return StepPathData
+
+  ####################################################
+ #                                                  ##
+#################################################### #
+#                                                  # #
+#                                                  # #
+#                                                  # #
+# TODO: Remove all below once testing is complete! # #
+#                                                  # #
+#                                                  # #
+#                                                  ##
+####################################################
+
+#
+# Temporary copied functions from Pathfinding.py.
+#
 
 def BresenhamLinePoints(StartPoint, EndPoint):
     """
@@ -306,19 +345,35 @@ def BresenhamLinePoints(StartPoint, EndPoint):
         Points.reverse()
     return Points
 
-#
-# Mainline code.
-#
+def GetIntersectionPoint(LineOne, LineTwo, LineSegments=True):
+    """
+    Determines and returns the intersection point of two line segments.
+    Returns False if the line segments do not intersect.
+    Can be called with "LineSegments = False" to calculate the intersections of unbounded lines.
+    """
+    X1, Y1, X2, Y2, X3, Y3, X4, Y4 = LineOne.PointOne.X, LineOne.PointOne.Y, LineOne.PointTwo.X, LineOne.PointTwo.Y, LineTwo.PointOne.X, LineTwo.PointOne.Y, LineTwo.PointTwo.X, LineTwo.PointTwo.Y
+    UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
+    UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+    UbNumerator = ((X2 - X1) * (Y1 - Y3) - (Y2 - Y1) * (X1 - X3))
+    UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
+    if UaNumerator == 0 and UaDenominator == 0 and UaNumerator == 0 and UbDenominator == 0: # If the lines are coincident.
+        return
+    elif UaDenominator == 0 and UbDenominator == 0: # If the lines are parallel.
+        return
+    else:
+        Ua = UaNumerator / UaDenominator
+        Ub = UbNumerator / UbDenominator
+        X = X1 + Ua * (X2 - X1)
+        Y = Y1 + Ua * (Y2 - Y1)
+        IntersectionPoint = Point(X, Y)
+        if not LineSegments: # If they are lines.
+            return IntersectionPoint
+        elif 0 <= Ua <= 1 and 0 <= Ub <= 1: # If they are line segments and they intersect:
+            return IntersectionPoint
 
-######################################################
-#                                                    #
-#                                                    #
-#                                                    #
-# TODO: Remove all of this once testing is complete! #
-#                                                    #
-#                                                    #
-#                                                    #
-######################################################
+#
+# Temporary Mainline code.
+#
 
 print("ANYA testing!")
 #MapFile = input("Please enter map file name: ")
