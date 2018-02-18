@@ -175,7 +175,7 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
         if NodeType == "START":
             Successors = GenerateStartSuccessors(StartPoint)
         elif NodeType == "FLAT":
-            FarPoint = FarthestPoint(Interval.StartPoint, Interval.EndPoint) # TODO: Determine which Point in the Interval is farthest from the Node's Root.
+            FarPoint = FarthestPoint(Interval.StartPoint, Interval.EndPoint)
             Successors = GenerateFlatSuccessors() # The Point passed is the Point in the Interval which is farthest from the Node's Root.
             if IsTurningPoint(FarPoint): # TODO: Determine if FarPoint is a turning point on a taut local path beginning at Node.Root.
                 Successors = Successors.union(GenerateConeSuccessors(FarPoint, FarPoint, Node.Root)) # These are non-observable successors.
