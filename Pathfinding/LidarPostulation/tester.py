@@ -159,7 +159,7 @@ def dotSvg(pointvals, location):
                   'stroke = "black" stroke-width = "3" '
                   'fill = "red"/>\n'.format((point[0] - 46) * 80, (point[1] - 46) * 80,
                                             round((pointvals[point] - 9000000)/10000)))
-        print(point, pointvals[point])
+        # print(point, pointvals[point])
     svg.write('<circle cx = "{0}" cy = "{1}" r = "5" '
                 'stroke = "blue" stroke-width = "3" fill = "blue"/>\n'.format((location[0] - 46) * 80,
                                                                             (location[1] - 46) * 80))
@@ -188,7 +188,7 @@ def measureTime(func):
     func()
     fin = time.time()
     finaltime = fin - start
-    print("Time: {0}".format(finaltime))
+    # print("Time: {0}".format(finaltime))
 
 def main():
     realpoints = [50, 48]
@@ -196,7 +196,7 @@ def main():
     testval = json.load(testfile)["({0}, {1})".format(realpoints[0], realpoints[1])]
     testfile.close()
     printinfo, pointvals = findBestLocation(np.array(testval), [49, 49, 30], 10, 30)
-    print(printinfo)
+    # print(printinfo)
     # dotSvg(findLargestPointPerAngle(pointvals), realpoints)
 
 cProfile.run("main()")

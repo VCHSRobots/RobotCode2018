@@ -29,7 +29,7 @@ from Log import Log
 
 Config = Configuration.LoadConfig()
 RenderBorder = Config["RenderImageBorder"]
-
+ 
 #
 # Functions.
 #

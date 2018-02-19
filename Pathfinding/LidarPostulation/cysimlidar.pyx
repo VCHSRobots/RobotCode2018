@@ -172,9 +172,9 @@ cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerat
 
 
 cdef compForAngle(rayinters, float robotangle):
-    angles = []
-    inters = []
-    adjustedinters = {}
+    cdef list angles = []
+    cdef list inters = []
+    cdef dict adjustedinters = {}
     for angle in rayinters:
         angles.append(angle)
         inters.append(rayinters[angle])

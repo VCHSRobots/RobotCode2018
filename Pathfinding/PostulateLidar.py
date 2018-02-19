@@ -1,4 +1,4 @@
-# simulatelidar.py: Tests Patrick's positioning algorithm
+# PostulateLidar.py: Tests Patrick's positioning algorithm
 # 1-6-2018
 #
 import json

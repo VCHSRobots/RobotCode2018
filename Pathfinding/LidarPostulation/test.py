@@ -187,7 +187,7 @@ def dotSvg(pointvals, location):
                   'stroke = "black" stroke-width = "3" '
                   'fill = "red"/>\n'.format((point[0] - 46) * 80, (point[1] - 46) * 80,
                                             round((pointvals[point] - 9000000)/10000)))
-        print(point, pointvals[point])
+        # print(point, pointvals[point])
     svg.write('<circle cx = "{0}" cy = "{1}" r = "5" '
                 'stroke = "blue" stroke-width = "3" fill = "blue"/>\n'.format((location[0] - 46) * 80,
                                                                             (location[1] - 46) * 80))
@@ -237,8 +237,8 @@ def measureTime(func):
 def main():
     realpoints = [50, 48]
     testval = shiftInds(cysimlidar.angledRayIntersects(cysimlidar.Point(realpoints[0], realpoints[1]), 0, cysimlidar.openEnvFile("FRC_Field_2018.map")), 7,)
-    printinfo, pointvals = findBestLocation(testval, [49, 49, 2], 5, 10)
-    print(printinfo)
+    printinfo, pointvals = findBestLocation(testval, [49, 49, 2], 5, 15)
+    # print(printinfo)
     dotSvg(findLargestPointPerAngle(pointvals), realpoints)
 
 
