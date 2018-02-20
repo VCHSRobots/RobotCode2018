@@ -1,34 +1,6 @@
 # SweepCommunication.py: Making library for communication with the Sweep lidar
 # HP 2/17/2018
 
-import serial
-import numpy as np
-import time
-
-def makeSweep(usb):
-    sweep = serial.Serial(usb, baudrate = 115200)
-    return sweep
-
-def startScan(sweep):
-    sweep.write(b"DS\n")
-    return sweep.readline()
-
-def stopScan(sweep):
-    sweep.write(b"DX\n")
-    return sweep.readline()
-
-def checkMotorStatus(sweep):
-    sweep.write(b"MZ\n")
-    return sweep.readline()
-
-def checkMotorInfo(sweep):
-    sweep.write(b"MI\n")
-    return sweep.readline()
-
-def checkSampleRate(sweep):
-    sweep.write(b"LI\n")
-    return sweep.readline()
-
 def checkMotorInfo(sweep):
     sweep.write(b"IV\n")
     return sweep.readline()

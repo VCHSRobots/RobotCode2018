@@ -1,11 +1,13 @@
-# parselidar.py: Outputs difference between ideal and actual lidar data
+# DotCompare.py: Outputs difference between ideal and actual lidar data
 # 1-18-2018
 
 import numpy as np
 import cProfile
-import cysimlidar
 import time
 import json
+
+###
+import CythonLidarPost
 # import SweepCommunication
 
 
@@ -13,9 +15,36 @@ size = [324, 360]
 
 
 def catctMyDrift(lidarid, location, robotangle):
-    lidardists = parseLidar("COM3")
-    location, ang = findRobotLocation(lidardists, location, 5, 15)
-    return location, ang
+    lidardists = parseLidar("COM3") 
+    fieldlines = cysimlidar.openEnvFile("FRC_Field_2018.map")
+    location, ang, distdif = findRobotLocation(lidardists, location, 5, 15, fieldlines)
+    obstacles = measureObstacles(distdifs, 6)
+    obstaclepoints = extractPointsFromObstacles(obstacles, location, fieldlines)
+    return location, ang, obstaclepoints
+
+
+def extractPointsFromObstacles(obstacles, location, fieldlines):
+    points = []
+    for obstacle in obstacles:
+        points.append(CythonLidarPost.customRayIntersects(location, lidarkeys, fieldlines))
+    return points
+
+
+def measureObstacles(distdifs, sensitivity = 1):
+    obstacle = 0
+    obstacles = []
+    for ang in distdifs:
+        distdif = distdifs[ang]
+        if distdif >= sensitivity:
+            obstacle += 1
+        else:
+            obstacle = 0
+        if obstacle:
+            if obstacle == 1:
+                obstacles.append([ang])
+            else:
+                obstacles[-1].append(ang)
+    return obstacles
 
 
 def parseLidar(sweepusb):
@@ -54,7 +83,8 @@ def findBestLocation(lidardists, location, testingrange, angoffsetrange):
     ang = bestdotdif[1]
     return (reallocation, ang), difvsret
 
-def findRobotLocation(lidardists, location, testingrange, angoffsetrange):
+
+def findRobotLocation(lidardists, location, testingrange, angoffsetrange, fieldlines):
     difvsret = {}
     # xs = tuple(range(location[0] - testingrange, location[0] + (testingrange + 1)))
     # ys = tuple(range(location[1] - testingrange, location[1] + (testingrange + 1)))
@@ -70,20 +100,29 @@ def findRobotLocation(lidardists, location, testingrange, angoffsetrange):
     xs = tuple(range(cordrange[0], cordrange[1] + 1))
     ys = tuple(range(cordrange[2], cordrange[3] + 1))
     angs = tuple(range(location[2] - angoffsetrange, location[2] + angoffsetrange + 1))
-    fieldlines = cysimlidar.openEnvFile("FRC_Field_2018.map")
+    lidardists = CmToInchesInDict(lidardists)
     lidarkeys = lidardists.keys()
     for x in xs:
         for y in ys:
-            postdata = cysimlidar.customRayIntersects(cysimlidar.Point(x, y), lidarkeys, fieldlines)
+            postdata = CythonPostLidar.customRayIntersects(cysimlidar.Point(x, y), lidarkeys, fieldlines)
             for angle in angs:
                 idealdists = shiftKeys(postdata, angle)
                 # distdifs = findDistDifs(lidardists, idealdists)
                 # lidardists = accountForObstacles(lidardists, measureObstacles(distdifs, sensitivity = 20))
-                difvsret[findDotDif(lidardists, idealdists)] = [(x, y), angle]
+                difvsret[findDotDif(lidardists, idealdists)] = [CythonPostLidar.Point(x, y), angle, idealdists]
     bestdotdif = difvsret[sorted(difvsret)[0]]
-    reallocation = [bestdotdif[0]]
-    ang = bestdotdif[1]
-    return reallocation, ang
+    location = bestdotdif[0]
+    angle = bestdotdif[1]
+    distdifs = (findDistDifs(lidardists, bestdetdif[2]))
+    return location, angle, distdifs
+
+
+def CmToInchesInDict(dict):
+    dictvalues = np.array(dict.values)
+    dictvalues *= .3937088
+    for ind, key in enumerate(dict):
+        dict[key] = dictvalues[ind]
+    return dictkeys
 
 
 """
@@ -138,8 +177,7 @@ def findDotDif(lidardists, idealdists):
 
 
 def findDistDifs(lidardists, idealdists):
-    distdifs = {}
-    idealdists = findKeysInCommon(idealdists, lidardists)
+    distdifs = {} 
     for ang in idealdists:
         distdifs[ang] = idealdists[ang] - lidardists[ang]
     return distdifs
@@ -182,25 +220,6 @@ def sortDictByVal(testdict):
     for key in newkeys:
         newdict[key] = testdict[key]
     return newdict
-
-
-#
-def measureObstacles(distdifs, sensitivity = 1):
-    obstacle = 0
-    obstacles =[]
-    for ang in distdifs:
-        distdif = distdifs[ang]
-        if distdif >= sensitivity:
-            obstacle += 1
-        else:
-            obstacle = 0
-        if obstacle:
-            if obstacle == 1:
-                obstacles.append([ang, ang, {ang: distdif}])
-            else:
-                obstacles[-1][1] = ang
-                obstacles[-1][2][ang] = distdif
-    return obstacles
 
 
 def dotSvg(pointvals, location):

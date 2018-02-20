@@ -3,12 +3,12 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "name": "cysimlidar",
+        "name": "CythonLidarPost",
         "sources": [
-            "cysimlidar.pyx"
+            "CythonLidarPost.pyx"
         ]
     },
-    "module_name": "cysimlidar"
+    "module_name": "CythonLidarPost"
 }
 END: Cython Metadata */
 
@@ -530,8 +530,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__cysimlidar
-#define __PYX_HAVE_API__cysimlidar
+#define __PYX_HAVE__CythonLidarPost
+#define __PYX_HAVE_API__CythonLidarPost
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -736,33 +736,33 @@ static const char *__pyx_filename;
 
 static const char *__pyx_f[] = {
   "stringsource",
-  "cysimlidar.pyx",
+  "CythonLidarPost.pyx",
 };
 
 /*--- Type declarations ---*/
-struct __pyx_obj_10cysimlidar_Point;
-struct __pyx_opt_args_10cysimlidar_angledRayIntersects;
+struct __pyx_obj_15CythonLidarPost_Point;
+struct __pyx_opt_args_15CythonLidarPost_angledRayIntersects;
 
-/* "cysimlidar.pyx":162
+/* "CythonLidarPost.pyx":162
  * 
  * # Function that needs the most optimizing
  * cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerate = 1):             # <<<<<<<<<<<<<<
  *     rayinters = []
  *     cdef int ang = 0
  */
-struct __pyx_opt_args_10cysimlidar_angledRayIntersects {
+struct __pyx_opt_args_15CythonLidarPost_angledRayIntersects {
   int __pyx_n;
   PyObject *samplerate;
 };
 
-/* "cysimlidar.pyx":8
+/* "CythonLidarPost.pyx":8
  * import numpy as np
  * 
  * cdef class Point:             # <<<<<<<<<<<<<<
  * 
  *     cdef public float x, y
  */
-struct __pyx_obj_10cysimlidar_Point {
+struct __pyx_obj_15CythonLidarPost_Point {
   PyObject_HEAD
   float x;
   float y;
@@ -1215,26 +1215,26 @@ static int __Pyx_check_binary_version(void);
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
-/* Module declarations from 'cysimlidar' */
-static PyTypeObject *__pyx_ptype_10cysimlidar_Point = 0;
-static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point *, struct __pyx_obj_10cysimlidar_Point *); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_findSlope(PyObject *, PyObject *, PyObject *); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *, PyObject *); /*proto*/
-static double __pyx_f_10cysimlidar_rad2deg(double); /*proto*/
-static double __pyx_f_10cysimlidar_deg2rad(double); /*proto*/
-static double __pyx_f_10cysimlidar_dist(PyObject *, PyObject *); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cysimlidar_Point *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_10cysimlidar_angledRayIntersects *__pyx_optional_args); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cysimlidar_Point *, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
-static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineIntersect(float, struct __pyx_obj_10cysimlidar_Point *, PyObject *); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *, struct __pyx_obj_10cysimlidar_Point *); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *, int __pyx_skip_dispatch); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *); /*proto*/
-#define __Pyx_MODULE_NAME "cysimlidar"
-extern int __pyx_module_is_main_cysimlidar;
-int __pyx_module_is_main_cysimlidar = 0;
+/* Module declarations from 'CythonLidarPost' */
+static PyTypeObject *__pyx_ptype_15CythonLidarPost_Point = 0;
+static int __pyx_f_15CythonLidarPost_isInQuadrant(struct __pyx_obj_15CythonLidarPost_Point *, struct __pyx_obj_15CythonLidarPost_Point *); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_findSlope(PyObject *, PyObject *, PyObject *); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_findinter(PyObject *, PyObject *); /*proto*/
+static double __pyx_f_15CythonLidarPost_rad2deg(double); /*proto*/
+static double __pyx_f_15CythonLidarPost_deg2rad(double); /*proto*/
+static double __pyx_f_15CythonLidarPost_dist(PyObject *, PyObject *); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_angledRayIntersects(struct __pyx_obj_15CythonLidarPost_Point *, PyObject *, PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_15CythonLidarPost_angledRayIntersects *__pyx_optional_args); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_customRayIntersects(struct __pyx_obj_15CythonLidarPost_Point *, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
+static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findLineIntersect(float, struct __pyx_obj_15CythonLidarPost_Point *, PyObject *); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *, struct __pyx_obj_15CythonLidarPost_Point *); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *); /*proto*/
+#define __Pyx_MODULE_NAME "CythonLidarPost"
+extern int __pyx_module_is_main_CythonLidarPost;
+int __pyx_module_is_main_CythonLidarPost = 0;
 
-/* Implementation of 'cysimlidar' */
+/* Implementation of 'CythonLidarPost' */
 static PyObject *__pyx_builtin_TypeError;
 static PyObject *__pyx_builtin_round;
 static PyObject *__pyx_builtin_enumerate;
@@ -1282,7 +1282,6 @@ static const char __pyx_k_enumerate[] = "enumerate";
 static const char __pyx_k_metaclass[] = "__metaclass__";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_Ray___init[] = "Ray.__init__";
-static const char __pyx_k_cysimlidar[] = "cysimlidar";
 static const char __pyx_k_fieldlines[] = "fieldlines";
 static const char __pyx_k_robotangle[] = "robotangle";
 static const char __pyx_k_samplerate[] = "samplerate";
@@ -1290,10 +1289,13 @@ static const char __pyx_k_anglestopost[] = "anglestopost";
 static const char __pyx_k_reduce_cython[] = "__reduce_cython__";
 static const char __pyx_k_robotlocation[] = "robotlocation";
 static const char __pyx_k_LineSeg___init[] = "LineSeg.__init__";
-static const char __pyx_k_cysimlidar_pyx[] = "cysimlidar.pyx";
+static const char __pyx_k_CythonLidarPost[] = "CythonLidarPost";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_CythonLidarPost_pyx[] = "CythonLidarPost.pyx";
 static const char __pyx_k_no_default___reduce___due_to_non[] = "no default __reduce__ due to non-trivial __cinit__";
+static PyObject *__pyx_n_s_CythonLidarPost;
+static PyObject *__pyx_kp_s_CythonLidarPost_pyx;
 static PyObject *__pyx_n_s_Elements;
 static PyObject *__pyx_n_s_LineSeg;
 static PyObject *__pyx_n_s_LineSeg___init;
@@ -1307,8 +1309,6 @@ static PyObject *__pyx_n_s_anglestopost;
 static PyObject *__pyx_n_s_arctan;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_close;
-static PyObject *__pyx_n_s_cysimlidar;
-static PyObject *__pyx_kp_s_cysimlidar_pyx;
 static PyObject *__pyx_n_s_doc;
 static PyObject *__pyx_n_s_enumerate;
 static PyObject *__pyx_n_s_fieldlines;
@@ -1349,19 +1349,19 @@ static PyObject *__pyx_n_s_tan;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_x;
 static PyObject *__pyx_n_s_y;
-static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_5Point_1x___get__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self); /* proto */
-static int __pyx_pf_10cysimlidar_5Point_1x_2__set__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_5Point_1y___get__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self); /* proto */
-static int __pyx_pf_10cysimlidar_5Point_1y_2__set__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_5Point_2__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_10cysimlidar_Point *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_5Point_4__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, float __pyx_v_ang, struct __pyx_obj_10cysimlidar_Point *__pyx_v_point); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_fieldlines, PyObject *__pyx_v_samplerate); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_2customRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_anglestopost, PyObject *__pyx_v_fieldlines); /* proto */
-static PyObject *__pyx_pf_10cysimlidar_4openEnvFile(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_env); /* proto */
-static PyObject *__pyx_tp_new_10cysimlidar_Point(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static int __pyx_pf_15CythonLidarPost_5Point___cinit__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_1x___get__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self); /* proto */
+static int __pyx_pf_15CythonLidarPost_5Point_1x_2__set__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_1y___get__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self); /* proto */
+static int __pyx_pf_15CythonLidarPost_5Point_1y_2__set__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_2__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_4__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_7LineSeg___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_3Ray___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, float __pyx_v_ang, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_point); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_fieldlines, PyObject *__pyx_v_samplerate); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_2customRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation, PyObject *__pyx_v_anglestopost, PyObject *__pyx_v_fieldlines); /* proto */
+static PyObject *__pyx_pf_15CythonLidarPost_4openEnvFile(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_env); /* proto */
+static PyObject *__pyx_tp_new_15CythonLidarPost_Point(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_float__5;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
@@ -1380,7 +1380,7 @@ static PyObject *__pyx_tuple__6;
 static PyObject *__pyx_codeobj__5;
 static PyObject *__pyx_codeobj__7;
 
-/* "cysimlidar.pyx":12
+/* "CythonLidarPost.pyx":12
  *     cdef public float x, y
  * 
  *     def __cinit__(self, x, y):             # <<<<<<<<<<<<<<
@@ -1389,8 +1389,8 @@ static PyObject *__pyx_codeobj__7;
  */
 
 /* Python wrapper */
-static int __pyx_pw_10cysimlidar_5Point_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_10cysimlidar_5Point_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_15CythonLidarPost_5Point_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_15CythonLidarPost_5Point_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_x = 0;
   PyObject *__pyx_v_y = 0;
   int __pyx_r;
@@ -1438,24 +1438,24 @@ static int __pyx_pw_10cysimlidar_5Point_1__cinit__(PyObject *__pyx_v_self, PyObj
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 12, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.Point.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_5Point___cinit__(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_self), __pyx_v_x, __pyx_v_y);
+  __pyx_r = __pyx_pf_15CythonLidarPost_5Point___cinit__(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_self), __pyx_v_x, __pyx_v_y);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y) {
+static int __pyx_pf_15CythonLidarPost_5Point___cinit__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   float __pyx_t_1;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "cysimlidar.pyx":13
+  /* "CythonLidarPost.pyx":13
  * 
  *     def __cinit__(self, x, y):
  *         self.x = x             # <<<<<<<<<<<<<<
@@ -1465,7 +1465,7 @@ static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_
   __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_x); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 13, __pyx_L1_error)
   __pyx_v_self->x = __pyx_t_1;
 
-  /* "cysimlidar.pyx":14
+  /* "CythonLidarPost.pyx":14
  *     def __cinit__(self, x, y):
  *         self.x = x
  *         self.y = y             # <<<<<<<<<<<<<<
@@ -1475,7 +1475,7 @@ static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_
   __pyx_t_1 = __pyx_PyFloat_AsFloat(__pyx_v_y); if (unlikely((__pyx_t_1 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 14, __pyx_L1_error)
   __pyx_v_self->y = __pyx_t_1;
 
-  /* "cysimlidar.pyx":12
+  /* "CythonLidarPost.pyx":12
  *     cdef public float x, y
  * 
  *     def __cinit__(self, x, y):             # <<<<<<<<<<<<<<
@@ -1487,14 +1487,14 @@ static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("cysimlidar.Point.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":10
+/* "CythonLidarPost.pyx":10
  * cdef class Point:
  * 
  *     cdef public float x, y             # <<<<<<<<<<<<<<
@@ -1503,19 +1503,19 @@ static int __pyx_pf_10cysimlidar_5Point___cinit__(struct __pyx_obj_10cysimlidar_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_5Point_1x_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_10cysimlidar_5Point_1x_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_1x_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_1x_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_5Point_1x___get__(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_self));
+  __pyx_r = __pyx_pf_15CythonLidarPost_5Point_1x___get__(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_5Point_1x___get__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self) {
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_1x___get__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1530,7 +1530,7 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_1x___get__(struct __pyx_obj_10cysi
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cysimlidar.Point.x.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.x.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1539,19 +1539,19 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_1x___get__(struct __pyx_obj_10cysi
 }
 
 /* Python wrapper */
-static int __pyx_pw_10cysimlidar_5Point_1x_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_10cysimlidar_5Point_1x_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_15CythonLidarPost_5Point_1x_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_15CythonLidarPost_5Point_1x_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_5Point_1x_2__set__(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_15CythonLidarPost_5Point_1x_2__set__(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_10cysimlidar_5Point_1x_2__set__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_15CythonLidarPost_5Point_1x_2__set__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   float __pyx_t_1;
@@ -1563,7 +1563,7 @@ static int __pyx_pf_10cysimlidar_5Point_1x_2__set__(struct __pyx_obj_10cysimlida
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("cysimlidar.Point.x.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.x.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -1571,19 +1571,19 @@ static int __pyx_pf_10cysimlidar_5Point_1x_2__set__(struct __pyx_obj_10cysimlida
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_5Point_1y_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_10cysimlidar_5Point_1y_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_1y_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_1y_1__get__(PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_5Point_1y___get__(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_self));
+  __pyx_r = __pyx_pf_15CythonLidarPost_5Point_1y___get__(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_5Point_1y___get__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self) {
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_1y___get__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1598,7 +1598,7 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_1y___get__(struct __pyx_obj_10cysi
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cysimlidar.Point.y.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.y.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1607,19 +1607,19 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_1y___get__(struct __pyx_obj_10cysi
 }
 
 /* Python wrapper */
-static int __pyx_pw_10cysimlidar_5Point_1y_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_10cysimlidar_5Point_1y_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_15CythonLidarPost_5Point_1y_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_15CythonLidarPost_5Point_1y_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_5Point_1y_2__set__(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_15CythonLidarPost_5Point_1y_2__set__(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_10cysimlidar_5Point_1y_2__set__(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_15CythonLidarPost_5Point_1y_2__set__(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   float __pyx_t_1;
@@ -1631,7 +1631,7 @@ static int __pyx_pf_10cysimlidar_5Point_1y_2__set__(struct __pyx_obj_10cysimlida
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("cysimlidar.Point.y.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.y.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -1645,19 +1645,19 @@ static int __pyx_pf_10cysimlidar_5Point_1y_2__set__(struct __pyx_obj_10cysimlida
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_5Point_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_10cysimlidar_5Point_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_3__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_5Point_2__reduce_cython__(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_self));
+  __pyx_r = __pyx_pf_15CythonLidarPost_5Point_2__reduce_cython__(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_5Point_2__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_10cysimlidar_Point *__pyx_v_self) {
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_2__reduce_cython__(CYTHON_UNUSED struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1684,7 +1684,7 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_2__reduce_cython__(CYTHON_UNUSED s
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cysimlidar.Point.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
@@ -1699,19 +1699,19 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_2__reduce_cython__(CYTHON_UNUSED s
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_5Point_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_10cysimlidar_5Point_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_15CythonLidarPost_5Point_5__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_5Point_4__setstate_cython__(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_15CythonLidarPost_5Point_4__setstate_cython__(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_5Point_4__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_15CythonLidarPost_5Point_4__setstate_cython__(CYTHON_UNUSED struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1738,14 +1738,14 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_4__setstate_cython__(CYTHON_UNUSED
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cysimlidar.Point.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Point.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":17
+/* "CythonLidarPost.pyx":17
  * 
  * 
  * cdef int isInQuadrant(Point self, Point origin):             # <<<<<<<<<<<<<<
@@ -1753,13 +1753,13 @@ static PyObject *__pyx_pf_10cysimlidar_5Point_4__setstate_cython__(CYTHON_UNUSED
  *         if self.x > origin.x:
  */
 
-static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point *__pyx_v_self, struct __pyx_obj_10cysimlidar_Point *__pyx_v_origin) {
+static int __pyx_f_15CythonLidarPost_isInQuadrant(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_self, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_origin) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("isInQuadrant", 0);
 
-  /* "cysimlidar.pyx":18
+  /* "CythonLidarPost.pyx":18
  * 
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:             # <<<<<<<<<<<<<<
@@ -1769,7 +1769,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->y == __pyx_v_origin->y) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":19
+    /* "CythonLidarPost.pyx":19
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:
  *         if self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1779,7 +1779,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->x > __pyx_v_origin->x) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":20
+      /* "CythonLidarPost.pyx":20
  *     if self.y == origin.y:
  *         if self.x > origin.x:
  *             return 1             # <<<<<<<<<<<<<<
@@ -1789,7 +1789,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 1;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":19
+      /* "CythonLidarPost.pyx":19
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:
  *         if self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1798,7 +1798,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":21
+    /* "CythonLidarPost.pyx":21
  *         if self.x > origin.x:
  *             return 1
  *         elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -1808,7 +1808,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->x < __pyx_v_origin->x) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":22
+      /* "CythonLidarPost.pyx":22
  *             return 1
  *         elif self.x < origin.x:
  *             return 3             # <<<<<<<<<<<<<<
@@ -1818,7 +1818,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 3;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":21
+      /* "CythonLidarPost.pyx":21
  *         if self.x > origin.x:
  *             return 1
  *         elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -1827,7 +1827,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":18
+    /* "CythonLidarPost.pyx":18
  * 
  * cdef int isInQuadrant(Point self, Point origin):
  *     if self.y == origin.y:             # <<<<<<<<<<<<<<
@@ -1837,7 +1837,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":23
+  /* "CythonLidarPost.pyx":23
  *         elif self.x < origin.x:
  *             return 3
  *     elif self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1847,7 +1847,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->x > __pyx_v_origin->x) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":24
+    /* "CythonLidarPost.pyx":24
  *             return 3
  *     elif self.x > origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -1857,7 +1857,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y >= __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":25
+      /* "CythonLidarPost.pyx":25
  *     elif self.x > origin.x:
  *         if self.y >= origin.y:
  *             return 1             # <<<<<<<<<<<<<<
@@ -1867,7 +1867,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 1;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":24
+      /* "CythonLidarPost.pyx":24
  *             return 3
  *     elif self.x > origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -1876,7 +1876,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":27
+    /* "CythonLidarPost.pyx":27
  *             return 1
  *         else:
  *             return 4             # <<<<<<<<<<<<<<
@@ -1888,7 +1888,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       goto __pyx_L0;
     }
 
-    /* "cysimlidar.pyx":23
+    /* "CythonLidarPost.pyx":23
  *         elif self.x < origin.x:
  *             return 3
  *     elif self.x > origin.x:             # <<<<<<<<<<<<<<
@@ -1897,7 +1897,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
   }
 
-  /* "cysimlidar.pyx":28
+  /* "CythonLidarPost.pyx":28
  *         else:
  *             return 4
  *     elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -1907,7 +1907,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->x < __pyx_v_origin->x) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":29
+    /* "CythonLidarPost.pyx":29
  *             return 4
  *     elif self.x < origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -1917,7 +1917,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y >= __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":30
+      /* "CythonLidarPost.pyx":30
  *     elif self.x < origin.x:
  *         if self.y >= origin.y:
  *             return 2             # <<<<<<<<<<<<<<
@@ -1927,7 +1927,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 2;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":29
+      /* "CythonLidarPost.pyx":29
  *             return 4
  *     elif self.x < origin.x:
  *         if self.y >= origin.y:             # <<<<<<<<<<<<<<
@@ -1936,7 +1936,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":32
+    /* "CythonLidarPost.pyx":32
  *             return 2
  *         else:
  *             return 3             # <<<<<<<<<<<<<<
@@ -1948,7 +1948,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       goto __pyx_L0;
     }
 
-    /* "cysimlidar.pyx":28
+    /* "CythonLidarPost.pyx":28
  *         else:
  *             return 4
  *     elif self.x < origin.x:             # <<<<<<<<<<<<<<
@@ -1957,7 +1957,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
   }
 
-  /* "cysimlidar.pyx":33
+  /* "CythonLidarPost.pyx":33
  *         else:
  *             return 3
  *     elif self.x == origin.x:             # <<<<<<<<<<<<<<
@@ -1967,7 +1967,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   __pyx_t_1 = ((__pyx_v_self->x == __pyx_v_origin->x) != 0);
   if (__pyx_t_1) {
 
-    /* "cysimlidar.pyx":34
+    /* "CythonLidarPost.pyx":34
  *             return 3
  *     elif self.x == origin.x:
  *         if self.y > origin.y:             # <<<<<<<<<<<<<<
@@ -1977,7 +1977,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y > __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":35
+      /* "CythonLidarPost.pyx":35
  *     elif self.x == origin.x:
  *         if self.y > origin.y:
  *             return 2             # <<<<<<<<<<<<<<
@@ -1987,7 +1987,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 2;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":34
+      /* "CythonLidarPost.pyx":34
  *             return 3
  *     elif self.x == origin.x:
  *         if self.y > origin.y:             # <<<<<<<<<<<<<<
@@ -1996,7 +1996,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":36
+    /* "CythonLidarPost.pyx":36
  *         if self.y > origin.y:
  *             return 2
  *         elif self.y < origin.y:             # <<<<<<<<<<<<<<
@@ -2006,7 +2006,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
     __pyx_t_1 = ((__pyx_v_self->y < __pyx_v_origin->y) != 0);
     if (__pyx_t_1) {
 
-      /* "cysimlidar.pyx":37
+      /* "CythonLidarPost.pyx":37
  *             return 2
  *         elif self.y < origin.y:
  *             return 4             # <<<<<<<<<<<<<<
@@ -2016,7 +2016,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
       __pyx_r = 4;
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":36
+      /* "CythonLidarPost.pyx":36
  *         if self.y > origin.y:
  *             return 2
  *         elif self.y < origin.y:             # <<<<<<<<<<<<<<
@@ -2025,7 +2025,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  */
     }
 
-    /* "cysimlidar.pyx":33
+    /* "CythonLidarPost.pyx":33
  *         else:
  *             return 3
  *     elif self.x == origin.x:             # <<<<<<<<<<<<<<
@@ -2035,7 +2035,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":17
+  /* "CythonLidarPost.pyx":17
  * 
  * 
  * cdef int isInQuadrant(Point self, Point origin):             # <<<<<<<<<<<<<<
@@ -2050,7 +2050,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":40
+/* "CythonLidarPost.pyx":40
  * 
  * 
  * cdef findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
@@ -2058,7 +2058,7 @@ static int __pyx_f_10cysimlidar_isInQuadrant(struct __pyx_obj_10cysimlidar_Point
  *     if xdif == 0:
  */
 
-static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
+static PyObject *__pyx_f_15CythonLidarPost_findSlope(CYTHON_UNUSED PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
   PyObject *__pyx_v_xdif = NULL;
   PyObject *__pyx_v_slope = NULL;
   PyObject *__pyx_r = NULL;
@@ -2070,7 +2070,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("findSlope", 0);
 
-  /* "cysimlidar.pyx":41
+  /* "CythonLidarPost.pyx":41
  * 
  * cdef findSlope(self, p1, p2):
  *     xdif = p1.x - p2.x             # <<<<<<<<<<<<<<
@@ -2088,7 +2088,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
   __pyx_v_xdif = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "cysimlidar.pyx":42
+  /* "CythonLidarPost.pyx":42
  * cdef findSlope(self, p1, p2):
  *     xdif = p1.x - p2.x
  *     if xdif == 0:             # <<<<<<<<<<<<<<
@@ -2101,7 +2101,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_4) {
 
-    /* "cysimlidar.pyx":43
+    /* "CythonLidarPost.pyx":43
  *     xdif = p1.x - p2.x
  *     if xdif == 0:
  *         slope = None             # <<<<<<<<<<<<<<
@@ -2111,7 +2111,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
     __Pyx_INCREF(Py_None);
     __pyx_v_slope = Py_None;
 
-    /* "cysimlidar.pyx":42
+    /* "CythonLidarPost.pyx":42
  * cdef findSlope(self, p1, p2):
  *     xdif = p1.x - p2.x
  *     if xdif == 0:             # <<<<<<<<<<<<<<
@@ -2121,7 +2121,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":45
+  /* "CythonLidarPost.pyx":45
  *         slope = None
  *     else:
  *         slope = (p1.y - p2.y) / (p1.x - p2.x)             # <<<<<<<<<<<<<<
@@ -2154,7 +2154,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":46
+  /* "CythonLidarPost.pyx":46
  *     else:
  *         slope = (p1.y - p2.y) / (p1.x - p2.x)
  *     return slope             # <<<<<<<<<<<<<<
@@ -2166,7 +2166,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
   __pyx_r = __pyx_v_slope;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":40
+  /* "CythonLidarPost.pyx":40
  * 
  * 
  * cdef findSlope(self, p1, p2):             # <<<<<<<<<<<<<<
@@ -2180,7 +2180,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("cysimlidar.findSlope", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.findSlope", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_xdif);
@@ -2190,7 +2190,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":48
+/* "CythonLidarPost.pyx":48
  *     return slope
  * 
  * cdef float findXWithY(self, y):             # <<<<<<<<<<<<<<
@@ -2198,7 +2198,7 @@ static PyObject *__pyx_f_10cysimlidar_findSlope(CYTHON_UNUSED PyObject *__pyx_v_
  *     return x
  */
 
-static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *__pyx_v_y) {
+static float __pyx_f_15CythonLidarPost_findXWithY(PyObject *__pyx_v_self, PyObject *__pyx_v_y) {
   PyObject *__pyx_v_x = NULL;
   float __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2207,7 +2207,7 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
   float __pyx_t_3;
   __Pyx_RefNannySetupContext("findXWithY", 0);
 
-  /* "cysimlidar.pyx":49
+  /* "CythonLidarPost.pyx":49
  * 
  * cdef float findXWithY(self, y):
  *     x = y - self.inter             # <<<<<<<<<<<<<<
@@ -2222,7 +2222,7 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
   __pyx_v_x = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":50
+  /* "CythonLidarPost.pyx":50
  * cdef float findXWithY(self, y):
  *     x = y - self.inter
  *     return x             # <<<<<<<<<<<<<<
@@ -2233,7 +2233,7 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
   __pyx_r = __pyx_t_3;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":48
+  /* "CythonLidarPost.pyx":48
  *     return slope
  * 
  * cdef float findXWithY(self, y):             # <<<<<<<<<<<<<<
@@ -2245,7 +2245,7 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_WriteUnraisable("cysimlidar.findXWithY", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("CythonLidarPost.findXWithY", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_x);
@@ -2253,7 +2253,7 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":52
+/* "CythonLidarPost.pyx":52
  *     return x
  * 
  * cdef float findYWithX(self, x):             # <<<<<<<<<<<<<<
@@ -2261,7 +2261,7 @@ static float __pyx_f_10cysimlidar_findXWithY(PyObject *__pyx_v_self, PyObject *_
  *     return y
  */
 
-static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *__pyx_v_x) {
+static float __pyx_f_15CythonLidarPost_findYWithX(PyObject *__pyx_v_self, PyObject *__pyx_v_x) {
   PyObject *__pyx_v_y = NULL;
   float __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -2271,7 +2271,7 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
   float __pyx_t_4;
   __Pyx_RefNannySetupContext("findYWithX", 0);
 
-  /* "cysimlidar.pyx":53
+  /* "CythonLidarPost.pyx":53
  * 
  * cdef float findYWithX(self, x):
  *     y = (self.slope * x) + self.inter             # <<<<<<<<<<<<<<
@@ -2292,7 +2292,7 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
   __pyx_v_y = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "cysimlidar.pyx":54
+  /* "CythonLidarPost.pyx":54
  * cdef float findYWithX(self, x):
  *     y = (self.slope * x) + self.inter
  *     return y             # <<<<<<<<<<<<<<
@@ -2303,7 +2303,7 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
   __pyx_r = __pyx_t_4;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":52
+  /* "CythonLidarPost.pyx":52
  *     return x
  * 
  * cdef float findYWithX(self, x):             # <<<<<<<<<<<<<<
@@ -2316,7 +2316,7 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_WriteUnraisable("cysimlidar.findYWithX", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("CythonLidarPost.findYWithX", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_y);
@@ -2324,7 +2324,7 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":59
+/* "CythonLidarPost.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
@@ -2333,9 +2333,9 @@ static float __pyx_f_10cysimlidar_findYWithX(PyObject *__pyx_v_self, PyObject *_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_7LineSeg_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_7LineSeg_1__init__ = {"__init__", (PyCFunction)__pyx_pw_10cysimlidar_7LineSeg_1__init__, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_7LineSeg_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_15CythonLidarPost_7LineSeg_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_15CythonLidarPost_7LineSeg_1__init__ = {"__init__", (PyCFunction)__pyx_pw_15CythonLidarPost_7LineSeg_1__init__, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_15CythonLidarPost_7LineSeg_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_p1 = 0;
   PyObject *__pyx_v_p2 = 0;
@@ -2394,18 +2394,18 @@ static PyObject *__pyx_pw_10cysimlidar_7LineSeg_1__init__(PyObject *__pyx_self, 
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 59, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.LineSeg.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.LineSeg.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10cysimlidar_7LineSeg___init__(__pyx_self, __pyx_v_self, __pyx_v_p1, __pyx_v_p2);
+  __pyx_r = __pyx_pf_15CythonLidarPost_7LineSeg___init__(__pyx_self, __pyx_v_self, __pyx_v_p1, __pyx_v_p2);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
+static PyObject *__pyx_pf_15CythonLidarPost_7LineSeg___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2418,7 +2418,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
   double __pyx_t_8;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "cysimlidar.pyx":60
+  /* "CythonLidarPost.pyx":60
  * 
  *     def __init__(self, p1, p2):
  *         self.p1 = p1             # <<<<<<<<<<<<<<
@@ -2427,7 +2427,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p1, __pyx_v_p1) < 0) __PYX_ERR(1, 60, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":61
+  /* "CythonLidarPost.pyx":61
  *     def __init__(self, p1, p2):
  *         self.p1 = p1
  *         self.p2 = p2             # <<<<<<<<<<<<<<
@@ -2436,19 +2436,19 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p2, __pyx_v_p2) < 0) __PYX_ERR(1, 61, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":62
+  /* "CythonLidarPost.pyx":62
  *         self.p1 = p1
  *         self.p2 = p2
  *         self.slope = findSlope(self, p1, p2)             # <<<<<<<<<<<<<<
  *         if self.slope is None:
  *             self.inter = None
  */
-  __pyx_t_1 = __pyx_f_10cysimlidar_findSlope(__pyx_v_self, __pyx_v_p1, __pyx_v_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 62, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_findSlope(__pyx_v_self, __pyx_v_p1, __pyx_v_p2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_1) < 0) __PYX_ERR(1, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":63
+  /* "CythonLidarPost.pyx":63
  *         self.p2 = p2
  *         self.slope = findSlope(self, p1, p2)
  *         if self.slope is None:             # <<<<<<<<<<<<<<
@@ -2462,7 +2462,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":64
+    /* "CythonLidarPost.pyx":64
  *         self.slope = findSlope(self, p1, p2)
  *         if self.slope is None:
  *             self.inter = None             # <<<<<<<<<<<<<<
@@ -2471,7 +2471,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
  */
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, Py_None) < 0) __PYX_ERR(1, 64, __pyx_L1_error)
 
-    /* "cysimlidar.pyx":65
+    /* "CythonLidarPost.pyx":65
  *         if self.slope is None:
  *             self.inter = None
  *             self.x = self.p1.x             # <<<<<<<<<<<<<<
@@ -2486,7 +2486,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_x, __pyx_t_4) < 0) __PYX_ERR(1, 65, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":66
+    /* "CythonLidarPost.pyx":66
  *             self.inter = None
  *             self.x = self.p1.x
  *             self.ang = 90             # <<<<<<<<<<<<<<
@@ -2495,7 +2495,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
  */
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_int_90) < 0) __PYX_ERR(1, 66, __pyx_L1_error)
 
-    /* "cysimlidar.pyx":63
+    /* "CythonLidarPost.pyx":63
  *         self.p2 = p2
  *         self.slope = findSlope(self, p1, p2)
  *         if self.slope is None:             # <<<<<<<<<<<<<<
@@ -2505,7 +2505,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":68
+  /* "CythonLidarPost.pyx":68
  *             self.ang = 90
  *         else:
  *             self.inter = (-self.slope * self.p1.x) + self.p1.y             # <<<<<<<<<<<<<<
@@ -2539,7 +2539,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_5) < 0) __PYX_ERR(1, 68, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "cysimlidar.pyx":69
+    /* "CythonLidarPost.pyx":69
  *         else:
  *             self.inter = (-self.slope * self.p1.x) + self.p1.y
  *             self.ang = rad2deg(np.arctan(self.slope / 1))             # <<<<<<<<<<<<<<
@@ -2604,14 +2604,14 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_t_5); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 69, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyFloat_FromDouble(__pyx_f_10cysimlidar_rad2deg(__pyx_t_8)); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 69, __pyx_L1_error)
+    __pyx_t_5 = PyFloat_FromDouble(__pyx_f_15CythonLidarPost_rad2deg(__pyx_t_8)); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_t_5) < 0) __PYX_ERR(1, 69, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":59
+  /* "CythonLidarPost.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
@@ -2628,7 +2628,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("cysimlidar.LineSeg.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.LineSeg.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2636,7 +2636,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":72
+/* "CythonLidarPost.pyx":72
  * 
  * 
  * cdef int segIsReal(self, point):             # <<<<<<<<<<<<<<
@@ -2644,7 +2644,7 @@ static PyObject *__pyx_pf_10cysimlidar_7LineSeg___init__(CYTHON_UNUSED PyObject 
  *         maxx = self.p1.x
  */
 
-static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__pyx_v_point) {
+static int __pyx_f_15CythonLidarPost_segIsReal(PyObject *__pyx_v_self, PyObject *__pyx_v_point) {
   PyObject *__pyx_v_maxx = NULL;
   PyObject *__pyx_v_minx = NULL;
   PyObject *__pyx_v_maxy = NULL;
@@ -2658,7 +2658,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("segIsReal", 0);
 
-  /* "cysimlidar.pyx":73
+  /* "CythonLidarPost.pyx":73
  * 
  * cdef int segIsReal(self, point):
  *     if self.p1.x > self.p2.x:             # <<<<<<<<<<<<<<
@@ -2682,7 +2682,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_4) {
 
-    /* "cysimlidar.pyx":74
+    /* "CythonLidarPost.pyx":74
  * cdef int segIsReal(self, point):
  *     if self.p1.x > self.p2.x:
  *         maxx = self.p1.x             # <<<<<<<<<<<<<<
@@ -2697,7 +2697,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_v_maxx = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "cysimlidar.pyx":75
+    /* "CythonLidarPost.pyx":75
  *     if self.p1.x > self.p2.x:
  *         maxx = self.p1.x
  *         minx = self.p2.x             # <<<<<<<<<<<<<<
@@ -2712,7 +2712,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_v_minx = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "cysimlidar.pyx":73
+    /* "CythonLidarPost.pyx":73
  * 
  * cdef int segIsReal(self, point):
  *     if self.p1.x > self.p2.x:             # <<<<<<<<<<<<<<
@@ -2722,7 +2722,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":77
+  /* "CythonLidarPost.pyx":77
  *         minx = self.p2.x
  *     else:
  *         minx = self.p1.x             # <<<<<<<<<<<<<<
@@ -2738,7 +2738,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_v_minx = __pyx_t_3;
     __pyx_t_3 = 0;
 
-    /* "cysimlidar.pyx":78
+    /* "CythonLidarPost.pyx":78
  *     else:
  *         minx = self.p1.x
  *         maxx = self.p2.x             # <<<<<<<<<<<<<<
@@ -2755,7 +2755,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":79
+  /* "CythonLidarPost.pyx":79
  *         minx = self.p1.x
  *         maxx = self.p2.x
  *     if self.p1.y > self.p2.y:             # <<<<<<<<<<<<<<
@@ -2779,7 +2779,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_4) {
 
-    /* "cysimlidar.pyx":80
+    /* "CythonLidarPost.pyx":80
  *         maxx = self.p2.x
  *     if self.p1.y > self.p2.y:
  *         maxy = self.p1.y             # <<<<<<<<<<<<<<
@@ -2794,7 +2794,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_v_maxy = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":81
+    /* "CythonLidarPost.pyx":81
  *     if self.p1.y > self.p2.y:
  *         maxy = self.p1.y
  *         miny = self.p2.y             # <<<<<<<<<<<<<<
@@ -2809,7 +2809,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_v_miny = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "cysimlidar.pyx":79
+    /* "CythonLidarPost.pyx":79
  *         minx = self.p1.x
  *         maxx = self.p2.x
  *     if self.p1.y > self.p2.y:             # <<<<<<<<<<<<<<
@@ -2819,7 +2819,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     goto __pyx_L4;
   }
 
-  /* "cysimlidar.pyx":83
+  /* "CythonLidarPost.pyx":83
  *         miny = self.p2.y
  *     else:
  *         miny = self.p1.y             # <<<<<<<<<<<<<<
@@ -2835,7 +2835,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_v_miny = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":84
+    /* "CythonLidarPost.pyx":84
  *     else:
  *         miny = self.p1.y
  *         maxy = self.p2.y             # <<<<<<<<<<<<<<
@@ -2852,7 +2852,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   }
   __pyx_L4:;
 
-  /* "cysimlidar.pyx":85
+  /* "CythonLidarPost.pyx":85
  *         miny = self.p1.y
  *         maxy = self.p2.y
  *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:             # <<<<<<<<<<<<<<
@@ -2902,7 +2902,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   __pyx_L6_bool_binop_done:;
   if (__pyx_t_4) {
 
-    /* "cysimlidar.pyx":86
+    /* "CythonLidarPost.pyx":86
  *         maxy = self.p2.y
  *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:
  *         return 0             # <<<<<<<<<<<<<<
@@ -2912,7 +2912,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "cysimlidar.pyx":85
+    /* "CythonLidarPost.pyx":85
  *         miny = self.p1.y
  *         maxy = self.p2.y
  *     if point.x > maxx or point.x < minx or point.y > maxy or point.y < miny:             # <<<<<<<<<<<<<<
@@ -2921,7 +2921,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
  */
   }
 
-  /* "cysimlidar.pyx":88
+  /* "CythonLidarPost.pyx":88
  *         return 0
  *     else:
  *         return 1             # <<<<<<<<<<<<<<
@@ -2933,7 +2933,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
     goto __pyx_L0;
   }
 
-  /* "cysimlidar.pyx":72
+  /* "CythonLidarPost.pyx":72
  * 
  * 
  * cdef int segIsReal(self, point):             # <<<<<<<<<<<<<<
@@ -2946,7 +2946,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_WriteUnraisable("cysimlidar.segIsReal", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("CythonLidarPost.segIsReal", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_maxx);
@@ -2957,7 +2957,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":91
+/* "CythonLidarPost.pyx":91
  * 
  * 
  * cdef findinter(self, obj):             # <<<<<<<<<<<<<<
@@ -2965,7 +2965,7 @@ static int __pyx_f_10cysimlidar_segIsReal(PyObject *__pyx_v_self, PyObject *__py
  *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
  */
 
-static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject *__pyx_v_obj) {
+static PyObject *__pyx_f_15CythonLidarPost_findinter(PyObject *__pyx_v_self, PyObject *__pyx_v_obj) {
   PyObject *__pyx_v_X1 = NULL;
   PyObject *__pyx_v_Y1 = NULL;
   PyObject *__pyx_v_X2 = NULL;
@@ -2982,7 +2982,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   PyObject *__pyx_v_Ub = NULL;
   PyObject *__pyx_v_X = NULL;
   PyObject *__pyx_v_Y = NULL;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_point = NULL;
+  struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_point = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -2998,7 +2998,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   int __pyx_t_11;
   __Pyx_RefNannySetupContext("findinter", 0);
 
-  /* "cysimlidar.pyx":92
+  /* "CythonLidarPost.pyx":92
  * 
  * cdef findinter(self, obj):
  *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y             # <<<<<<<<<<<<<<
@@ -3062,7 +3062,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __pyx_v_Y4 = __pyx_t_9;
   __pyx_t_9 = 0;
 
-  /* "cysimlidar.pyx":93
+  /* "CythonLidarPost.pyx":93
  * cdef findinter(self, obj):
  *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
  *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))             # <<<<<<<<<<<<<<
@@ -3092,7 +3092,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __pyx_v_UaNumerator = __pyx_t_9;
   __pyx_t_9 = 0;
 
-  /* "cysimlidar.pyx":94
+  /* "CythonLidarPost.pyx":94
  *     X1, Y1, X2, Y2, X3, Y3, X4, Y4 = self.p1.x, self.p1.y, self.p2.x, self.p2.y, obj.p1.x, obj.p1.y, obj.p2.x, obj.p2.y
  *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
  *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))             # <<<<<<<<<<<<<<
@@ -3122,7 +3122,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __pyx_v_UaDenominator = __pyx_t_9;
   __pyx_t_9 = 0;
 
-  /* "cysimlidar.pyx":95
+  /* "CythonLidarPost.pyx":95
  *     UaNumerator = ((X4 - X3) * (Y1 - Y3) - (Y4 - Y3) * (X1 - X3))
  *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
  *     UbNumerator = ((X2 - X1) * (Y1 - Y3) - (Y2 - Y1) * (X1 - X3))             # <<<<<<<<<<<<<<
@@ -3152,7 +3152,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __pyx_v_UbNumerator = __pyx_t_9;
   __pyx_t_9 = 0;
 
-  /* "cysimlidar.pyx":96
+  /* "CythonLidarPost.pyx":96
  *     UaDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
  *     UbNumerator = ((X2 - X1) * (Y1 - Y3) - (Y2 - Y1) * (X1 - X3))
  *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))             # <<<<<<<<<<<<<<
@@ -3182,7 +3182,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __pyx_v_UbDenominator = __pyx_t_9;
   __pyx_t_9 = 0;
 
-  /* "cysimlidar.pyx":97
+  /* "CythonLidarPost.pyx":97
  *     UbNumerator = ((X2 - X1) * (Y1 - Y3) - (Y2 - Y1) * (X1 - X3))
  *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
  *     if UaNumerator == 0 and UaDenominator == 0 and UbNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.             # <<<<<<<<<<<<<<
@@ -3224,7 +3224,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_10) {
 
-    /* "cysimlidar.pyx":98
+    /* "CythonLidarPost.pyx":98
  *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
  *     if UaNumerator == 0 and UaDenominator == 0 and UbNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
  *         return None             # <<<<<<<<<<<<<<
@@ -3236,7 +3236,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "cysimlidar.pyx":97
+    /* "CythonLidarPost.pyx":97
  *     UbNumerator = ((X2 - X1) * (Y1 - Y3) - (Y2 - Y1) * (X1 - X3))
  *     UbDenominator = ((Y4 - Y3) * (X2 - X1) - (X4 - X3) * (Y2 - Y1))
  *     if UaNumerator == 0 and UaDenominator == 0 and UbNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.             # <<<<<<<<<<<<<<
@@ -3245,7 +3245,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
  */
   }
 
-  /* "cysimlidar.pyx":99
+  /* "CythonLidarPost.pyx":99
  *     if UaNumerator == 0 and UaDenominator == 0 and UbNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
  *         return None
  *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.             # <<<<<<<<<<<<<<
@@ -3269,7 +3269,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __pyx_L8_bool_binop_done:;
   if (__pyx_t_10) {
 
-    /* "cysimlidar.pyx":100
+    /* "CythonLidarPost.pyx":100
  *         return None
  *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.
  *         return None             # <<<<<<<<<<<<<<
@@ -3281,7 +3281,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "cysimlidar.pyx":99
+    /* "CythonLidarPost.pyx":99
  *     if UaNumerator == 0 and UaDenominator == 0 and UbNumerator == 0 and UbDenominator == 0:  # If the lines are coincident.
  *         return None
  *     elif UaDenominator == 0 and UbDenominator == 0:  # If the lines are parallel.             # <<<<<<<<<<<<<<
@@ -3290,7 +3290,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
  */
   }
 
-  /* "cysimlidar.pyx":102
+  /* "CythonLidarPost.pyx":102
  *         return None
  *     else:
  *         Ua = UaNumerator / UaDenominator             # <<<<<<<<<<<<<<
@@ -3303,7 +3303,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __pyx_v_Ua = __pyx_t_9;
     __pyx_t_9 = 0;
 
-    /* "cysimlidar.pyx":103
+    /* "CythonLidarPost.pyx":103
  *     else:
  *         Ua = UaNumerator / UaDenominator
  *         Ub = UbNumerator / UbDenominator             # <<<<<<<<<<<<<<
@@ -3315,7 +3315,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __pyx_v_Ub = __pyx_t_9;
     __pyx_t_9 = 0;
 
-    /* "cysimlidar.pyx":104
+    /* "CythonLidarPost.pyx":104
  *         Ua = UaNumerator / UaDenominator
  *         Ub = UbNumerator / UbDenominator
  *         X = X1 + Ua * (X2 - X1)             # <<<<<<<<<<<<<<
@@ -3333,7 +3333,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __pyx_v_X = __pyx_t_9;
     __pyx_t_9 = 0;
 
-    /* "cysimlidar.pyx":105
+    /* "CythonLidarPost.pyx":105
  *         Ub = UbNumerator / UbDenominator
  *         X = X1 + Ua * (X2 - X1)
  *         Y = Y1 + Ua * (Y2 - Y1)             # <<<<<<<<<<<<<<
@@ -3351,7 +3351,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __pyx_v_Y = __pyx_t_9;
     __pyx_t_9 = 0;
 
-    /* "cysimlidar.pyx":106
+    /* "CythonLidarPost.pyx":106
  *         X = X1 + Ua * (X2 - X1)
  *         Y = Y1 + Ua * (Y2 - Y1)
  *         point = Point(X, Y)             # <<<<<<<<<<<<<<
@@ -3366,13 +3366,13 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __Pyx_INCREF(__pyx_v_Y);
     __Pyx_GIVEREF(__pyx_v_Y);
     PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_v_Y);
-    __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 106, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 106, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-    __pyx_v_point = ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_8);
+    __pyx_v_point = ((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_t_8);
     __pyx_t_8 = 0;
 
-    /* "cysimlidar.pyx":109
+    /* "CythonLidarPost.pyx":109
  *         # if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
  *         # if segIsReal(self, point) and rayIsReal(obj, point):
  *         if 0 <= Ua <= 1 and 0 <= Ub <= 1:             # <<<<<<<<<<<<<<
@@ -3402,7 +3402,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     __pyx_L11_bool_binop_done:;
     if (__pyx_t_10) {
 
-      /* "cysimlidar.pyx":110
+      /* "CythonLidarPost.pyx":110
  *         # if segIsReal(self, point) and rayIsReal(obj, point):
  *         if 0 <= Ua <= 1 and 0 <= Ub <= 1:
  *             return point             # <<<<<<<<<<<<<<
@@ -3414,7 +3414,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
       __pyx_r = ((PyObject *)__pyx_v_point);
       goto __pyx_L0;
 
-      /* "cysimlidar.pyx":109
+      /* "CythonLidarPost.pyx":109
  *         # if Ua > 0 and Ua < 1 and rayIsReal(obj, point):
  *         # if segIsReal(self, point) and rayIsReal(obj, point):
  *         if 0 <= Ua <= 1 and 0 <= Ub <= 1:             # <<<<<<<<<<<<<<
@@ -3424,7 +3424,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
     }
   }
 
-  /* "cysimlidar.pyx":91
+  /* "CythonLidarPost.pyx":91
  * 
  * 
  * cdef findinter(self, obj):             # <<<<<<<<<<<<<<
@@ -3445,7 +3445,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_AddTraceback("cysimlidar.findinter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.findinter", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_X1);
@@ -3470,7 +3470,7 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":114
+/* "CythonLidarPost.pyx":114
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
@@ -3479,12 +3479,12 @@ static PyObject *__pyx_f_10cysimlidar_findinter(PyObject *__pyx_v_self, PyObject
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_3Ray_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_10cysimlidar_3Ray_1__init__ = {"__init__", (PyCFunction)__pyx_pw_10cysimlidar_3Ray_1__init__, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10cysimlidar_3Ray_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_15CythonLidarPost_3Ray_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_15CythonLidarPost_3Ray_1__init__ = {"__init__", (PyCFunction)__pyx_pw_15CythonLidarPost_3Ray_1__init__, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_15CythonLidarPost_3Ray_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   float __pyx_v_ang;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_point = 0;
+  struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_point = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
@@ -3534,18 +3534,18 @@ static PyObject *__pyx_pw_10cysimlidar_3Ray_1__init__(PyObject *__pyx_self, PyOb
     }
     __pyx_v_self = values[0];
     __pyx_v_ang = __pyx_PyFloat_AsFloat(values[1]); if (unlikely((__pyx_v_ang == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 114, __pyx_L3_error)
-    __pyx_v_point = ((struct __pyx_obj_10cysimlidar_Point *)values[2]);
+    __pyx_v_point = ((struct __pyx_obj_15CythonLidarPost_Point *)values[2]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__init__", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 114, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.Ray.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Ray.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_point), __pyx_ptype_10cysimlidar_Point, 1, "point", 0))) __PYX_ERR(1, 114, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10cysimlidar_3Ray___init__(__pyx_self, __pyx_v_self, __pyx_v_ang, __pyx_v_point);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_point), __pyx_ptype_15CythonLidarPost_Point, 1, "point", 0))) __PYX_ERR(1, 114, __pyx_L1_error)
+  __pyx_r = __pyx_pf_15CythonLidarPost_3Ray___init__(__pyx_self, __pyx_v_self, __pyx_v_ang, __pyx_v_point);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3556,7 +3556,7 @@ static PyObject *__pyx_pw_10cysimlidar_3Ray_1__init__(PyObject *__pyx_self, PyOb
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, float __pyx_v_ang, struct __pyx_obj_10cysimlidar_Point *__pyx_v_point) {
+static PyObject *__pyx_pf_15CythonLidarPost_3Ray___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, float __pyx_v_ang, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_point) {
   PyObject *__pyx_v_slopeang = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3571,7 +3571,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   int __pyx_t_9;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "cysimlidar.pyx":115
+  /* "CythonLidarPost.pyx":115
  * class Ray:
  *     def __init__(self, float ang, Point point):
  *         self.ang = ang             # <<<<<<<<<<<<<<
@@ -3583,7 +3583,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_ang, __pyx_t_1) < 0) __PYX_ERR(1, 115, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":116
+  /* "CythonLidarPost.pyx":116
  *     def __init__(self, float ang, Point point):
  *         self.ang = ang
  *         self.p1 = point             # <<<<<<<<<<<<<<
@@ -3592,7 +3592,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p1, ((PyObject *)__pyx_v_point)) < 0) __PYX_ERR(1, 116, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":117
+  /* "CythonLidarPost.pyx":117
  *         self.ang = ang
  *         self.p1 = point
  *         self.quadrant = int(self.ang / 90) + 1             # <<<<<<<<<<<<<<
@@ -3613,7 +3613,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_quadrant, __pyx_t_2) < 0) __PYX_ERR(1, 117, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":118
+  /* "CythonLidarPost.pyx":118
  *         self.p1 = point
  *         self.quadrant = int(self.ang / 90) + 1
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
@@ -3643,7 +3643,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":119
+    /* "CythonLidarPost.pyx":119
  *         self.quadrant = int(self.ang / 90) + 1
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             slopeang = 90 - (self.ang % 90)             # <<<<<<<<<<<<<<
@@ -3661,7 +3661,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     __pyx_v_slopeang = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":118
+    /* "CythonLidarPost.pyx":118
  *         self.p1 = point
  *         self.quadrant = int(self.ang / 90) + 1
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
@@ -3671,7 +3671,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     goto __pyx_L3;
   }
 
-  /* "cysimlidar.pyx":121
+  /* "CythonLidarPost.pyx":121
  *             slopeang = 90 - (self.ang % 90)
  *         else:
  *             slopeang = self.ang % 90             # <<<<<<<<<<<<<<
@@ -3689,7 +3689,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   }
   __pyx_L3:;
 
-  /* "cysimlidar.pyx":122
+  /* "CythonLidarPost.pyx":122
  *         else:
  *             slopeang = self.ang % 90
  *         self.slope = round(np.tan(deg2rad(slopeang)), 3)             # <<<<<<<<<<<<<<
@@ -3702,7 +3702,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_6 = __pyx_PyFloat_AsDouble(__pyx_v_slopeang); if (unlikely((__pyx_t_6 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 122, __pyx_L1_error)
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_f_10cysimlidar_deg2rad(__pyx_t_6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 122, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_f_15CythonLidarPost_deg2rad(__pyx_t_6)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_7 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -3764,7 +3764,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_1) < 0) __PYX_ERR(1, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":123
+  /* "CythonLidarPost.pyx":123
  *             slopeang = self.ang % 90
  *         self.slope = round(np.tan(deg2rad(slopeang)), 3)
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
@@ -3794,7 +3794,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   __pyx_L7_bool_binop_done:;
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":124
+    /* "CythonLidarPost.pyx":124
  *         self.slope = round(np.tan(deg2rad(slopeang)), 3)
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             self.slope *= -1             # <<<<<<<<<<<<<<
@@ -3809,7 +3809,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_slope, __pyx_t_5) < 0) __PYX_ERR(1, 124, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "cysimlidar.pyx":123
+    /* "CythonLidarPost.pyx":123
  *             slopeang = self.ang % 90
  *         self.slope = round(np.tan(deg2rad(slopeang)), 3)
  *         if self.quadrant == 2 or self.quadrant == 4:             # <<<<<<<<<<<<<<
@@ -3818,7 +3818,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
  */
   }
 
-  /* "cysimlidar.pyx":125
+  /* "CythonLidarPost.pyx":125
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             self.slope *= -1
  *         if self.slope == 0:             # <<<<<<<<<<<<<<
@@ -3834,7 +3834,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":126
+    /* "CythonLidarPost.pyx":126
  *             self.slope *= -1
  *         if self.slope == 0:
  *             self.inter = self.p1.y             # <<<<<<<<<<<<<<
@@ -3849,7 +3849,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_inter, __pyx_t_5) < 0) __PYX_ERR(1, 126, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "cysimlidar.pyx":127
+    /* "CythonLidarPost.pyx":127
  *         if self.slope == 0:
  *             self.inter = self.p1.y
  *             self.x = self.p1.x             # <<<<<<<<<<<<<<
@@ -3864,7 +3864,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_x, __pyx_t_1) < 0) __PYX_ERR(1, 127, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "cysimlidar.pyx":125
+    /* "CythonLidarPost.pyx":125
  *         if self.quadrant == 2 or self.quadrant == 4:
  *             self.slope *= -1
  *         if self.slope == 0:             # <<<<<<<<<<<<<<
@@ -3874,7 +3874,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     goto __pyx_L9;
   }
 
-  /* "cysimlidar.pyx":129
+  /* "CythonLidarPost.pyx":129
  *             self.x = self.p1.x
  *         else:
  *             self.inter = (-self.slope * self.p1.x) + self.p1.y             # <<<<<<<<<<<<<<
@@ -3910,7 +3910,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   }
   __pyx_L9:;
 
-  /* "cysimlidar.pyx":130
+  /* "CythonLidarPost.pyx":130
  *         else:
  *             self.inter = (-self.slope * self.p1.x) + self.p1.y
  *         if self.quadrant is 1 or self.quadrant is 4:             # <<<<<<<<<<<<<<
@@ -3936,7 +3936,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   __pyx_L11_bool_binop_done:;
   if (__pyx_t_3) {
 
-    /* "cysimlidar.pyx":131
+    /* "CythonLidarPost.pyx":131
  *             self.inter = (-self.slope * self.p1.x) + self.p1.y
  *         if self.quadrant is 1 or self.quadrant is 4:
  *             self.p2 = Point(point.x + 500, point.y + (500 * self.slope))             # <<<<<<<<<<<<<<
@@ -3964,13 +3964,13 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1);
     __pyx_t_8 = 0;
     __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 131, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 131, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p2, __pyx_t_1) < 0) __PYX_ERR(1, 131, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "cysimlidar.pyx":130
+    /* "CythonLidarPost.pyx":130
  *         else:
  *             self.inter = (-self.slope * self.p1.x) + self.p1.y
  *         if self.quadrant is 1 or self.quadrant is 4:             # <<<<<<<<<<<<<<
@@ -3980,7 +3980,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     goto __pyx_L10;
   }
 
-  /* "cysimlidar.pyx":133
+  /* "CythonLidarPost.pyx":133
  *             self.p2 = Point(point.x + 500, point.y + (500 * self.slope))
  *         else:
  *             self.p2 = Point(point.x - 500, point.y - (500 * self.slope))             # <<<<<<<<<<<<<<
@@ -4009,7 +4009,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
     PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_8);
     __pyx_t_1 = 0;
     __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_5, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 133, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_5, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 133, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_p2, __pyx_t_8) < 0) __PYX_ERR(1, 133, __pyx_L1_error)
@@ -4017,7 +4017,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   }
   __pyx_L10:;
 
-  /* "cysimlidar.pyx":114
+  /* "CythonLidarPost.pyx":114
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
@@ -4034,7 +4034,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("cysimlidar.Ray.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.Ray.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_slopeang);
@@ -4043,7 +4043,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":136
+/* "CythonLidarPost.pyx":136
  * 
  * 
  * cdef int rayIsReal(self, point):             # <<<<<<<<<<<<<<
@@ -4051,7 +4051,7 @@ static PyObject *__pyx_pf_10cysimlidar_3Ray___init__(CYTHON_UNUSED PyObject *__p
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
  */
 
-static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__pyx_v_point) {
+static int __pyx_f_15CythonLidarPost_rayIsReal(PyObject *__pyx_v_self, PyObject *__pyx_v_point) {
   int __pyx_v_pointquad;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -4061,21 +4061,21 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("rayIsReal", 0);
 
-  /* "cysimlidar.pyx":137
+  /* "CythonLidarPost.pyx":137
  * 
  * cdef int rayIsReal(self, point):
  *     pointquad = isInQuadrant(point, self.p1)             # <<<<<<<<<<<<<<
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
  *         return 1
  */
-  if (!(likely(((__pyx_v_point) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_point, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 137, __pyx_L1_error)
+  if (!(likely(((__pyx_v_point) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_point, __pyx_ptype_15CythonLidarPost_Point))))) __PYX_ERR(1, 137, __pyx_L1_error)
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_p1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 137, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 137, __pyx_L1_error)
-  __pyx_v_pointquad = __pyx_f_10cysimlidar_isInQuadrant(((struct __pyx_obj_10cysimlidar_Point *)__pyx_v_point), ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_1));
+  if (!(likely(((__pyx_t_1) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_1, __pyx_ptype_15CythonLidarPost_Point))))) __PYX_ERR(1, 137, __pyx_L1_error)
+  __pyx_v_pointquad = __pyx_f_15CythonLidarPost_isInQuadrant(((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_v_point), ((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_t_1));
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":138
+  /* "CythonLidarPost.pyx":138
  * cdef int rayIsReal(self, point):
  *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:             # <<<<<<<<<<<<<<
@@ -4093,7 +4093,7 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_4) {
 
-    /* "cysimlidar.pyx":139
+    /* "CythonLidarPost.pyx":139
  *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:
  *         return 1             # <<<<<<<<<<<<<<
@@ -4103,7 +4103,7 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "cysimlidar.pyx":138
+    /* "CythonLidarPost.pyx":138
  * cdef int rayIsReal(self, point):
  *     pointquad = isInQuadrant(point, self.p1)
  *     if self.quadrant == pointquad: # or (self.quadrant - pointquad)%2 != 0:             # <<<<<<<<<<<<<<
@@ -4112,7 +4112,7 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
  */
   }
 
-  /* "cysimlidar.pyx":141
+  /* "CythonLidarPost.pyx":141
  *         return 1
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -4124,7 +4124,7 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
     goto __pyx_L0;
   }
 
-  /* "cysimlidar.pyx":136
+  /* "CythonLidarPost.pyx":136
  * 
  * 
  * cdef int rayIsReal(self, point):             # <<<<<<<<<<<<<<
@@ -4137,14 +4137,14 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_WriteUnraisable("cysimlidar.rayIsReal", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("CythonLidarPost.rayIsReal", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":144
+/* "CythonLidarPost.pyx":144
  * 
  * 
  * cdef double rad2deg(double rad):             # <<<<<<<<<<<<<<
@@ -4152,14 +4152,14 @@ static int __pyx_f_10cysimlidar_rayIsReal(PyObject *__pyx_v_self, PyObject *__py
  *     deg = rad * (180 / pi)
  */
 
-static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
+static double __pyx_f_15CythonLidarPost_rad2deg(double __pyx_v_rad) {
   double __pyx_v_pi;
   double __pyx_v_deg;
   double __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("rad2deg", 0);
 
-  /* "cysimlidar.pyx":145
+  /* "CythonLidarPost.pyx":145
  * 
  * cdef double rad2deg(double rad):
  *     pi = 3.1415926535897932384626433832             # <<<<<<<<<<<<<<
@@ -4168,7 +4168,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
  */
   __pyx_v_pi = 3.1415926535897932384626433832;
 
-  /* "cysimlidar.pyx":146
+  /* "CythonLidarPost.pyx":146
  * cdef double rad2deg(double rad):
  *     pi = 3.1415926535897932384626433832
  *     deg = rad * (180 / pi)             # <<<<<<<<<<<<<<
@@ -4181,7 +4181,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
   }
   __pyx_v_deg = (__pyx_v_rad * (180.0 / __pyx_v_pi));
 
-  /* "cysimlidar.pyx":147
+  /* "CythonLidarPost.pyx":147
  *     pi = 3.1415926535897932384626433832
  *     deg = rad * (180 / pi)
  *     return deg             # <<<<<<<<<<<<<<
@@ -4191,7 +4191,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
   __pyx_r = __pyx_v_deg;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":144
+  /* "CythonLidarPost.pyx":144
  * 
  * 
  * cdef double rad2deg(double rad):             # <<<<<<<<<<<<<<
@@ -4201,14 +4201,14 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("cysimlidar.rad2deg", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("CythonLidarPost.rad2deg", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":150
+/* "CythonLidarPost.pyx":150
  * 
  * #-
  * cdef double deg2rad(double deg):             # <<<<<<<<<<<<<<
@@ -4216,7 +4216,7 @@ static double __pyx_f_10cysimlidar_rad2deg(double __pyx_v_rad) {
  *     rad = deg / (180 / pi)
  */
 
-static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
+static double __pyx_f_15CythonLidarPost_deg2rad(double __pyx_v_deg) {
   double __pyx_v_pi;
   double __pyx_v_rad;
   double __pyx_r;
@@ -4224,7 +4224,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
   double __pyx_t_1;
   __Pyx_RefNannySetupContext("deg2rad", 0);
 
-  /* "cysimlidar.pyx":151
+  /* "CythonLidarPost.pyx":151
  * #-
  * cdef double deg2rad(double deg):
  *     pi = 3.1415926535897932384626433832             # <<<<<<<<<<<<<<
@@ -4233,7 +4233,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
  */
   __pyx_v_pi = 3.1415926535897932384626433832;
 
-  /* "cysimlidar.pyx":152
+  /* "CythonLidarPost.pyx":152
  * cdef double deg2rad(double deg):
  *     pi = 3.1415926535897932384626433832
  *     rad = deg / (180 / pi)             # <<<<<<<<<<<<<<
@@ -4251,7 +4251,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
   }
   __pyx_v_rad = (__pyx_v_deg / __pyx_t_1);
 
-  /* "cysimlidar.pyx":153
+  /* "CythonLidarPost.pyx":153
  *     pi = 3.1415926535897932384626433832
  *     rad = deg / (180 / pi)
  *     return rad             # <<<<<<<<<<<<<<
@@ -4261,7 +4261,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
   __pyx_r = __pyx_v_rad;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":150
+  /* "CythonLidarPost.pyx":150
  * 
  * #-
  * cdef double deg2rad(double deg):             # <<<<<<<<<<<<<<
@@ -4271,14 +4271,14 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_WriteUnraisable("cysimlidar.deg2rad", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("CythonLidarPost.deg2rad", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":156
+/* "CythonLidarPost.pyx":156
  * 
  * 
  * cdef double dist(p1, p2):             # <<<<<<<<<<<<<<
@@ -4286,7 +4286,7 @@ static double __pyx_f_10cysimlidar_deg2rad(double __pyx_v_deg) {
  *     y = (p1.y - p2.y) ** 2
  */
 
-static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
+static double __pyx_f_15CythonLidarPost_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_p2) {
   PyObject *__pyx_v_x = NULL;
   PyObject *__pyx_v_y = NULL;
   double __pyx_r;
@@ -4297,7 +4297,7 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   double __pyx_t_4;
   __Pyx_RefNannySetupContext("dist", 0);
 
-  /* "cysimlidar.pyx":157
+  /* "CythonLidarPost.pyx":157
  * 
  * cdef double dist(p1, p2):
  *     x = (p1.x - p2.x) ** 2             # <<<<<<<<<<<<<<
@@ -4318,7 +4318,7 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   __pyx_v_x = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":158
+  /* "CythonLidarPost.pyx":158
  * cdef double dist(p1, p2):
  *     x = (p1.x - p2.x) ** 2
  *     y = (p1.y - p2.y) ** 2             # <<<<<<<<<<<<<<
@@ -4339,7 +4339,7 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   __pyx_v_y = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "cysimlidar.pyx":159
+  /* "CythonLidarPost.pyx":159
  *     x = (p1.x - p2.x) ** 2
  *     y = (p1.y - p2.y) ** 2
  *     return (x + y) ** .5             # <<<<<<<<<<<<<<
@@ -4356,7 +4356,7 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   __pyx_r = __pyx_t_4;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":156
+  /* "CythonLidarPost.pyx":156
  * 
  * 
  * cdef double dist(p1, p2):             # <<<<<<<<<<<<<<
@@ -4369,7 +4369,7 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_WriteUnraisable("cysimlidar.dist", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("CythonLidarPost.dist", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_x);
@@ -4378,7 +4378,7 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":162
+/* "CythonLidarPost.pyx":162
  * 
  * # Function that needs the most optimizing
  * cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerate = 1):             # <<<<<<<<<<<<<<
@@ -4386,12 +4386,12 @@ static double __pyx_f_10cysimlidar_dist(PyObject *__pyx_v_p1, PyObject *__pyx_v_
  *     cdef int ang = 0
  */
 
-static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, CYTHON_UNUSED PyObject *__pyx_v_robotangle, PyObject *__pyx_v_fieldlines, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_10cysimlidar_angledRayIntersects *__pyx_optional_args) {
+static PyObject *__pyx_pw_15CythonLidarPost_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_angledRayIntersects(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation, CYTHON_UNUSED PyObject *__pyx_v_robotangle, PyObject *__pyx_v_fieldlines, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_15CythonLidarPost_angledRayIntersects *__pyx_optional_args) {
   PyObject *__pyx_v_samplerate = ((PyObject *)__pyx_int_1);
   PyObject *__pyx_v_rayinters = NULL;
   int __pyx_v_ang;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_i = NULL;
+  struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_i = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4406,7 +4406,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
     }
   }
 
-  /* "cysimlidar.pyx":163
+  /* "CythonLidarPost.pyx":163
  * # Function that needs the most optimizing
  * cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerate = 1):
  *     rayinters = []             # <<<<<<<<<<<<<<
@@ -4418,7 +4418,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
   __pyx_v_rayinters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":164
+  /* "CythonLidarPost.pyx":164
  * cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerate = 1):
  *     rayinters = []
  *     cdef int ang = 0             # <<<<<<<<<<<<<<
@@ -4427,7 +4427,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
  */
   __pyx_v_ang = 0;
 
-  /* "cysimlidar.pyx":165
+  /* "CythonLidarPost.pyx":165
  *     rayinters = []
  *     cdef int ang = 0
  *     while ang < 360:             # <<<<<<<<<<<<<<
@@ -4438,7 +4438,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
     __pyx_t_2 = ((__pyx_v_ang < 0x168) != 0);
     if (!__pyx_t_2) break;
 
-    /* "cysimlidar.pyx":166
+    /* "CythonLidarPost.pyx":166
  *     cdef int ang = 0
  *     while ang < 360:
  *         i = findLineIntersect(ang, robotlocation, fieldlines)             # <<<<<<<<<<<<<<
@@ -4446,12 +4446,12 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
  *             rayinters.append(dist(robotlocation, i))
  */
     if (!(likely(PyList_CheckExact(__pyx_v_fieldlines))||((__pyx_v_fieldlines) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "list", Py_TYPE(__pyx_v_fieldlines)->tp_name), 0))) __PYX_ERR(1, 166, __pyx_L1_error)
-    __pyx_t_1 = ((PyObject *)__pyx_f_10cysimlidar_findLineIntersect(__pyx_v_ang, __pyx_v_robotlocation, ((PyObject*)__pyx_v_fieldlines))); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 166, __pyx_L1_error)
+    __pyx_t_1 = ((PyObject *)__pyx_f_15CythonLidarPost_findLineIntersect(__pyx_v_ang, __pyx_v_robotlocation, ((PyObject*)__pyx_v_fieldlines))); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 166, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_XDECREF_SET(__pyx_v_i, ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_1));
+    __Pyx_XDECREF_SET(__pyx_v_i, ((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "cysimlidar.pyx":167
+    /* "CythonLidarPost.pyx":167
  *     while ang < 360:
  *         i = findLineIntersect(ang, robotlocation, fieldlines)
  *         if i:             # <<<<<<<<<<<<<<
@@ -4461,19 +4461,19 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
     __pyx_t_2 = __Pyx_PyObject_IsTrue(((PyObject *)__pyx_v_i)); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(1, 167, __pyx_L1_error)
     if (__pyx_t_2) {
 
-      /* "cysimlidar.pyx":168
+      /* "CythonLidarPost.pyx":168
  *         i = findLineIntersect(ang, robotlocation, fieldlines)
  *         if i:
  *             rayinters.append(dist(robotlocation, i))             # <<<<<<<<<<<<<<
  *         ang += samplerate
  *     # rayinters = compForAngle(rayinters, robotangle)
  */
-      __pyx_t_1 = PyFloat_FromDouble(__pyx_f_10cysimlidar_dist(((PyObject *)__pyx_v_robotlocation), ((PyObject *)__pyx_v_i))); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 168, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble(__pyx_f_15CythonLidarPost_dist(((PyObject *)__pyx_v_robotlocation), ((PyObject *)__pyx_v_i))); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 168, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_t_3 = __Pyx_PyList_Append(__pyx_v_rayinters, __pyx_t_1); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(1, 168, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "cysimlidar.pyx":167
+      /* "CythonLidarPost.pyx":167
  *     while ang < 360:
  *         i = findLineIntersect(ang, robotlocation, fieldlines)
  *         if i:             # <<<<<<<<<<<<<<
@@ -4482,7 +4482,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
  */
     }
 
-    /* "cysimlidar.pyx":169
+    /* "CythonLidarPost.pyx":169
  *         if i:
  *             rayinters.append(dist(robotlocation, i))
  *         ang += samplerate             # <<<<<<<<<<<<<<
@@ -4499,7 +4499,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
     __pyx_v_ang = __pyx_t_5;
   }
 
-  /* "cysimlidar.pyx":171
+  /* "CythonLidarPost.pyx":171
  *         ang += samplerate
  *     # rayinters = compForAngle(rayinters, robotangle)
  *     return rayinters             # <<<<<<<<<<<<<<
@@ -4511,7 +4511,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
   __pyx_r = __pyx_v_rayinters;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":162
+  /* "CythonLidarPost.pyx":162
  * 
  * # Function that needs the most optimizing
  * cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerate = 1):             # <<<<<<<<<<<<<<
@@ -4523,7 +4523,7 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("cysimlidar.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_rayinters);
@@ -4534,9 +4534,9 @@ static PyObject *__pyx_f_10cysimlidar_angledRayIntersects(struct __pyx_obj_10cys
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation = 0;
+static PyObject *__pyx_pw_15CythonLidarPost_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_15CythonLidarPost_1angledRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation = 0;
   PyObject *__pyx_v_robotangle = 0;
   PyObject *__pyx_v_fieldlines = 0;
   PyObject *__pyx_v_samplerate = 0;
@@ -4600,7 +4600,7 @@ static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_robotlocation = ((struct __pyx_obj_10cysimlidar_Point *)values[0]);
+    __pyx_v_robotlocation = ((struct __pyx_obj_15CythonLidarPost_Point *)values[0]);
     __pyx_v_robotangle = values[1];
     __pyx_v_fieldlines = values[2];
     __pyx_v_samplerate = values[3];
@@ -4609,12 +4609,12 @@ static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("angledRayIntersects", 0, 3, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 162, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_robotlocation), __pyx_ptype_10cysimlidar_Point, 1, "robotlocation", 0))) __PYX_ERR(1, 162, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10cysimlidar_angledRayIntersects(__pyx_self, __pyx_v_robotlocation, __pyx_v_robotangle, __pyx_v_fieldlines, __pyx_v_samplerate);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_robotlocation), __pyx_ptype_15CythonLidarPost_Point, 1, "robotlocation", 0))) __PYX_ERR(1, 162, __pyx_L1_error)
+  __pyx_r = __pyx_pf_15CythonLidarPost_angledRayIntersects(__pyx_self, __pyx_v_robotlocation, __pyx_v_robotangle, __pyx_v_fieldlines, __pyx_v_samplerate);
 
   /* function exit code */
   goto __pyx_L0;
@@ -4625,16 +4625,16 @@ static PyObject *__pyx_pw_10cysimlidar_1angledRayIntersects(PyObject *__pyx_self
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_fieldlines, PyObject *__pyx_v_samplerate) {
+static PyObject *__pyx_pf_15CythonLidarPost_angledRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation, PyObject *__pyx_v_robotangle, PyObject *__pyx_v_fieldlines, PyObject *__pyx_v_samplerate) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  struct __pyx_opt_args_10cysimlidar_angledRayIntersects __pyx_t_2;
+  struct __pyx_opt_args_15CythonLidarPost_angledRayIntersects __pyx_t_2;
   __Pyx_RefNannySetupContext("angledRayIntersects", 0);
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_2.__pyx_n = 1;
   __pyx_t_2.samplerate = __pyx_v_samplerate;
-  __pyx_t_1 = __pyx_f_10cysimlidar_angledRayIntersects(__pyx_v_robotlocation, __pyx_v_robotangle, __pyx_v_fieldlines, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 162, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_angledRayIntersects(__pyx_v_robotlocation, __pyx_v_robotangle, __pyx_v_fieldlines, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4643,7 +4643,7 @@ static PyObject *__pyx_pf_10cysimlidar_angledRayIntersects(CYTHON_UNUSED PyObjec
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cysimlidar.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.angledRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4651,7 +4651,7 @@ static PyObject *__pyx_pf_10cysimlidar_angledRayIntersects(CYTHON_UNUSED PyObjec
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":173
+/* "CythonLidarPost.pyx":173
  *     return rayinters
  * 
  * cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fieldlines):             # <<<<<<<<<<<<<<
@@ -4659,11 +4659,11 @@ static PyObject *__pyx_pf_10cysimlidar_angledRayIntersects(CYTHON_UNUSED PyObjec
  *     for angle in anglestopost:
  */
 
-static PyObject *__pyx_pw_10cysimlidar_3customRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_anglestopost, PyObject *__pyx_v_fieldlines, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_15CythonLidarPost_3customRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_customRayIntersects(struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation, PyObject *__pyx_v_anglestopost, PyObject *__pyx_v_fieldlines, CYTHON_UNUSED int __pyx_skip_dispatch) {
   PyObject *__pyx_v_rayinters = 0;
   PyObject *__pyx_v_angle = NULL;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_intersect = NULL;
+  struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_intersect = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -4672,7 +4672,7 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
   float __pyx_t_4;
   __Pyx_RefNannySetupContext("customRayIntersects", 0);
 
-  /* "cysimlidar.pyx":174
+  /* "CythonLidarPost.pyx":174
  * 
  * cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fieldlines):
  *     cdef dict rayinters = {}             # <<<<<<<<<<<<<<
@@ -4684,7 +4684,7 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
   __pyx_v_rayinters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":175
+  /* "CythonLidarPost.pyx":175
  * cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fieldlines):
  *     cdef dict rayinters = {}
  *     for angle in anglestopost:             # <<<<<<<<<<<<<<
@@ -4707,7 +4707,7 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "cysimlidar.pyx":176
+    /* "CythonLidarPost.pyx":176
  *     cdef dict rayinters = {}
  *     for angle in anglestopost:
  *         intersect = findLineIntersect(angle, robotlocation, fieldlines)             # <<<<<<<<<<<<<<
@@ -4715,24 +4715,24 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
  *     return rayinters
  */
     __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_angle); if (unlikely((__pyx_t_4 == (float)-1) && PyErr_Occurred())) __PYX_ERR(1, 176, __pyx_L1_error)
-    __pyx_t_3 = ((PyObject *)__pyx_f_10cysimlidar_findLineIntersect(__pyx_t_4, __pyx_v_robotlocation, __pyx_v_fieldlines)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 176, __pyx_L1_error)
+    __pyx_t_3 = ((PyObject *)__pyx_f_15CythonLidarPost_findLineIntersect(__pyx_t_4, __pyx_v_robotlocation, __pyx_v_fieldlines)); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 176, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_XDECREF_SET(__pyx_v_intersect, ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_3));
+    __Pyx_XDECREF_SET(__pyx_v_intersect, ((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "cysimlidar.pyx":177
+    /* "CythonLidarPost.pyx":177
  *     for angle in anglestopost:
  *         intersect = findLineIntersect(angle, robotlocation, fieldlines)
  *         rayinters[angle] =  dist(robotlocation, intersect)             # <<<<<<<<<<<<<<
  *     return rayinters
  * 
  */
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_10cysimlidar_dist(((PyObject *)__pyx_v_robotlocation), ((PyObject *)__pyx_v_intersect))); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 177, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_f_15CythonLidarPost_dist(((PyObject *)__pyx_v_robotlocation), ((PyObject *)__pyx_v_intersect))); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     if (unlikely(PyDict_SetItem(__pyx_v_rayinters, __pyx_v_angle, __pyx_t_3) < 0)) __PYX_ERR(1, 177, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-    /* "cysimlidar.pyx":175
+    /* "CythonLidarPost.pyx":175
  * cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fieldlines):
  *     cdef dict rayinters = {}
  *     for angle in anglestopost:             # <<<<<<<<<<<<<<
@@ -4742,7 +4742,7 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":178
+  /* "CythonLidarPost.pyx":178
  *         intersect = findLineIntersect(angle, robotlocation, fieldlines)
  *         rayinters[angle] =  dist(robotlocation, intersect)
  *     return rayinters             # <<<<<<<<<<<<<<
@@ -4754,7 +4754,7 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
   __pyx_r = __pyx_v_rayinters;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":173
+  /* "CythonLidarPost.pyx":173
  *     return rayinters
  * 
  * cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fieldlines):             # <<<<<<<<<<<<<<
@@ -4766,7 +4766,7 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("cysimlidar.customRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.customRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_rayinters);
@@ -4778,9 +4778,9 @@ static PyObject *__pyx_f_10cysimlidar_customRayIntersects(struct __pyx_obj_10cys
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_3customRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_10cysimlidar_3customRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation = 0;
+static PyObject *__pyx_pw_15CythonLidarPost_3customRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_15CythonLidarPost_3customRayIntersects(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation = 0;
   PyObject *__pyx_v_anglestopost = 0;
   PyObject *__pyx_v_fieldlines = 0;
   PyObject *__pyx_r = 0;
@@ -4830,7 +4830,7 @@ static PyObject *__pyx_pw_10cysimlidar_3customRayIntersects(PyObject *__pyx_self
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
-    __pyx_v_robotlocation = ((struct __pyx_obj_10cysimlidar_Point *)values[0]);
+    __pyx_v_robotlocation = ((struct __pyx_obj_15CythonLidarPost_Point *)values[0]);
     __pyx_v_anglestopost = ((PyObject*)values[1]);
     __pyx_v_fieldlines = ((PyObject*)values[2]);
   }
@@ -4838,14 +4838,14 @@ static PyObject *__pyx_pw_10cysimlidar_3customRayIntersects(PyObject *__pyx_self
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("customRayIntersects", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(1, 173, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("cysimlidar.customRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.customRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_robotlocation), __pyx_ptype_10cysimlidar_Point, 1, "robotlocation", 0))) __PYX_ERR(1, 173, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_robotlocation), __pyx_ptype_15CythonLidarPost_Point, 1, "robotlocation", 0))) __PYX_ERR(1, 173, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_anglestopost), (&PyList_Type), 1, "anglestopost", 1))) __PYX_ERR(1, 173, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_fieldlines), (&PyList_Type), 1, "fieldlines", 1))) __PYX_ERR(1, 173, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10cysimlidar_2customRayIntersects(__pyx_self, __pyx_v_robotlocation, __pyx_v_anglestopost, __pyx_v_fieldlines);
+  __pyx_r = __pyx_pf_15CythonLidarPost_2customRayIntersects(__pyx_self, __pyx_v_robotlocation, __pyx_v_anglestopost, __pyx_v_fieldlines);
 
   /* function exit code */
   goto __pyx_L0;
@@ -4856,13 +4856,13 @@ static PyObject *__pyx_pw_10cysimlidar_3customRayIntersects(PyObject *__pyx_self
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_2customRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_10cysimlidar_Point *__pyx_v_robotlocation, PyObject *__pyx_v_anglestopost, PyObject *__pyx_v_fieldlines) {
+static PyObject *__pyx_pf_15CythonLidarPost_2customRayIntersects(CYTHON_UNUSED PyObject *__pyx_self, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_robotlocation, PyObject *__pyx_v_anglestopost, PyObject *__pyx_v_fieldlines) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("customRayIntersects", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10cysimlidar_customRayIntersects(__pyx_v_robotlocation, __pyx_v_anglestopost, __pyx_v_fieldlines, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 173, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_customRayIntersects(__pyx_v_robotlocation, __pyx_v_anglestopost, __pyx_v_fieldlines, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 173, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4871,7 +4871,7 @@ static PyObject *__pyx_pf_10cysimlidar_2customRayIntersects(CYTHON_UNUSED PyObje
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cysimlidar.customRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.customRayIntersects", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4879,7 +4879,7 @@ static PyObject *__pyx_pf_10cysimlidar_2customRayIntersects(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":180
+/* "CythonLidarPost.pyx":180
  *     return rayinters
  * 
  * cdef compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
@@ -4887,7 +4887,7 @@ static PyObject *__pyx_pf_10cysimlidar_2customRayIntersects(CYTHON_UNUSED PyObje
  *     cdef list inters = []
  */
 
-static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, float __pyx_v_robotangle) {
+static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayinters, float __pyx_v_robotangle) {
   PyObject *__pyx_v_angles = 0;
   PyObject *__pyx_v_inters = 0;
   PyObject *__pyx_v_adjustedinters = 0;
@@ -4905,7 +4905,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("compForAngle", 0);
 
-  /* "cysimlidar.pyx":181
+  /* "CythonLidarPost.pyx":181
  * 
  * cdef compForAngle(rayinters, float robotangle):
  *     cdef list angles = []             # <<<<<<<<<<<<<<
@@ -4917,7 +4917,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   __pyx_v_angles = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":182
+  /* "CythonLidarPost.pyx":182
  * cdef compForAngle(rayinters, float robotangle):
  *     cdef list angles = []
  *     cdef list inters = []             # <<<<<<<<<<<<<<
@@ -4929,7 +4929,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   __pyx_v_inters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":183
+  /* "CythonLidarPost.pyx":183
  *     cdef list angles = []
  *     cdef list inters = []
  *     cdef dict adjustedinters = {}             # <<<<<<<<<<<<<<
@@ -4941,7 +4941,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   __pyx_v_adjustedinters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":184
+  /* "CythonLidarPost.pyx":184
  *     cdef list inters = []
  *     cdef dict adjustedinters = {}
  *     for angle in rayinters:             # <<<<<<<<<<<<<<
@@ -4990,7 +4990,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":185
+    /* "CythonLidarPost.pyx":185
  *     cdef dict adjustedinters = {}
  *     for angle in rayinters:
  *         angles.append(angle)             # <<<<<<<<<<<<<<
@@ -4999,7 +4999,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
  */
     __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_angles, __pyx_v_angle); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 185, __pyx_L1_error)
 
-    /* "cysimlidar.pyx":186
+    /* "CythonLidarPost.pyx":186
  *     for angle in rayinters:
  *         angles.append(angle)
  *         inters.append(rayinters[angle])             # <<<<<<<<<<<<<<
@@ -5011,7 +5011,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
     __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 186, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":184
+    /* "CythonLidarPost.pyx":184
  *     cdef list inters = []
  *     cdef dict adjustedinters = {}
  *     for angle in rayinters:             # <<<<<<<<<<<<<<
@@ -5021,7 +5021,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":187
+  /* "CythonLidarPost.pyx":187
  *         angles.append(angle)
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5043,7 +5043,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
     __pyx_v_ind = __pyx_t_2;
     __pyx_t_2 = (__pyx_t_2 + 1);
 
-    /* "cysimlidar.pyx":188
+    /* "CythonLidarPost.pyx":188
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360             # <<<<<<<<<<<<<<
@@ -5064,7 +5064,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
     if (unlikely(__Pyx_SetItemInt(__pyx_v_angles, __pyx_v_ind, __pyx_t_7, Py_ssize_t, 1, PyInt_FromSsize_t, 1, 1, 1) < 0)) __PYX_ERR(1, 188, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "cysimlidar.pyx":187
+    /* "CythonLidarPost.pyx":187
  *         angles.append(angle)
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5074,7 +5074,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":189
+  /* "CythonLidarPost.pyx":189
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5096,7 +5096,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
     __pyx_v_ind = __pyx_t_2;
     __pyx_t_2 = (__pyx_t_2 + 1);
 
-    /* "cysimlidar.pyx":190
+    /* "CythonLidarPost.pyx":190
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]             # <<<<<<<<<<<<<<
@@ -5108,7 +5108,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
     if (unlikely(PyDict_SetItem(__pyx_v_adjustedinters, __pyx_v_angle, __pyx_t_7) < 0)) __PYX_ERR(1, 190, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "cysimlidar.pyx":189
+    /* "CythonLidarPost.pyx":189
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5118,7 +5118,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":191
+  /* "CythonLidarPost.pyx":191
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]
  *     return adjustedinters             # <<<<<<<<<<<<<<
@@ -5130,7 +5130,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   __pyx_r = __pyx_v_adjustedinters;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":180
+  /* "CythonLidarPost.pyx":180
  *     return rayinters
  * 
  * cdef compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
@@ -5144,7 +5144,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("cysimlidar.compForAngle", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.compForAngle", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_angles);
@@ -5156,7 +5156,7 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":194
+/* "CythonLidarPost.pyx":194
  * 
  * 
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):             # <<<<<<<<<<<<<<
@@ -5164,13 +5164,13 @@ static PyObject *__pyx_f_10cysimlidar_compForAngle(PyObject *__pyx_v_rayinters, 
  *     ray = Ray(ang, location)
  */
 
-static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineIntersect(float __pyx_v_ang, struct __pyx_obj_10cysimlidar_Point *__pyx_v_location, PyObject *__pyx_v_fieldlines) {
+static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findLineIntersect(float __pyx_v_ang, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_location, PyObject *__pyx_v_fieldlines) {
   PyObject *__pyx_v_inters = NULL;
   PyObject *__pyx_v_ray = NULL;
   PyObject *__pyx_v_line = NULL;
   PyObject *__pyx_v_dists = NULL;
   PyObject *__pyx_v_closestpoint = NULL;
-  struct __pyx_obj_10cysimlidar_Point *__pyx_r = NULL;
+  struct __pyx_obj_15CythonLidarPost_Point *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
@@ -5182,7 +5182,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("findLineIntersect", 0);
 
-  /* "cysimlidar.pyx":195
+  /* "CythonLidarPost.pyx":195
  * 
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):
  *     inters = []             # <<<<<<<<<<<<<<
@@ -5194,7 +5194,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   __pyx_v_inters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":196
+  /* "CythonLidarPost.pyx":196
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):
  *     inters = []
  *     ray = Ray(ang, location)             # <<<<<<<<<<<<<<
@@ -5255,7 +5255,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   __pyx_v_ray = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":197
+  /* "CythonLidarPost.pyx":197
  *     inters = []
  *     ray = Ray(ang, location)
  *     for line in fieldlines:             # <<<<<<<<<<<<<<
@@ -5278,19 +5278,19 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
     __Pyx_XDECREF_SET(__pyx_v_line, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":198
+    /* "CythonLidarPost.pyx":198
  *     ray = Ray(ang, location)
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))             # <<<<<<<<<<<<<<
  *     inters = filterNone(inters)
  *     dists = makeDictOfDists(inters, location)
  */
-    __pyx_t_2 = __pyx_f_10cysimlidar_findinter(__pyx_v_line, __pyx_v_ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 198, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_15CythonLidarPost_findinter(__pyx_v_line, __pyx_v_ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 198, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 198, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":197
+    /* "CythonLidarPost.pyx":197
  *     inters = []
  *     ray = Ray(ang, location)
  *     for line in fieldlines:             # <<<<<<<<<<<<<<
@@ -5300,31 +5300,31 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":199
+  /* "CythonLidarPost.pyx":199
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))
  *     inters = filterNone(inters)             # <<<<<<<<<<<<<<
  *     dists = makeDictOfDists(inters, location)
  *     # try:
  */
-  __pyx_t_1 = __pyx_f_10cysimlidar_filterNone(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 199, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_filterNone(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 199, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_inters, ((PyObject*)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":200
+  /* "CythonLidarPost.pyx":200
  *         inters.append(findinter(line, ray))
  *     inters = filterNone(inters)
  *     dists = makeDictOfDists(inters, location)             # <<<<<<<<<<<<<<
  *     # try:
  *     closestpoint = sorted(dists)[0]
  */
-  __pyx_t_1 = __pyx_f_10cysimlidar_makeDictOfDists(__pyx_v_inters, __pyx_v_location); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 200, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_makeDictOfDists(__pyx_v_inters, __pyx_v_location); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_dists = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":202
+  /* "CythonLidarPost.pyx":202
  *     dists = makeDictOfDists(inters, location)
  *     # try:
  *     closestpoint = sorted(dists)[0]             # <<<<<<<<<<<<<<
@@ -5346,7 +5346,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   __pyx_v_closestpoint = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":203
+  /* "CythonLidarPost.pyx":203
  *     # try:
  *     closestpoint = sorted(dists)[0]
  *     return dists[closestpoint]             # <<<<<<<<<<<<<<
@@ -5360,12 +5360,12 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   }
   __pyx_t_2 = __Pyx_PyDict_GetItem(__pyx_v_dists, __pyx_v_closestpoint); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 203, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_10cysimlidar_Point))))) __PYX_ERR(1, 203, __pyx_L1_error)
-  __pyx_r = ((struct __pyx_obj_10cysimlidar_Point *)__pyx_t_2);
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_15CythonLidarPost_Point))))) __PYX_ERR(1, 203, __pyx_L1_error)
+  __pyx_r = ((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":194
+  /* "CythonLidarPost.pyx":194
  * 
  * 
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):             # <<<<<<<<<<<<<<
@@ -5380,7 +5380,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_AddTraceback("cysimlidar.findLineIntersect", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.findLineIntersect", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_inters);
@@ -5393,7 +5393,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":208
+/* "CythonLidarPost.pyx":208
  * 
  * 
  * cdef dict makeDictOfDists(inters, Point location):             # <<<<<<<<<<<<<<
@@ -5401,7 +5401,7 @@ static struct __pyx_obj_10cysimlidar_Point *__pyx_f_10cysimlidar_findLineInterse
  *     for point in inters:
  */
 
-static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, struct __pyx_obj_10cysimlidar_Point *__pyx_v_location) {
+static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_inters, struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_location) {
   PyObject *__pyx_v_dists = NULL;
   PyObject *__pyx_v_point = NULL;
   PyObject *__pyx_r = NULL;
@@ -5412,7 +5412,7 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("makeDictOfDists", 0);
 
-  /* "cysimlidar.pyx":209
+  /* "CythonLidarPost.pyx":209
  * 
  * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}             # <<<<<<<<<<<<<<
@@ -5424,7 +5424,7 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
   __pyx_v_dists = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":210
+  /* "CythonLidarPost.pyx":210
  * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}
  *     for point in inters:             # <<<<<<<<<<<<<<
@@ -5473,19 +5473,19 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
     __Pyx_XDECREF_SET(__pyx_v_point, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":211
+    /* "CythonLidarPost.pyx":211
  *     dists = {}
  *     for point in inters:
  *         dists[dist(location, point)] = point             # <<<<<<<<<<<<<<
  *     return dists
  * 
  */
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_10cysimlidar_dist(((PyObject *)__pyx_v_location), __pyx_v_point)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 211, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_15CythonLidarPost_dist(((PyObject *)__pyx_v_location), __pyx_v_point)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 211, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     if (unlikely(PyDict_SetItem(__pyx_v_dists, __pyx_t_4, __pyx_v_point) < 0)) __PYX_ERR(1, 211, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":210
+    /* "CythonLidarPost.pyx":210
  * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}
  *     for point in inters:             # <<<<<<<<<<<<<<
@@ -5495,7 +5495,7 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":212
+  /* "CythonLidarPost.pyx":212
  *     for point in inters:
  *         dists[dist(location, point)] = point
  *     return dists             # <<<<<<<<<<<<<<
@@ -5507,7 +5507,7 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
   __pyx_r = __pyx_v_dists;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":208
+  /* "CythonLidarPost.pyx":208
  * 
  * 
  * cdef dict makeDictOfDists(inters, Point location):             # <<<<<<<<<<<<<<
@@ -5519,7 +5519,7 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("cysimlidar.makeDictOfDists", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.makeDictOfDists", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_dists);
@@ -5529,7 +5529,7 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":215
+/* "CythonLidarPost.pyx":215
  * 
  * 
  * cdef list filterNone(filtered):             # <<<<<<<<<<<<<<
@@ -5537,7 +5537,7 @@ static PyObject *__pyx_f_10cysimlidar_makeDictOfDists(PyObject *__pyx_v_inters, 
  *     for item in filtered:
  */
 
-static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
+static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered) {
   PyObject *__pyx_v_res = NULL;
   PyObject *__pyx_v_item = NULL;
   PyObject *__pyx_r = NULL;
@@ -5551,7 +5551,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   int __pyx_t_7;
   __Pyx_RefNannySetupContext("filterNone", 0);
 
-  /* "cysimlidar.pyx":216
+  /* "CythonLidarPost.pyx":216
  * 
  * cdef list filterNone(filtered):
  *     res = []             # <<<<<<<<<<<<<<
@@ -5563,7 +5563,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   __pyx_v_res = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":217
+  /* "CythonLidarPost.pyx":217
  * cdef list filterNone(filtered):
  *     res = []
  *     for item in filtered:             # <<<<<<<<<<<<<<
@@ -5612,7 +5612,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
     __Pyx_XDECREF_SET(__pyx_v_item, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "cysimlidar.pyx":218
+    /* "CythonLidarPost.pyx":218
  *     res = []
  *     for item in filtered:
  *         if item is not None:             # <<<<<<<<<<<<<<
@@ -5623,7 +5623,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
     __pyx_t_6 = (__pyx_t_5 != 0);
     if (__pyx_t_6) {
 
-      /* "cysimlidar.pyx":219
+      /* "CythonLidarPost.pyx":219
  *     for item in filtered:
  *         if item is not None:
  *             res.append(item)             # <<<<<<<<<<<<<<
@@ -5632,7 +5632,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
  */
       __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_res, __pyx_v_item); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(1, 219, __pyx_L1_error)
 
-      /* "cysimlidar.pyx":218
+      /* "CythonLidarPost.pyx":218
  *     res = []
  *     for item in filtered:
  *         if item is not None:             # <<<<<<<<<<<<<<
@@ -5641,7 +5641,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
  */
     }
 
-    /* "cysimlidar.pyx":217
+    /* "CythonLidarPost.pyx":217
  * cdef list filterNone(filtered):
  *     res = []
  *     for item in filtered:             # <<<<<<<<<<<<<<
@@ -5651,7 +5651,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":220
+  /* "CythonLidarPost.pyx":220
  *         if item is not None:
  *             res.append(item)
  *     return res             # <<<<<<<<<<<<<<
@@ -5663,7 +5663,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":215
+  /* "CythonLidarPost.pyx":215
  * 
  * 
  * cdef list filterNone(filtered):             # <<<<<<<<<<<<<<
@@ -5675,7 +5675,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("cysimlidar.filterNone", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.filterNone", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_res);
@@ -5685,7 +5685,7 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":223
+/* "CythonLidarPost.pyx":223
  * 
  * 
  * cpdef list openEnvFile(env):             # <<<<<<<<<<<<<<
@@ -5693,8 +5693,8 @@ static PyObject *__pyx_f_10cysimlidar_filterNone(PyObject *__pyx_v_filtered) {
  *     file = open(env, "r")
  */
 
-static PyObject *__pyx_pw_10cysimlidar_5openEnvFile(PyObject *__pyx_self, PyObject *__pyx_v_env); /*proto*/
-static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_pw_15CythonLidarPost_5openEnvFile(PyObject *__pyx_self, PyObject *__pyx_v_env); /*proto*/
+static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CYTHON_UNUSED int __pyx_skip_dispatch) {
   PyObject *__pyx_v_lines = NULL;
   PyObject *__pyx_v_file = NULL;
   PyObject *__pyx_v_field = NULL;
@@ -5718,7 +5718,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   int __pyx_t_13;
   __Pyx_RefNannySetupContext("openEnvFile", 0);
 
-  /* "cysimlidar.pyx":224
+  /* "CythonLidarPost.pyx":224
  * 
  * cpdef list openEnvFile(env):
  *     lines = []             # <<<<<<<<<<<<<<
@@ -5730,7 +5730,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   __pyx_v_lines = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":225
+  /* "CythonLidarPost.pyx":225
  * cpdef list openEnvFile(env):
  *     lines = []
  *     file = open(env, "r")             # <<<<<<<<<<<<<<
@@ -5751,7 +5751,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   __pyx_v_file = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":226
+  /* "CythonLidarPost.pyx":226
  *     lines = []
  *     file = open(env, "r")
  *     field = json.load(file)             # <<<<<<<<<<<<<<
@@ -5809,7 +5809,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   __pyx_v_field = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":227
+  /* "CythonLidarPost.pyx":227
  *     file = open(env, "r")
  *     field = json.load(file)
  *     file.close()             # <<<<<<<<<<<<<<
@@ -5838,7 +5838,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":228
+  /* "CythonLidarPost.pyx":228
  *     field = json.load(file)
  *     file.close()
  *     elements = field["Elements"]             # <<<<<<<<<<<<<<
@@ -5850,7 +5850,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   __pyx_v_elements = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":229
+  /* "CythonLidarPost.pyx":229
  *     file.close()
  *     elements = field["Elements"]
  *     for e in elements:             # <<<<<<<<<<<<<<
@@ -5899,7 +5899,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
     __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "cysimlidar.pyx":230
+    /* "CythonLidarPost.pyx":230
  *     elements = field["Elements"]
  *     for e in elements:
  *         if elements[e]["Solidity"]:             # <<<<<<<<<<<<<<
@@ -5915,7 +5915,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_7) {
 
-      /* "cysimlidar.pyx":231
+      /* "CythonLidarPost.pyx":231
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):             # <<<<<<<<<<<<<<
@@ -5927,7 +5927,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
       __pyx_t_3 = PyObject_GetItem(__pyx_t_4, __pyx_n_s_Points); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 231, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __pyx_f_10cysimlidar_findLinesFromPoints(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 231, __pyx_L1_error)
+      __pyx_t_4 = __pyx_f_15CythonLidarPost_findLinesFromPoints(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 231, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (unlikely(__pyx_t_4 == Py_None)) {
@@ -5947,7 +5947,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
         __Pyx_XDECREF_SET(__pyx_v_l, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "cysimlidar.pyx":232
+        /* "CythonLidarPost.pyx":232
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]             # <<<<<<<<<<<<<<
@@ -5974,7 +5974,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
         PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_11);
         __pyx_t_10 = 0;
         __pyx_t_11 = 0;
-        __pyx_t_11 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 232, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 232, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 232, __pyx_L1_error)
@@ -5995,7 +5995,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
         PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_12);
         __pyx_t_10 = 0;
         __pyx_t_12 = 0;
-        __pyx_t_12 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_10cysimlidar_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 232, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 232, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_9 = NULL;
@@ -6058,7 +6058,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
         __Pyx_DECREF_SET(__pyx_v_lines, ((PyObject*)__pyx_t_4));
         __pyx_t_4 = 0;
 
-        /* "cysimlidar.pyx":231
+        /* "CythonLidarPost.pyx":231
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):             # <<<<<<<<<<<<<<
@@ -6068,7 +6068,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "cysimlidar.pyx":230
+      /* "CythonLidarPost.pyx":230
  *     elements = field["Elements"]
  *     for e in elements:
  *         if elements[e]["Solidity"]:             # <<<<<<<<<<<<<<
@@ -6077,7 +6077,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
  */
     }
 
-    /* "cysimlidar.pyx":229
+    /* "CythonLidarPost.pyx":229
  *     file.close()
  *     elements = field["Elements"]
  *     for e in elements:             # <<<<<<<<<<<<<<
@@ -6087,7 +6087,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":233
+  /* "CythonLidarPost.pyx":233
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]
  *     return lines             # <<<<<<<<<<<<<<
@@ -6099,7 +6099,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   __pyx_r = __pyx_v_lines;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":223
+  /* "CythonLidarPost.pyx":223
  * 
  * 
  * cpdef list openEnvFile(env):             # <<<<<<<<<<<<<<
@@ -6117,7 +6117,7 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
   __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_11);
   __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_AddTraceback("cysimlidar.openEnvFile", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.openEnvFile", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_lines);
@@ -6132,25 +6132,25 @@ static PyObject *__pyx_f_10cysimlidar_openEnvFile(PyObject *__pyx_v_env, CYTHON_
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10cysimlidar_5openEnvFile(PyObject *__pyx_self, PyObject *__pyx_v_env); /*proto*/
-static PyObject *__pyx_pw_10cysimlidar_5openEnvFile(PyObject *__pyx_self, PyObject *__pyx_v_env) {
+static PyObject *__pyx_pw_15CythonLidarPost_5openEnvFile(PyObject *__pyx_self, PyObject *__pyx_v_env); /*proto*/
+static PyObject *__pyx_pw_15CythonLidarPost_5openEnvFile(PyObject *__pyx_self, PyObject *__pyx_v_env) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("openEnvFile (wrapper)", 0);
-  __pyx_r = __pyx_pf_10cysimlidar_4openEnvFile(__pyx_self, ((PyObject *)__pyx_v_env));
+  __pyx_r = __pyx_pf_15CythonLidarPost_4openEnvFile(__pyx_self, ((PyObject *)__pyx_v_env));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10cysimlidar_4openEnvFile(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_env) {
+static PyObject *__pyx_pf_15CythonLidarPost_4openEnvFile(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_env) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("openEnvFile", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_10cysimlidar_openEnvFile(__pyx_v_env, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 223, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_openEnvFile(__pyx_v_env, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 223, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6159,7 +6159,7 @@ static PyObject *__pyx_pf_10cysimlidar_4openEnvFile(CYTHON_UNUSED PyObject *__py
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("cysimlidar.openEnvFile", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.openEnvFile", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -6167,7 +6167,7 @@ static PyObject *__pyx_pf_10cysimlidar_4openEnvFile(CYTHON_UNUSED PyObject *__py
   return __pyx_r;
 }
 
-/* "cysimlidar.pyx":236
+/* "CythonLidarPost.pyx":236
  * 
  * 
  * cdef list findLinesFromPoints(points):             # <<<<<<<<<<<<<<
@@ -6175,7 +6175,7 @@ static PyObject *__pyx_pf_10cysimlidar_4openEnvFile(CYTHON_UNUSED PyObject *__py
  *     for ind, point in enumerate(points[:-1]):
  */
 
-static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_points) {
+static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v_points) {
   PyObject *__pyx_v_ret = NULL;
   PyObject *__pyx_v_ind = NULL;
   CYTHON_UNUSED PyObject *__pyx_v_point = NULL;
@@ -6192,7 +6192,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("findLinesFromPoints", 0);
 
-  /* "cysimlidar.pyx":237
+  /* "CythonLidarPost.pyx":237
  * 
  * cdef list findLinesFromPoints(points):
  *     ret = []             # <<<<<<<<<<<<<<
@@ -6204,7 +6204,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":238
+  /* "CythonLidarPost.pyx":238
  * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
@@ -6265,7 +6265,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
     __pyx_t_1 = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "cysimlidar.pyx":239
+    /* "CythonLidarPost.pyx":239
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]             # <<<<<<<<<<<<<<
@@ -6290,7 +6290,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
     __Pyx_XDECREF_SET(__pyx_v_pair, ((PyObject*)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "cysimlidar.pyx":240
+    /* "CythonLidarPost.pyx":240
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)             # <<<<<<<<<<<<<<
@@ -6298,7 +6298,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
  */
     __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_v_pair); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 240, __pyx_L1_error)
 
-    /* "cysimlidar.pyx":238
+    /* "CythonLidarPost.pyx":238
  * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
@@ -6309,7 +6309,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":241
+  /* "CythonLidarPost.pyx":241
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)
  *     return ret             # <<<<<<<<<<<<<<
@@ -6319,7 +6319,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "cysimlidar.pyx":236
+  /* "CythonLidarPost.pyx":236
  * 
  * 
  * cdef list findLinesFromPoints(points):             # <<<<<<<<<<<<<<
@@ -6334,7 +6334,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("cysimlidar.findLinesFromPoints", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("CythonLidarPost.findLinesFromPoints", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_ret);
@@ -6346,7 +6346,7 @@ static PyObject *__pyx_f_10cysimlidar_findLinesFromPoints(PyObject *__pyx_v_poin
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_10cysimlidar_Point(PyTypeObject *t, PyObject *a, PyObject *k) {
+static PyObject *__pyx_tp_new_15CythonLidarPost_Point(PyTypeObject *t, PyObject *a, PyObject *k) {
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -6354,14 +6354,14 @@ static PyObject *__pyx_tp_new_10cysimlidar_Point(PyTypeObject *t, PyObject *a, P
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  if (unlikely(__pyx_pw_10cysimlidar_5Point_1__cinit__(o, a, k) < 0)) goto bad;
+  if (unlikely(__pyx_pw_15CythonLidarPost_5Point_1__cinit__(o, a, k) < 0)) goto bad;
   return o;
   bad:
   Py_DECREF(o); o = 0;
   return NULL;
 }
 
-static void __pyx_tp_dealloc_10cysimlidar_Point(PyObject *o) {
+static void __pyx_tp_dealloc_15CythonLidarPost_Point(PyObject *o) {
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely(PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE) && Py_TYPE(o)->tp_finalize) && (!PyType_IS_GC(Py_TYPE(o)) || !_PyGC_FINALIZED(o))) {
     if (PyObject_CallFinalizerFromDealloc(o)) return;
@@ -6370,13 +6370,13 @@ static void __pyx_tp_dealloc_10cysimlidar_Point(PyObject *o) {
   (*Py_TYPE(o)->tp_free)(o);
 }
 
-static PyObject *__pyx_getprop_10cysimlidar_5Point_x(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_10cysimlidar_5Point_1x_1__get__(o);
+static PyObject *__pyx_getprop_15CythonLidarPost_5Point_x(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_15CythonLidarPost_5Point_1x_1__get__(o);
 }
 
-static int __pyx_setprop_10cysimlidar_5Point_x(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_15CythonLidarPost_5Point_x(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_10cysimlidar_5Point_1x_3__set__(o, v);
+    return __pyx_pw_15CythonLidarPost_5Point_1x_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -6384,13 +6384,13 @@ static int __pyx_setprop_10cysimlidar_5Point_x(PyObject *o, PyObject *v, CYTHON_
   }
 }
 
-static PyObject *__pyx_getprop_10cysimlidar_5Point_y(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_10cysimlidar_5Point_1y_1__get__(o);
+static PyObject *__pyx_getprop_15CythonLidarPost_5Point_y(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_15CythonLidarPost_5Point_1y_1__get__(o);
 }
 
-static int __pyx_setprop_10cysimlidar_5Point_y(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_15CythonLidarPost_5Point_y(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_10cysimlidar_5Point_1y_3__set__(o, v);
+    return __pyx_pw_15CythonLidarPost_5Point_1y_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -6398,24 +6398,24 @@ static int __pyx_setprop_10cysimlidar_5Point_y(PyObject *o, PyObject *v, CYTHON_
   }
 }
 
-static PyMethodDef __pyx_methods_10cysimlidar_Point[] = {
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_10cysimlidar_5Point_3__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_10cysimlidar_5Point_5__setstate_cython__, METH_O, 0},
+static PyMethodDef __pyx_methods_15CythonLidarPost_Point[] = {
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_15CythonLidarPost_5Point_3__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_15CythonLidarPost_5Point_5__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_10cysimlidar_Point[] = {
-  {(char *)"x", __pyx_getprop_10cysimlidar_5Point_x, __pyx_setprop_10cysimlidar_5Point_x, (char *)0, 0},
-  {(char *)"y", __pyx_getprop_10cysimlidar_5Point_y, __pyx_setprop_10cysimlidar_5Point_y, (char *)0, 0},
+static struct PyGetSetDef __pyx_getsets_15CythonLidarPost_Point[] = {
+  {(char *)"x", __pyx_getprop_15CythonLidarPost_5Point_x, __pyx_setprop_15CythonLidarPost_5Point_x, (char *)0, 0},
+  {(char *)"y", __pyx_getprop_15CythonLidarPost_5Point_y, __pyx_setprop_15CythonLidarPost_5Point_y, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 
-static PyTypeObject __pyx_type_10cysimlidar_Point = {
+static PyTypeObject __pyx_type_15CythonLidarPost_Point = {
   PyVarObject_HEAD_INIT(0, 0)
-  "cysimlidar.Point", /*tp_name*/
-  sizeof(struct __pyx_obj_10cysimlidar_Point), /*tp_basicsize*/
+  "CythonLidarPost.Point", /*tp_name*/
+  sizeof(struct __pyx_obj_15CythonLidarPost_Point), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_10cysimlidar_Point, /*tp_dealloc*/
+  __pyx_tp_dealloc_15CythonLidarPost_Point, /*tp_dealloc*/
   0, /*tp_print*/
   0, /*tp_getattr*/
   0, /*tp_setattr*/
@@ -6443,9 +6443,9 @@ static PyTypeObject __pyx_type_10cysimlidar_Point = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_10cysimlidar_Point, /*tp_methods*/
+  __pyx_methods_15CythonLidarPost_Point, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_10cysimlidar_Point, /*tp_getset*/
+  __pyx_getsets_15CythonLidarPost_Point, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -6453,7 +6453,7 @@ static PyTypeObject __pyx_type_10cysimlidar_Point = {
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_10cysimlidar_Point, /*tp_new*/
+  __pyx_tp_new_15CythonLidarPost_Point, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -6469,26 +6469,26 @@ static PyTypeObject __pyx_type_10cysimlidar_Point = {
 };
 
 static PyMethodDef __pyx_methods[] = {
-  {"angledRayIntersects", (PyCFunction)__pyx_pw_10cysimlidar_1angledRayIntersects, METH_VARARGS|METH_KEYWORDS, 0},
-  {"customRayIntersects", (PyCFunction)__pyx_pw_10cysimlidar_3customRayIntersects, METH_VARARGS|METH_KEYWORDS, 0},
-  {"openEnvFile", (PyCFunction)__pyx_pw_10cysimlidar_5openEnvFile, METH_O, 0},
+  {"angledRayIntersects", (PyCFunction)__pyx_pw_15CythonLidarPost_1angledRayIntersects, METH_VARARGS|METH_KEYWORDS, 0},
+  {"customRayIntersects", (PyCFunction)__pyx_pw_15CythonLidarPost_3customRayIntersects, METH_VARARGS|METH_KEYWORDS, 0},
+  {"openEnvFile", (PyCFunction)__pyx_pw_15CythonLidarPost_5openEnvFile, METH_O, 0},
   {0, 0, 0, 0}
 };
 
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_cysimlidar(PyObject* module); /*proto*/
+static int __pyx_pymod_exec_CythonLidarPost(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_cysimlidar},
+  {Py_mod_exec, (void*)__pyx_pymod_exec_CythonLidarPost},
   {0, NULL}
 };
 #endif
 
 static struct PyModuleDef __pyx_moduledef = {
     PyModuleDef_HEAD_INIT,
-    "cysimlidar",
+    "CythonLidarPost",
     0, /* m_doc */
   #if CYTHON_PEP489_MULTI_PHASE_INIT
     0, /* m_size */
@@ -6508,6 +6508,8 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
+  {&__pyx_n_s_CythonLidarPost, __pyx_k_CythonLidarPost, sizeof(__pyx_k_CythonLidarPost), 0, 0, 1, 1},
+  {&__pyx_kp_s_CythonLidarPost_pyx, __pyx_k_CythonLidarPost_pyx, sizeof(__pyx_k_CythonLidarPost_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_Elements, __pyx_k_Elements, sizeof(__pyx_k_Elements), 0, 0, 1, 1},
   {&__pyx_n_s_LineSeg, __pyx_k_LineSeg, sizeof(__pyx_k_LineSeg), 0, 0, 1, 1},
   {&__pyx_n_s_LineSeg___init, __pyx_k_LineSeg___init, sizeof(__pyx_k_LineSeg___init), 0, 0, 1, 1},
@@ -6521,8 +6523,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_arctan, __pyx_k_arctan, sizeof(__pyx_k_arctan), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_close, __pyx_k_close, sizeof(__pyx_k_close), 0, 0, 1, 1},
-  {&__pyx_n_s_cysimlidar, __pyx_k_cysimlidar, sizeof(__pyx_k_cysimlidar), 0, 0, 1, 1},
-  {&__pyx_kp_s_cysimlidar_pyx, __pyx_k_cysimlidar_pyx, sizeof(__pyx_k_cysimlidar_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_doc, __pyx_k_doc, sizeof(__pyx_k_doc), 0, 0, 1, 1},
   {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
   {&__pyx_n_s_fieldlines, __pyx_k_fieldlines, sizeof(__pyx_k_fieldlines), 0, 0, 1, 1},
@@ -6598,7 +6598,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "cysimlidar.pyx":238
+  /* "CythonLidarPost.pyx":238
  * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
@@ -6609,7 +6609,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_slice__3);
   __Pyx_GIVEREF(__pyx_slice__3);
 
-  /* "cysimlidar.pyx":59
+  /* "CythonLidarPost.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
@@ -6619,9 +6619,9 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__4 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_p1, __pyx_n_s_p2); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(1, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
-  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_init, 59, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 59, __pyx_L1_error)
+  __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_CythonLidarPost_pyx, __pyx_n_s_init, 59, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(1, 59, __pyx_L1_error)
 
-  /* "cysimlidar.pyx":114
+  /* "CythonLidarPost.pyx":114
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
@@ -6631,7 +6631,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__6 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_ang, __pyx_n_s_point, __pyx_n_s_slopeang); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
-  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(3, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_cysimlidar_pyx, __pyx_n_s_init, 114, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 114, __pyx_L1_error)
+  __pyx_codeobj__7 = (PyObject*)__Pyx_PyCode_New(3, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__6, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_CythonLidarPost_pyx, __pyx_n_s_init, 114, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__7)) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6657,11 +6657,11 @@ static int __Pyx_InitGlobals(void) {
 }
 
 #if PY_MAJOR_VERSION < 3
-PyMODINIT_FUNC initcysimlidar(void); /*proto*/
-PyMODINIT_FUNC initcysimlidar(void)
+PyMODINIT_FUNC initCythonLidarPost(void); /*proto*/
+PyMODINIT_FUNC initCythonLidarPost(void)
 #else
-PyMODINIT_FUNC PyInit_cysimlidar(void); /*proto*/
-PyMODINIT_FUNC PyInit_cysimlidar(void)
+PyMODINIT_FUNC PyInit_CythonLidarPost(void); /*proto*/
+PyMODINIT_FUNC PyInit_CythonLidarPost(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -6701,7 +6701,7 @@ bad:
 }
 
 
-static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
+static int __pyx_pymod_exec_CythonLidarPost(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -6720,7 +6720,7 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
           Py_FatalError("failed to import 'refnanny' module");
   }
   #endif
-  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit_cysimlidar(void)", 0);
+  __Pyx_RefNannySetupContext("PyMODINIT_FUNC PyInit_CythonLidarPost(void)", 0);
   if (__Pyx_check_binary_version() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_empty_tuple = PyTuple_New(0); if (unlikely(!__pyx_empty_tuple)) __PYX_ERR(1, 1, __pyx_L1_error)
   __pyx_empty_bytes = PyBytes_FromStringAndSize("", 0); if (unlikely(!__pyx_empty_bytes)) __PYX_ERR(1, 1, __pyx_L1_error)
@@ -6756,7 +6756,7 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("cysimlidar", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("CythonLidarPost", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   #else
   __pyx_m = PyModule_Create(&__pyx_moduledef);
   #endif
@@ -6775,14 +6775,14 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_cysimlidar) {
+  if (__pyx_module_is_main_CythonLidarPost) {
     if (PyObject_SetAttrString(__pyx_m, "__name__", __pyx_n_s_main) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(1, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "cysimlidar")) {
-      if (unlikely(PyDict_SetItemString(modules, "cysimlidar", __pyx_m) < 0)) __PYX_ERR(1, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "CythonLidarPost")) {
+      if (unlikely(PyDict_SetItemString(modules, "CythonLidarPost", __pyx_m) < 0)) __PYX_ERR(1, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -6794,11 +6794,11 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
-  __pyx_type_10cysimlidar_Point.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "Point", (PyObject *)&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10cysimlidar_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
-  __pyx_ptype_10cysimlidar_Point = &__pyx_type_10cysimlidar_Point;
+  if (PyType_Ready(&__pyx_type_15CythonLidarPost_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
+  __pyx_type_15CythonLidarPost_Point.tp_print = 0;
+  if (PyObject_SetAttrString(__pyx_m, "Point", (PyObject *)&__pyx_type_15CythonLidarPost_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_15CythonLidarPost_Point) < 0) __PYX_ERR(1, 8, __pyx_L1_error)
+  __pyx_ptype_15CythonLidarPost_Point = &__pyx_type_15CythonLidarPost_Point;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
   /*--- Function import code ---*/
@@ -6807,7 +6807,7 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   #endif
 
-  /* "cysimlidar.pyx":5
+  /* "CythonLidarPost.pyx":5
  * #
  * 
  * import json             # <<<<<<<<<<<<<<
@@ -6819,7 +6819,7 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_json, __pyx_t_1) < 0) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":6
+  /* "CythonLidarPost.pyx":6
  * 
  * import json
  * import numpy as np             # <<<<<<<<<<<<<<
@@ -6831,29 +6831,29 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(1, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":57
+  /* "CythonLidarPost.pyx":57
  * 
  * 
  * class LineSeg:             # <<<<<<<<<<<<<<
  * 
  *     def __init__(self, p1, p2):
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_LineSeg, __pyx_n_s_LineSeg, (PyObject *) NULL, __pyx_n_s_cysimlidar, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 57, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_LineSeg, __pyx_n_s_LineSeg, (PyObject *) NULL, __pyx_n_s_CythonLidarPost, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "cysimlidar.pyx":59
+  /* "CythonLidarPost.pyx":59
  * class LineSeg:
  * 
  *     def __init__(self, p1, p2):             # <<<<<<<<<<<<<<
  *         self.p1 = p1
  *         self.p2 = p2
  */
-  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10cysimlidar_7LineSeg_1__init__, 0, __pyx_n_s_LineSeg___init, NULL, __pyx_n_s_cysimlidar, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 59, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_15CythonLidarPost_7LineSeg_1__init__, 0, __pyx_n_s_LineSeg___init, NULL, __pyx_n_s_CythonLidarPost, __pyx_d, ((PyObject *)__pyx_codeobj__5)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(1, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":57
+  /* "CythonLidarPost.pyx":57
  * 
  * 
  * class LineSeg:             # <<<<<<<<<<<<<<
@@ -6866,29 +6866,29 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":113
+  /* "CythonLidarPost.pyx":113
  * 
  * 
  * class Ray:             # <<<<<<<<<<<<<<
  *     def __init__(self, float ang, Point point):
  *         self.ang = ang
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Ray, __pyx_n_s_Ray, (PyObject *) NULL, __pyx_n_s_cysimlidar, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 113, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Ray, __pyx_n_s_Ray, (PyObject *) NULL, __pyx_n_s_CythonLidarPost, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "cysimlidar.pyx":114
+  /* "CythonLidarPost.pyx":114
  * 
  * class Ray:
  *     def __init__(self, float ang, Point point):             # <<<<<<<<<<<<<<
  *         self.ang = ang
  *         self.p1 = point
  */
-  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10cysimlidar_3Ray_1__init__, 0, __pyx_n_s_Ray___init, NULL, __pyx_n_s_cysimlidar, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 114, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_15CythonLidarPost_3Ray_1__init__, 0, __pyx_n_s_Ray___init, NULL, __pyx_n_s_CythonLidarPost, __pyx_d, ((PyObject *)__pyx_codeobj__7)); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyObject_SetItem(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(1, 114, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "cysimlidar.pyx":113
+  /* "CythonLidarPost.pyx":113
  * 
  * 
  * class Ray:             # <<<<<<<<<<<<<<
@@ -6901,7 +6901,7 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "cysimlidar.pyx":1
+  /* "CythonLidarPost.pyx":1
  * # simulatelidar.py: Tests Patrick's positioning algorithm             # <<<<<<<<<<<<<<
  * # 1-6-2018
  * #
@@ -6919,11 +6919,11 @@ static int __pyx_pymod_exec_cysimlidar(PyObject *__pyx_pyinit_module)
   __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init cysimlidar", 0, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init CythonLidarPost", 0, __pyx_lineno, __pyx_filename);
     }
     Py_DECREF(__pyx_m); __pyx_m = 0;
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init cysimlidar");
+    PyErr_SetString(PyExc_ImportError, "init CythonLidarPost");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
