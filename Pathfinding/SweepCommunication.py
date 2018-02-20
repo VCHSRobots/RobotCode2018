@@ -21,7 +21,7 @@ def checkMotorStatus(sweep):
     sweep.write(b"MZ\n")
     return sweep.readline()
 
-def checkMotorInfo(sweep):
+def checkMotorSpeed(sweep):
     sweep.write(b"MI\n")
     return sweep.readline()
 
@@ -29,11 +29,11 @@ def checkSampleRate(sweep):
     sweep.write(b"LI\n")
     return sweep.readline()
 
-def checkMotorInfo(sweep):
+def checkVersionInfo(sweep):
     sweep.write(b"IV\n")
     return sweep.readline()
 
-def checkMotorInfo(sweep):
+def checkDeviceInfo(sweep):
     sweep.write(b"ID\n")
     return sweep.readline()
 
@@ -75,7 +75,7 @@ def parseSweepScannedBytesInDict(sweepbytes):
 
 def adjustMotorSpeed(sweep, speed):
     strspeed = str(speed)
-    sweep.write(bytes("MZ{0:02}\n".format(rate), "ascii"))
+    sweep.write(bytes("MS{0:02}\n".format(speed), "ascii"))
     return sweep.readline()
 
 def adjustSampleRate(sweep, rate):
@@ -104,7 +104,7 @@ def scanRotation(sweep):
     data = getData(sweep, scansperspin)
     for dataset in data:
         if len(dataset) == 7 and (dataset["sync"] == 0 or dataset["sync"] == 1):
-        angvsdict[dataset["angle"]] = dataset["distance"]
+            angvsdist[dataset["angle"]] = dataset["distance"]
     return angvsdict
 
 
