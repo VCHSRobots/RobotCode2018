@@ -1,6 +1,34 @@
 # SweepCommunication.py: Making library for communication with the Sweep lidar
 # HP 2/17/2018
 
+import serial
+import numpy as np
+import time
+
+def makeSweep(usb):
+    sweep = serial.Serial(usb, baudrate = 115200)
+    return sweep
+
+def startScan(sweep):
+    sweep.write(b"DS\n")
+    return sweep.readline()
+
+def stopScan(sweep):
+    sweep.write(b"DX\n")
+    return sweep.readline()
+
+def checkMotorStatus(sweep):
+    sweep.write(b"MZ\n")
+    return sweep.readline()
+
+def checkMotorInfo(sweep):
+    sweep.write(b"MI\n")
+    return sweep.readline()
+
+def checkSampleRate(sweep):
+    sweep.write(b"LI\n")
+    return sweep.readline()
+
 def checkMotorInfo(sweep):
     sweep.write(b"IV\n")
     return sweep.readline()
@@ -64,3 +92,19 @@ def testScanData():
         if dict["sync"] == 0 or dict["sync"] == 1:
             print(dict["angle"], dict["distance"])
     stopScan(sweep)
+
+def scanRotation(sweep):
+    """
+    Scans 1 full rotation and returns the angle and distance in a dictionary
+    """
+    angvsdist = {}
+    samplerate = 250 * (int(checkSampleRate(sweep)[3]) * 250)
+    motorspeed = int(checkMotorSpeed(sweep)[2:4])
+    scansperspin = samplerate/motorspeed
+    data = getData(sweep, scansperspin)
+    for dataset in data:
+        if len(dataset) == 7 and (dataset["sync"] == 0 or dataset["sync"] == 1):
+        angvsdict[dataset["angle"]] = dataset["distance"]
+    return angvsdict
+
+
