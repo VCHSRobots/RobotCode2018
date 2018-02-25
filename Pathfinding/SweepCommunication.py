@@ -105,6 +105,6 @@ def scanRotation(sweep):
     for dataset in data:
         if len(dataset) == 7 and (dataset["sync"] == 0 or dataset["sync"] == 1):
             angvsdist[dataset["angle"]] = dataset["distance"]
-    return angvsdict
+    return angvsdist
 
 
