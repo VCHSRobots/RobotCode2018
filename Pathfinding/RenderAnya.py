@@ -37,7 +37,10 @@ def RenderAnya(GridData, FileName = None, Nodes = None, PathInformation = None):
             # cv2.arrowedLine(Image, (X, Y), (StartX, StartY), (0, 100, 0), 1)
             # cv2.arrowedLine(Image, (X, Y), (EndX, EndY), (0, 100, 0), 1)
             cv2.line(Image, (StartX, StartY), (EndX, EndY), (0, 100, 0), 1)
-            
-    NewFileName = "AnyaRender {0}.png".format(time.strftime("%Y-%m-%d %H%M%S"))
+    
+    if FileName:
+        NewFileName = FileName + ".png"
+    else:
+        NewFileName = "AnyaRender {0}.png".format(time.strftime("%Y-%m-%d %H%M%S"))
     Log("Saving render \"{0}\".".format(NewFileName), 0)
     cv2.imwrite("{0}/{1}".format(Config["RenderStorageLocation"], NewFileName), Image)

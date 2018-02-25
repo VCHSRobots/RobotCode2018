@@ -365,6 +365,8 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
         LinePoints = BresenhamLinePoints(PointOne, PointTwo)
         if any(GetGridData(LinePoint.X, LinePoint.Y) for LinePoint in LinePoints) == 1:
             return False
+        else:
+            return True
 
     def NodeType(PassedNode):
         """
@@ -569,4 +571,3 @@ EndTime = time.time()
 RunTime = EndTime - StartTime
 
 print("Anya complete! Estimated run time: {0}.".format(RunTime))
-    
