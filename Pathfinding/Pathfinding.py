@@ -14,7 +14,7 @@ from copy import deepcopy
 import math
 from operator import itemgetter
 
-#
+#z
 # Custom imports.
 #
 
@@ -168,7 +168,7 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
             TargetPoints.append((Item, PathIndex))
         else: # If the item is a pre-defined location, as described in the .map file.
             if not Item in PathfindingMapData["Elements"]:
-                Log("Path target \"{0}\" is not described in map file.".format(Element), 3)
+                Log("Path target \"{0}\" is not described in map file.".format(Item), 3)
                 return
             if "InteractiveFaces" in PathfindingMapData["Elements"][Item]:
                 FacesToEvaluate = []

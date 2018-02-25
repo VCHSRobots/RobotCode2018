@@ -54,11 +54,7 @@ class Communicate:
         pass
 
 def DisplayConfigurationMenu():
-    print("// Pathfinding configuration menu:\r\n// Just edit the configuration file yourself. It's named \"Pathfinding.cfg\", and it's written in JSON. 😤")
-    sys.exit()
-
-def DisplayHelp():
-    print("// Pathfinding help menu:\r\n// Commands:\r\n// -h, --help, -?\t Help Information\r\n// -c, --configure\tConfiguration Menu\r\n// Documentation:\r\n// You may view documentation locally at FILENAME, or online at either https://github.com/VCHSRobots/RobotCode2018, or at mirror http://pkre.co/RobotCode2018.")
+    print("// Command-line configuration is not yet implemented. Edit the configuration file \"Pathfinding.cfg\" manually to modify program settings.")
     sys.exit()
 
 def Exit():
@@ -99,11 +95,17 @@ def ParseUserInput():
         return
     Log("Verbatim command-line user input: " + str(Input), 0)
     if any(X in Input[0] for X in ("-h", "-?")):
-        DisplayHelp()
-        return
+        print("// Pathfinding help menu:\r\n// Commands:\r\n// -h, --help, -?\t Help Information\r\n// -c, --configure\tConfiguration Menu\r\n// --modify-password-visibility\tProcure BASH information.\r\n// Documentation:\r\n// You may view documentation locally at FILENAME, or online at either https://github.com/VCHSRobots/RobotCode2018, or at mirror http://pkre.co/RobotCode2018.")
+        sys.exit()
     elif any(X in Input[0] for X in ("-c", "-s")):
         DisplayConfigurationMenu()
         return
+    elif Input[0] == "--modify-password-visibility":
+        print("// http://bash.org/?244321")
+        sys.exit()
+    else:
+        print("Unable to parse command-line user input. Use \"-h\" for help.")
+        sys.exit()
 
 def PerformAction(Action, CurrentLocation):
     if Action == "deliver":

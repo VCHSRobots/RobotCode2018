@@ -14,8 +14,9 @@ Pathfinding uses LIDAR to continually report and correct the robot's orientation
 
 ### Required libraries
 
-- [OpenCV](https://opencv.org/)
 - [NumPy](http://www.numpy.org/)
+- [OpenCV](https://opencv.org/)
+- [pySerial](https://pyserial.readthedocs.io/en/latest/pyserial.html)
 
 #### Communication between these devices and programs works as follows
 

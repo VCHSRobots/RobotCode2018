@@ -75,7 +75,7 @@ def parseSweepScannedBytesInDict(sweepbytes):
 
 def adjustMotorSpeed(sweep, speed):
     strspeed = str(speed)
-    sweep.write(bytes("MZ{0:02}\n".format(rate), "ascii"))
+    sweep.write(bytes("MS{0:02}\n".format(speed), "ascii"))
     return sweep.readline()
 
 def adjustSampleRate(sweep, rate):
@@ -89,7 +89,7 @@ def testScanData():
     startScan(sweep)
     data = getData(sweep, 10)
     for dict in data:
-        if dict["sync"] == 0 or dict["sync"] == 1:
+        if dist["sync"] == 0 or dict["sync"] == 1:
             print(dict["angle"], dict["distance"])
     stopScan(sweep)
 
@@ -104,7 +104,7 @@ def scanRotation(sweep):
     data = getData(sweep, scansperspin)
     for dataset in data:
         if len(dataset) == 7 and (dataset["sync"] == 0 or dataset["sync"] == 1):
-        angvsdict[dataset["angle"]] = dataset["distance"]
-    return angvsdict
+            angvsdist[dataset["angle"]] = dataset["distance"]
+    return angvsdist
 
 

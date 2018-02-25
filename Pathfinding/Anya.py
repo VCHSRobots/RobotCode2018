@@ -4,8 +4,8 @@
 # Built-in imports.
 #
 
-from collections import namedtuple
-from math import acos, degrees, hypot
+from collections import Counter, namedtuple
+from math import acos, ceil, degrees, floor, hypot
 import operator
 import sys
 import time
@@ -14,13 +14,18 @@ import time
 # Custom imports.
 #
 
+from Log import Log
 from RenderAnya import RenderAnya # TODO: Change this into the proper Render import once testing on Anya is completed.
 
 #
 # Global variables.
 #
 
+Interval = namedtuple("Interval", "StartFlag StartPoint EndPoint EndFlag")
+Line = namedtuple("Line", "PointOne PointTwo")
+Node = namedtuple("Node", "Interval Root") # These two keys - Interval and Root - must be in the type of the namedtuples Interval and Point, respectively.
 Point = namedtuple("Point", "X Y")
+
 
 #
 # Functions.
@@ -35,11 +40,9 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
     # Function variables.
     #
 
-    GridHeight = len(GridData) - 1
-    GridWidth = len(GridData[0]) - 1
-    Interval = namedtuple("Interval", "StartFlag StartPoint EndPoint EndFlag")
-    Node = namedtuple("Node", "Interval Root") # These two keys - Interval and Root - must be in the type of the namedtuples Interval and Point, respectively.
     EndPoint = Point(TupleEndPoint[0], TupleEndPoint[1])
+    GridHeight = len(GridData)
+    GridWidth = len(GridData[0])
     RootHistory = []
     StartPoint = Point(TupleStartPoint[0], TupleStartPoint[1])
 
@@ -47,7 +50,7 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
     # Sub-functions.
     #
 
-    def FareySequence(N, Descending = False):
+    def FareySequence(N, Descending=False):
         """
         Calculate the Farey Sequence of order N.
         """
@@ -67,62 +70,111 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
         """
         Returns the Point which is farthest from the ReferencePoint passed.
         """
-        MaximumDistanceIndex, MaximumDistance = max(enumerate([hypot(Point.X - ReferencePoint.X, Point.Y - ReferencePoint.Y) for Point in OtherPoints]), key=operator.itemgetter(0))
-        return OtherPoints[MaximumDistanceIndex], MaximumDistance
+        MaximumDistanceIndex, MaximumDistance = max(enumerate([hypot(OtherPoint.X - ReferencePoint.X, OtherPoint.Y - ReferencePoint.Y) for OtherPoint in OtherPoints]), key=operator.itemgetter(0)) # TODO: Remove MaximumDistance; it is never used.
+        return OtherPoints[MaximumDistanceIndex]
 
-    def FValue(Node): # TODO: Simplify this function! We don't need to repeat the code for "FValueEstimate" so many times! Also remove unnecessary / redundant value checks in IF statements! (╯°□°）╯︵ ┻━┻
+    def FValue(PassedNode): # TODO: Simplify this function! We don't need to repeat the code for "FValueEstimate" so many times! Also remove unnecessary / redundant value checks in IF statements! (╯°□°）╯︵ ┻━┻
         """
         Calculate the "F Value" of a Node.
         """
-        Line = namedtuple("Line", "PointOne PointTwo")
-        IntersectionPoint = GetIntersectionPoint(Line(Node.Root, EndPoint, Line(Node.Interval.PointOne, Node.Interval.PointTwo)):
+        IntersectionPoint = GetIntersectionPoint(Line(PassedNode.Root, EndPoint), Line(PassedNode.Interval.StartPoint, PassedNode.Interval.EndPoint))
         if IntersectionPoint:
-            FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(IntersectionPoint.X - Node.Root.X, IntersectionPoint.Y - Node.Root.Y) + hypot(EndPoint.X - IntersectionPoint.X, EndPoint.Y - IntersectionPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
+            FValueEstimate = hypot(PassedNode.Root.X - StartPoint.X, PassedNode.Root.Y - StartPoint.Y) + hypot(IntersectionPoint.X - PassedNode.Root.X, IntersectionPoint.Y - PassedNode.Root.Y) + hypot(EndPoint.X - IntersectionPoint.X, EndPoint.Y - IntersectionPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
         else: # The path from the Root to the EndPoint does not pass through the interval.
-            if # If the Root and the EndPoint are both below (or above) the interval.
-                if Node.Interval.PointOne.Y - TargetPoint.Y > 0 and Node.Interval.PointOne.Y - Node.Root.Y > 0: # If they are above the Interval.
-                    YDifference = TargetPoint.Y - Node.Interval.PointOne.Y
-                    MirroredEndPoint = Point(EndPoint.X, Node.Interval.PointOne.Y - YDifference)
-                else: # If they are below the Interval.
-                    YDifference = Node.Interval.PointOne.Y - TargetPoint.Y
-                    MirroredEndPoint = Point(EndPoint.X, Node.Interval.PointOne.Y + YDifference)
-                FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(IntersectionPoint.X - Node.Root.X, IntersectionPoint.Y - Node.Root.Y) + hypot(MirroredEndPoint.X - IntersectionPoint.X, MirroredEndPoint.Y - IntersectionPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
+            # If the Root and the EndPoint are both below (or above) the interval.
+            if PassedNode.Interval.StartPoint.Y - EndPoint.Y > 0 and PassedNode.Interval.StartPoint.Y - PassedNode.Root.Y > 0: # If they are above the Interval.
+                YDifference = EndPoint.Y - PassedNode.Interval.StartPoint.Y
+                MirroredEndPoint = Point(EndPoint.X, PassedNode.Interval.StartPoint.Y - YDifference)
+                FValueEstimate = hypot(PassedNode.Root.X - StartPoint.X, PassedNode.Root.Y - StartPoint.Y) + hypot(IntersectionPoint.X - PassedNode.Root.X, IntersectionPoint.Y - PassedNode.Root.Y) + hypot(MirroredEndPoint.X - IntersectionPoint.X, MirroredEndPoint.Y - IntersectionPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
+            elif PassedNode.Interval.StartPoint.Y - EndPoint.Y < 0 and PassedNode.Interval.StartPoint.Y - PassedNode.Root.Y < 0: # If they are below the Interval.
+                YDifference = PassedNode.Interval.StartPoint.Y - EndPoint.Y
+                MirroredEndPoint = Point(EndPoint.X, PassedNode.Interval.StartPoint.Y + YDifference)
+                FValueEstimate = hypot(PassedNode.Root.X - StartPoint.X, PassedNode.Root.Y - StartPoint.Y) + hypot(IntersectionPoint.X - PassedNode.Root.X, IntersectionPoint.Y - PassedNode.Root.Y) + hypot(MirroredEndPoint.X - IntersectionPoint.X, MirroredEndPoint.Y - IntersectionPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
             else: # Otherwise, they are on opposite sides of the interval. (This should be the norm.)
-                IntersectionPoint = GetIntersectionPoint(Line(Node.Root, EndPoint), Line(Node.Interval.PointOne, Node.Interval.PointTwo), False): # Where would they intersect if they were lines; not line-segments?
-                if IntersectionPoint.X < Node.Interval.PointOne.X and IntersectionPoint.X < Node.Interval.PointTwo.X: # If the Root-EndPoint line travels to the left of the interval.
-                    FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(Node.Interval.PointOne.X - Node.Root.X, Node.Interval.PointOne.Y - Node.Root.Y) + hypot(EndPoint.X - Node.Interval.PointOne.X, EndPoint.Y - Node.Interval.PointOne.Y) # Distance from Source-Root + Root-Point + Point-Target.
-                elif IntersectionPoint.X > Node.Interval.PointOne.X and IntersectionPoint.X > Node.Interval.PointTwo.X: # If the Root-EndPoint line travels to the right of the interval.
-                    FValueEstimate = hypot(Node.Root.X - StartPoint.X, Node.Root.Y - StartPoint.Y) + hypot(Node.Interval.PointTwo.X - Node.Root.X, Node.Interval.PointTwo.Y - Node.Root.Y) + hypot(EndPoint.X - Node.Interval.PointTwo.X, EndPoint.Y - Node.Interval.PointTwo.Y) # Distance from Source-Root + Root-Point + Point-Target.
+                IntersectionPoint = GetIntersectionPoint(Line(PassedNode.Root, EndPoint), Line(PassedNode.Interval.StartPoint, PassedNode.Interval.EndPoint), False) # Where would they intersect if they were lines; not line-segments?
+                if IntersectionPoint.X < PassedNode.Interval.StartPoint.X and IntersectionPoint.X < PassedNode.Interval.EndPoint.X: # If the Root-EndPoint line travels to the left of the interval.
+                    FValueEstimate = hypot(PassedNode.Root.X - StartPoint.X, PassedNode.Root.Y - StartPoint.Y) + hypot(PassedNode.Interval.StartPoint.X - PassedNode.Root.X, PassedNode.Interval.StartPoint.Y - PassedNode.Root.Y) + hypot(EndPoint.X - PassedNode.Interval.StartPoint.X, EndPoint.Y - PassedNode.Interval.StartPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
+                elif IntersectionPoint.X > PassedNode.Interval.StartPoint.X and IntersectionPoint.X > PassedNode.Interval.EndPoint.X: # If the Root-EndPoint line travels to the right of the interval.
+                    FValueEstimate = hypot(PassedNode.Root.X - StartPoint.X, PassedNode.Root.Y - StartPoint.Y) + hypot(PassedNode.Interval.EndPoint.X - PassedNode.Root.X, PassedNode.Interval.EndPoint.Y - PassedNode.Root.Y) + hypot(EndPoint.X - PassedNode.Interval.EndPoint.X, EndPoint.Y - PassedNode.Interval.EndPoint.Y) # Distance from Source-Root + Root-Point + Point-Target.
         return FValueEstimate
 
-    def GenerateSuccessors(Node):
+    def GenerateSuccessors(PassedNode):
         """
-        Generates the successors of an Anya search node.
+        Generates the successors of an Anya search node. Returns a tuple of the successor Nodes.
         """
+        PrettyRoot = "{0}, {1}".format(PassedNode.Root.X, PassedNode.Root.Y)
+        PrettyInterval = "{0}{1} --> {2}{3}".format("[" if PassedNode.Interval.StartFlag else "(", "(" + str(PassedNode.Interval.StartPoint.X) + ", " + str(PassedNode.Interval.StartPoint.Y) + ")", "(" + str(PassedNode.Interval.EndPoint.X) + ", " + str(PassedNode.Interval.EndPoint.Y) + ")", "]" if PassedNode.Interval.EndFlag else ")")
+        Log("Anya: Generating succesors for node with root \"{0}\" and interval \"{1}\"".format(PrettyRoot, PrettyInterval), 0)
         def GenerateConeSuccessors(PointOne, PointTwo, Root):
             """
             Generates the successors of a cone search node.
             """
-            pass
+            global Node
+            global Point
+            NewInterval = None
+            if PointOne.Y == PointTwo.Y == Root.Y: # If these are all on the same row (I.e. they are the non-observable successors of a flat node).
+                NewRoot = FarthestPoint(Root, PointOne, PointTwo) # We have previously established that this is a turning point.
+                print("NewRoot via FarthestPoint = {0}".format(NewRoot)) # TODO: TEMP
+                Neighbors = GetGridData(PointOne.X, PointOne.Y, True) # We follow the edge of the obstacle to create the successor. The StartPoint for the new interval begins either directly above or below PointOne.
+                if 1 in Neighbors[:2]: # We go up.
+                    NewPointOne = Point(PointOne.X, PointOne.Y + 1)
+                else: # We go down.
+                    NewPointOne = Point(PointOne.X, PointOne.Y + 1)
+                NewInterval = Interval(True, NewPointOne, Point(GridWidth, NewPointOne.Y), True)
+            elif PointOne == PointTwo: # Non-observable successors of a cone node.
+                NewRoot = PointOne
+                if PointOne.Y - Root.Y > 0: # If the Root is below PointOne, we project the line upward.
+                    NewPointOne = GetIntersectionPoint(Line(Root, PointOne), Line(Point(PointOne.X, PointOne.Y + 1), Point(PointTwo.X, PointTwo.Y + 1)), False)
+                else: # The Root is above PointOne, so we project the line downward.
+                    NewPointOne = GetIntersectionPoint(Line(Root, PointOne), Line(Point(PointOne.X, PointOne.Y - 1), Point(PointTwo.X, PointTwo.Y - 1)), False)
+                NewInterval = Interval(True, NewPointOne, Point(GridWidth, NewPointOne.Y), True)
+            else: # Observable successors of a cone node.
+                NewRoot = Root
+                if PointOne.Y - Root.Y > 0: # If the Root is below PointOne, we project the line upward.
+                    NewPointOne = GetIntersectionPoint(Line(Root, PointOne), Line(Point(PointOne.X, PointOne.Y + 1), Point(PointTwo.X, PointTwo.Y + 1)), False)
+                else: # The Root is above PointOne, so we project the line downward.
+                    NewPointOne = GetIntersectionPoint(Line(Root, PointOne), Line(Point(PointOne.X, PointOne.Y - 1), Point(PointTwo.X, PointTwo.Y - 1)), False)
+                if PointTwo.Y - Root.Y > 0: # If the Root is below PointTwo, we project the line upward.
+                    NewPointTwo = GetIntersectionPoint(Line(Root, PointTwo), Line(Point(PointOne.X, PointOne.Y + 1), Point(PointTwo.X, PointTwo.Y + 1)), False)
+                else: # The Root is above PointOne, so we project the line downward.
+                    NewPointTwo = GetIntersectionPoint(Line(Root, PointTwo), Line(Point(PointOne.X, PointOne.Y - 1), Point(PointTwo.X, PointTwo.Y - 1)), False)
+                NewInterval = Interval(True, NewPointOne, NewPointTwo, True)
+            print("NewInterval is \"{0}\".".format(NewInterval)) # TODO: TEMP
+            Successors = []
+            for I in SplitInterval(NewInterval):
+                NewNode = Node(I, NewRoot) # TODO: I don't get this... :/
+                RenderAnya(GridData, None, [NewNode], None) # TODO: TEMP
+                Successors = Successors.append(NewNode.Interval)
+            print("ConeSuccessors are \"{0}\"".format(Successors)) # TODO: TEMP
+            return Successors
 
         def GenerateFlatSuccessors(PointOne, Root):
             """
             Generates the successors of a flat search node.
             """
-            PointTwo = None # TODO: This point must be the first corner point (or otherwise the farthest obstacle vertex) on the row of PointOne such that "Root --> PointOne --> PointTwo" is taut.
+            PointTwo = GetFirstCornerPoint(PointOne)
+            NewInterval = Interval(False, PointOne, PointTwo, True)
+            Successors = []
+            if Root.Y == PointOne.Y: # If these points are on the same row.
+                Successors = GenerateSuccessors(Node(NewInterval, Root)) # Observable successors.
+            else:
+                Successors = GenerateSuccessors(Node(NewInterval, PointOne)) # Non-observable flat successors.
+            print("FlatSuccessors are \"{0}\"".format(Successors)) # TODO: TEMP
+            return Successors
 
         def GenerateStartSuccessors(StartPoint):
             """
             Generates the successors for the start search node.
             """
+            global Node
             # Construct a maximal half-closed interval containing all points observable and to the left of StartPoint. (This does not include the StartPoint itself.)
             LeftStartInterval = []
             if LineOfSight(StartPoint, [0, StartPoint.Y]):
                 LeftStartInterval = Interval(True, Point(0, StartPoint.Y), StartPoint, False)
             else:
                 LeftPoints = BresenhamLinePoints(StartPoint, Point(0, StartPoint.Y))
-                for Point, PointIndex in enumerate(LeftPoints):
-                    if GridData(Point.X, Point.Y) == 1:
+                for PointIndex, LeftPoint in enumerate(LeftPoints):
+                    if GetGridData(LeftPoint.X, LeftPoint.Y) == 1:
                         LeftStartInterval = Interval(True, LeftPoints[PointIndex], StartPoint, False)
             # Construct a maximal half-closed interval containing all points observable and to the right of StartPoint. (This does not include the StartPoint itself.)
             RightStartInterval = []
@@ -130,23 +182,23 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
                 RightStartInterval = Interval(False, StartPoint, Point(GridWidth, StartPoint.Y))
             else:
                 RightPoints = BresenhamLinePoints(StartPoint, Point(GridWidth, StartPoint.Y))
-                for Point, PointIndex in enumerate(RightPoints):
-                    if GridData(Point.X, Point.Y) == 1:
+                for PointIndex, RightPoint in enumerate(RightPoints):
+                    if GetGridData(RightPoint.X, RightPoint.Y) == 1:
                         RightStartInterval = Interval(False, StartPoint, RightPoints[PointIndex], True)
             # Construct a maximal half-closed interval containing all points observable and from the row above StartPoint.
             UpperLeftPoints = BresenhamLinePoints(Point(0, StartPoint.Y + 1), Point(StartPoint.X, StartPoint.Y + 1))
-            UpperRightPoints = BresenhamLinePoints(Pont(StartPoint.X, StartPoint.Y + 1), Point(GridWidth, StartPoint.Y + 1))
+            UpperRightPoints = BresenhamLinePoints(Point(StartPoint.X, StartPoint.Y + 1), Point(GridWidth, StartPoint.Y + 1))
             if LineOfSight(StartPoint, Point(0, StartPoint.Y + 1)): # If there is a LOS from the Root to the leftmost point in the upper row.
                 UpperStartIntervalLeft = [True, Point(0, StartPoint.Y + 1)]
             else: # Scan left until we no longer have a LOS.
-                for Point, PointIndex in enumerate(UpperLeftPoints):
-                    if not LineOfSight(StartPoint, Point):
+                for PointIndex, LeftPoint in enumerate(UpperLeftPoints):
+                    if not LineOfSight(StartPoint, LeftPoint):
                         UpperStartIntervalLeft = [True, UpperLeftPoints[PointIndex - 1]]
             if LineOfSight(StartPoint, Point(GridWidth, StartPoint.Y + 1)): # If there is a LOS from the Root to the rightmost point in the upper row.
                 UpperStartIntervalRight = [Point(GridWidth, StartPoint.Y + 1), True]
             else: # Scan right until we no longer have a LOS.
-                for Point, PointIndex in enumerate(UpperRightPoints):
-                    if not LineOfSight(StartPoint, Point):
+                for PointIndex, RightPoint in enumerate(UpperRightPoints):
+                    if not LineOfSight(StartPoint, RightPoint):
                         UpperStartIntervalRight = [UpperRightPoints[PointIndex - 1], True]
             UpperStartInterval = Interval(UpperStartIntervalLeft[0], UpperStartIntervalLeft[1], UpperStartIntervalRight[0], UpperStartIntervalRight[1])
             # Construct a maximal half-closed interval containing all points observable and from the row below StartPoint.
@@ -155,38 +207,130 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
             if LineOfSight(StartPoint, Point(0, StartPoint.Y - 1)): # If there is a LOS from the Root to the leftmost point in the lower row.
                 LowerStartIntervalLeft = [True, Point(0, StartPoint.Y - 1)]
             else: # Scan left until we no longer have a LOS.
-                for Point, PointIndex in enumerate(LowerLeftPoints):
-                    if not LineOfSight(StartPoint, Point):
+                for PointIndex, LeftPoint in enumerate(LowerLeftPoints):
+                    if not LineOfSight(StartPoint, LeftPoint):
                         LowerStartIntervalLeft = [True, LowerLeftPoints[PointIndex - 1]]
             if LineOfSight(StartPoint, Point(GridWidth, StartPoint.Y - 1)):
-                LowerStartIntervalRight = [Point(GridWidth, StartingPoint.Y - 1), True]
+                LowerStartIntervalRight = [Point(GridWidth, StartPoint.Y - 1), True]
             else: # Scan right until we no longer have a LOS.
-                for Point, PointIndex in enumerate(LowerRightPoints):
-                    if not LineOfSight(StartPoint, Point):
+                for PointIndex, RightPoint in enumerate(LowerRightPoints):
+                    if not LineOfSight(StartPoint, RightPoint):
                         LowerStartIntervalRight = [LowerRightPoints[PointIndex - 1], True]
             LowerStartInterval = Interval(LowerStartIntervalLeft[0], LowerStartIntervalLeft[1], LowerStartIntervalRight[0], LowerStartIntervalRight[1])
             # Split each interval at any corner points.
-            Intervals = [SplitInterval(LeftStartInterval), SplitInterval(RightStartInterval), SplitInterval(UpperStartInterval), SplitInterval(LowerStartInterval)]
-            Log("Anya Intervals for Root {0} created at {1}.".format(Root, Intervals), 0)
-            StartSuccessors = [GenerateSuccessors(Node(Interval, StartPoint)) for Interval in Intervals]
+            Intervals = set().union(SplitInterval(LeftStartInterval), SplitInterval(RightStartInterval), SplitInterval(UpperStartInterval), SplitInterval(LowerStartInterval))
+            StartSuccessors = [GenerateSuccessors(Node(I, StartPoint)) for I in Intervals]
+            print("StartSuccessors are \"{0}\"".format(StartSuccessors)) # TODO: TEMP
             return StartSuccessors
 
-        NodeType = NodeType(Node)
-        if NodeType == "START":
+        Type = NodeType(PassedNode)
+        if Type == "START":
             Successors = GenerateStartSuccessors(StartPoint)
-        elif NodeType == "FLAT":
-            FarPoint = FarthestPoint(Interval.StartPoint, Interval.EndPoint)
-            Successors = GenerateFlatSuccessors() # The Point passed is the Point in the Interval which is farthest from the Node's Root.
-            if IsTurningPoint(FarPoint): # TODO: Determine if FarPoint is a turning point on a taut local path beginning at Node.Root.
-                Successors = Successors.union(GenerateConeSuccessors(FarPoint, FarPoint, Node.Root)) # These are non-observable successors.
-        else: # NodeType == "CONE"
-            Successors = GenerateConeSuccessors(Node.Interval.PointTwo, Node.Interval.PointOne, Node.Root)
+        elif Type == "FLAT":
+            FarPoint = FarthestPoint(PassedNode.Root, PassedNode.Interval.StartPoint, PassedNode.Interval.EndPoint)
+            Successors = GenerateFlatSuccessors(FarPoint, PassedNode.Root) # The Point passed is the Point in the Interval which is farthest from the Node's Root. Only one successor should be created...
+            if IsTurningPoint(PassedNode.Root, FarPoint):
+                Successors.append(GenerateConeSuccessors(FarPoint, FarPoint, PassedNode.Root)) # These are non-observable successors.
+        else: # Type == "CONE"
+            Successors = GenerateConeSuccessors(PassedNode.Interval.StartPoint, PassedNode.Interval.EndPoint, PassedNode.Root) # Observable successors.
+            if IsTurningPoint(PassedNode.Root, PassedNode.Interval.StartPoint):
+                Successors.append(GenerateFlatSuccessors(PassedNode.Interval.StartPoint, PassedNode.Root)) # Non-observable successors.
+                Successors.append(GenerateConeSuccessors(PassedNode.Interval.StartPoint, PassedNode.Interval.StartPoint, PassedNode.Root)) # More non-observable successors.
+            if IsTurningPoint(PassedNode.Root, PassedNode.Interval.EndPoint):
+                Successors.append(GenerateFlatSuccessors(PassedNode.Interval.EndPoint, PassedNode.Root)) # Non-observable successors.
+                Successors.append(GenerateConeSuccessors(PassedNode.Interval.EndPoint, PassedNode.Interval.EndPoint, PassedNode.Root)) # More non-observable successors.
+        Log("Anya: Successors for Root {0} created at {1}.".format(PassedNode.Root, Successors), 0)
+        return Successors
 
-    def GridData(X, Y):
+    def GetFirstCornerPoint(PassedStartPoint):
         """
-        Provides an easy to determine the value of a specific coordinate in the grid. Note that the coordinates run *between* the lines; so 
+        Returns the first corner point in a row, moving right from the starting point. Otherwise returns the right-most point on the grid.
         """
-        return GridData[Y][X]
+        I = 0 # TODO: Find some nicer way of incrementing.
+        MaximumXCoordinateValue = GridWidth + 1
+        RowLength = ceil(MaximumXCoordinateValue - PassedStartPoint.X) # We add one ["!"] to GridWidth to account for the fact that there is a coordinate column AFTER the last square row.
+        while I != RowLength: # From left to right, scan each point along the interval for a corner.
+            Neighbors = Counter(GetGridData(PassedStartPoint.X + I, PassedStartPoint.Y, True))
+            if Neighbors["0"] == 3 and Neighbors["1"] == 1: # We have found a corner point!
+                return Point(PassedStartPoint.X + I, PassedStartPoint.Y) # Return the corner point.
+            I += 1
+        return Point(GridWidth + 1, PassedStartPoint.Y) # If we didn't find any corner points, return the right-most coordinate point. (We add one ["1"] because we are looking for the last coordinate, which lies after the last line in the grid.)
+
+    def GetGridData(X, Y, GetNeighbors=False):
+        """
+        Provides an easy to determine the value of a specific coordinate square in the grid.
+        Pass with "GetNeighbors=True" to get the value of the squares surrounding a specific coordinate.
+        """
+        # TODO: Place into documentation: Note that the coordinates run *between* the lines; so getting the value of "10, 10" would return the value of the square which occupies the space from 10,10 -> 11,11.
+        # TODO: Place into documentation: "Round coordinates" (I.e. integers as opposed to floats) will return a list with the four nearest square values, while float coordinates will return either the nearest or two nearest square values.
+        if GetNeighbors:
+            if type(X) != int and type(Y) != int: # They are formatted as floating point numbers.
+                if X.is_integer() and Y.is_integer(): # But still evaluate to integers.
+                    X, Y = int(X), int(Y)
+                    try:
+                        QuadrantOne = GridData[Y][X]
+                    except IndexError:
+                        QuadrantOne = 0
+                    try:
+                        QuadrantTwo = GridData[Y][X-1]
+                    except IndexError:
+                        QuadrantTwo = 0
+                    try:
+                        QuadrantThree = GridData[Y - 1][X - 1]
+                    except IndexError:
+                        QuadrantThree = 0
+                    try:
+                        QuadrantFour = GridData[Y - 1][X]
+                    except IndexError:
+                        QuadrantFour = 0
+                    return [QuadrantOne, QuadrantTwo, QuadrantThree, QuadrantFour]
+                elif not X.is_integer() and Y.is_integer():
+                    Y = int(Y)
+                    try:
+                        QuadrantsOneAndTwo = GridData[Y][floor(X)]
+                    except IndexError:
+                        QuadrantsOneAndTwo = 0
+                    try:
+                        QuadrantsThreeAndFour = GridData[Y - 1][floor(X)]
+                    except IndexError:
+                        QuadrantsThreeAndFour = 0
+                    return [QuadrantsOneAndTwo, QuadrantsThreeAndFour]
+                elif X.is_integer() and not Y.is_integer():
+                    X = int(X)
+                    try:
+                        QuadrantsTwoAndThree = GridData[floor(Y)][X]
+                    except IndexError:
+                        QuadrantsTwoAndThree = 0
+                    try:
+                        QuadrantsFourAndOne = GridData[floor(Y)][X - 1]
+                    except IndexError:
+                        QuadrantsFourAndOne = 0
+                    return [QuadrantsTwoAndThree, QuadrantsFourAndOne]
+                # Both X and Y are floats.
+                try:
+                    QuadrantsAll = GridData[floor(Y)][floor(X)]
+                except IndexError:
+                    QuadrantsAll = 0
+                return [QuadrantsAll]
+            else: # They are allready integers (type=int).
+                try:
+                    QuadrantOne = GridData[Y][X]
+                except IndexError:
+                    QuadrantOne = 0
+                try:
+                    QuadrantTwo = GridData[Y][X-1]
+                except IndexError:
+                    QuadrantTwo = 0
+                try:
+                    QuadrantThree = GridData[Y - 1][X - 1]
+                except IndexError:
+                    QuadrantThree = 0
+                try:
+                    QuadrantFour = GridData[Y - 1][X]
+                except IndexError:
+                    QuadrantFour = 0
+                return [QuadrantOne, QuadrantTwo, QuadrantThree, QuadrantFour]
+        return GridData[Y - 1][X - 1]
 
     def IsTaut(PointOne, PointTwo, PointThree):
         """
@@ -199,100 +343,119 @@ def Anya(GridData, TupleStartPoint, TupleEndPoint):
         if Angle == 180:
             return True
 
-    def IsTurningPoint(): # TODO: Complete this function.
+    def IsTurningPoint(PreviousPoint, PassedPoint):
         """
-        WIP.
+        Determines if a point is a turning point.
         """
-        return
+        Neighbors = Counter(GetGridData(PassedPoint.X, PassedPoint.Y, True))
+        if Neighbors["0"] == 3 and Neighbors["1"] == 1: # The point lies on a corner.
+            return True
 
-    def LiesWithin(Point, Interval): # TODO: Complete this function.
+    def LiesWithin(PassedPoint, PassedInterval): # TODO: Complete this function.
         """
         Determines whether a point lies within an interval.
         """
-        IntervalPoints = BresenhamLinePoints(Interval.StartPoint, Interval.EndPoint)
+        if PassedPoint.Y == PassedInterval.StartPoint.Y == PassedInterval.EndPoint.Y and PassedInterval.StartPoint.X <= PassedPoint.X <= PassedInterval.EndPoint.X:
+            return True
 
     def LineOfSight(PointOne, PointTwo):
         """
         Determines whether two points have a line-of-sight; that is, if a line drawn between them does not intersect with any solid (non-traversable) points.
         """
         LinePoints = BresenhamLinePoints(PointOne, PointTwo)
-
-        if any(GridData[Point[1]][Point[0]] for Point in LinePoints) == 1:
+        if any(GetGridData(LinePoint.X, LinePoint.Y) for LinePoint in LinePoints) == 1:
             return False
 
-    def NodeType(Node):
+    def NodeType(PassedNode):
         """
-        Determines and returns the type of an Anya search node.
+        Determines and returns the type of an Anya search PassedNode.
         """
-        Interval, Root = Node
-        if Root == Point(-1, -1): # If the root of the node is off the map.
+        if PassedNode.Root == Point(-1, -1): # If the root of the PassedNode is off the map.
             return "START"
-        elif Root.Y != Interval.StartPoint.Y and Root.Y != Interval.EndPoint.Y: # If the root of the node is not on the same line (does not have the same Y value) as the points contained in the Interval.
+        elif PassedNode.Root.Y != PassedNode.Interval.StartPoint.Y and PassedNode.Root.Y != PassedNode.Interval.EndPoint.Y: # If the root of the PassedNode is not on the same line (does not have the same Y value) as the points contained in the Interval.
             return "CONE"
-        elif Root.Y == Interval.StartPoint.Y and Root.Y == Interval.EndPoint: # If the root of the node is on the same line as the (has the same Y value) as the points contained in the Interval.
+        elif PassedNode.Root.Y == PassedNode.Interval.StartPoint.Y and PassedNode.Root.Y == PassedNode.Interval.EndPoint.Y: # If the root of the PassedNode is on the same line as the (has the same Y value) as the points contained in the Interval.
             return "FLAT"
 
-        def ProjectNode(Node): # TODO: Complete this function.
-            """
-            Computes and returns the maximum observable interval projection for the node passed.
-            If the projection is invalid, returns False.
-            """
-            if NodeType(Node) == "FLAT":
+    def PathTo(PassedEndPoint):
+        Log("Anya: Path found to EndPoint!", 0)
+
+    def ProjectNode(PassedNode): # TODO: Complete this function.
+        """
+        Computes and returns the maximum observable interval projection for the node passed.
+        If the projection is invalid, returns False.
+        """
+        if NodeType(PassedNode) == "FLAT":
+            pass
+        elif NodeType(PassedNode) == "CONE":
+            if PassedNode.Interval.EndPoint.Y > PassedNode.Root.Y: # Project up, because the EndPoint is above the root.
                 pass
-            elif NodeType(Node) == "CONE":
-                Interval, Root = Node
-                if EndPoint.Y > Root.Y: # Project up, because the EndPoint is above the root.
-                    pass
-                elif EndPoint.Y < Root.Y: # Project down, because the EndPoint is below the root.
-                    pass
+            elif PassedNode.Interval.EndPoint.Y < PassedNode.Root.Y: # Project down, because the EndPoint is below the root.
+                pass
 
-        def ShouldPrune(Node): # TODO: Complete this function.
+    def ShouldPrune(PassedNode): # TODO: Complete this function.
+        """
+        Determines whether an Anya search Node should be pruned.
+        """
+        def IsCulDeSac(PassedNode):
             """
-            Determines whether an Anya search Node should be pruned.
+            Determines whether an Anya search Node is a "Cul De Sac".
             """
-            def IsCulDeSac(Node):
-                """
-                Determines whether an Anya search Node is a "Cul De Sac".
-                """
-                ProjectedInterval = ProjectNode(Node)
-                if ProjectedInterval: # If the ProjectedInterval is valid.
+            ProjectedInterval = ProjectNode(PassedNode)
+            if ProjectedInterval: # If the ProjectedInterval is valid.
+                return False
+        def IsIntermediate(PassedNode):
+            """
+            Determines whether an Anya search Node is an intermediate Node.
+            """
+            if NodeType(PassedNode) == "FLAT":
+                FarPoint = None # TODO: Determine which Point in the Interval is farthest from the Node's Root.
+                if IsTurningPoint(PassedNode.Root, PassedNode.Interval.StartPoint, FarPoint): # If FarPoint is a turning point for a taut local path with prefix (Root, Point), then the Node must have at least one non-observable successor; it cannot be intermediate.
                     return False
-            def IsIntermediate(Node):
-                """
-                Determines whether an Anya search Node is an intermediate Node.
-                """
-                if NodeType(Node) == "FLAT":
-                    FarPoint = None # TODO: Determine which Point in the Interval is farthest from the Node's Root.
-                    if IsTurningPoint(FarPoint): # If FarPoint is a turning point for a taut local path with prefix (Root, Point), then the Node must have at least one non-observable successor; it cannot be intermediate.
-                        return False
-                else: # The Node is not a flat node; therefore it must be a cone node.
-                    if Interval: # TODO: "If Interval has a closed endpoint that is also a corner point..."
-                        return False
-                    ProjectedInterval = ProjectNode(Node)
-                    if ProjectedInterval: # TODO: "If ProjectedInterval contains any corner points..."
-                        return False
-                return True
+            else: # The Node is not a flat node; therefore it must be a cone node.
+                if Interval: # TODO: "If Interval has a closed endpoint that is also a corner point..."
+                    return False
+                ProjectedInterval = ProjectNode(PassedNode)
+                if ProjectedInterval: # TODO: "If ProjectedInterval contains any corner points..."
+                    return False
+            return True
+        #IsCulDeSac(Node)
+        #IsIntermediate(Node)
+        return
 
-        def SplitInterval(Interval, ReturnUnsplitInterval=False): # TODO: Complete this function.
-            """
-            Splits an Interval at any corner points into a new interval. Returns a tuple containing any new intervals. If no new intervals were created, returns False. (Call with "ReturnUnsplitInterval=True" to return the original interval if it was not split.)
-            """
-            Intervals = []
-            I = 0
-            while I != Interval.EndPoint.X - Interval.StartPoint.X: # From left to right, scan each point along the interval for a corner.
-
-                I += 1
-            if not Intervals and ReturnUnsplitInterval == True:
-                return Interval
-            return Intervals
+    def SplitInterval(IntervalToBeSplit, ReturnUnsplitInterval=True):
+        """
+        Splits an Interval at any corner points into a new interval. Returns a tuple containing any new intervals. If no new intervals were created, returns False. (Call with "ReturnUnsplitInterval=False" to return False if the original interval was not split.)
+        """
+        Intervals = []
+        I = 0 # TODO: Find some nicer way of incrementing.
+        IntervalLength = ceil(IntervalToBeSplit.EndPoint.X - IntervalToBeSplit.StartPoint.X)
+        while I != IntervalLength: # From left to right, scan each point along the interval for a corner.
+            Neighbors = Counter(GetGridData(IntervalToBeSplit.StartPoint.X + I, IntervalToBeSplit.StartPoint.Y, True))
+            if Neighbors["0"] == 3 and Neighbors["1"] == 1: # Create a new interval if we detect a corner point.
+                Intervals.append(Interval(IntervalToBeSplit.StartFlag, IntervalToBeSplit.StartPoint, Point(IntervalToBeSplit.StartPoint.X + I, IntervalToBeSplit.EndPoint.Y), False))
+                IntervalToBeSplit = Interval(False, IntervalToBeSplit.StartPoint.X + I, IntervalToBeSplit.EndPoint, True)
+                IntervalLength = ceil(IntervalToBeSplit.EndPoint.X - IntervalToBeSplit.StartPoint.X) # Get the length of the remainder (latter half) of the original interval.
+            I += 1
+        if not Intervals and ReturnUnsplitInterval:
+            return [IntervalToBeSplit]
+        return Intervals
 
     #
     # Mainline function code.
     #
 
     StepPathData = []
-    StartInterval = Interval(True, StartPoint, StartPoint, True)
-    return StepPathData
+    StartNode = Node(Interval(True, StartPoint, StartPoint, True), Point(-1, -1))
+    Open = [StartNode]
+    while Open:
+        CurrentNode = Open.pop()
+        if LiesWithin(EndPoint, CurrentNode.Interval):
+            return PathTo(EndPoint)
+        for SuccessorNode in GenerateSuccessors(CurrentNode):
+            if not ShouldPrune(SuccessorNode):
+                Open = Open | SuccessorNode
+    return
 
   ####################################################
  #                                                  ##
@@ -375,7 +538,6 @@ def GetIntersectionPoint(LineOne, LineTwo, LineSegments=True):
 # Temporary Mainline code.
 #
 
-print("ANYA testing!")
 #MapFile = input("Please enter map file name: ")
 #Sx = input("Please enter X pos. of StartPoint: ")
 #Sy = input("Please enter Y pos. of StartPoint: ")
@@ -384,9 +546,9 @@ print("ANYA testing!")
 #StartPoint = [Sx, Sy]
 #EndPoint = [Ex, Ey]
 
-MapFile = "temp.map"
-TupleStartPoint = [95, 10]
-TupleEndPoint = [5, 30]
+MapFile = "test3.map"
+TupleStartPoint = [175, 35]
+TupleEndPoint = [1000, 875]
 
 GridData = []
 
@@ -394,12 +556,12 @@ with open(MapFile, "r") as File:
     GridData = File.readlines()[::-1] # We reverse and make a shallow copy of the list.
 
 GridData = [list(Line.strip()) for Line in GridData] # Remove newlines.
-for LineIndex, Line in enumerate(GridData):
-    for CharacterIndex, Character in enumerate(GridData[LineIndex]):
-        GridData[LineIndex][CharacterIndex] = int(Character) # Split each line character-by-character, and convert each character from a string into an integer.
+for RowIndex, Row in enumerate(GridData):
+    for CharacterIndex, Character in enumerate(GridData[RowIndex]):
+        GridData[RowIndex][CharacterIndex] = int(Character) # Split each line character-by-character, and convert each character from a string into an integer.
 
 print("Map loaded! Filename: \"{0}\". Map dimensions: {1} * {2}.".format(MapFile, len(GridData[0]), len(GridData)))
-RenderAnya(GridData)
+RenderAnya(GridData, "_AnyaRender GridData")
 
 StartTime = time.time()
 StepPathData = Anya(GridData, TupleStartPoint, TupleEndPoint)
@@ -407,14 +569,4 @@ EndTime = time.time()
 RunTime = EndTime - StartTime
 
 print("Anya complete! Estimated run time: {0}.".format(RunTime))
-
-def ClonedFarthestPoint(ReferencePoint, *OtherPoints):
-    """
-    Returns the Point which is farthest from the ReferencePoint passed.
-    """
-    for Point in OtherPoints:
-        print("Point in OtherPoints: \"{0}\"".format(Point))
-    print("ReferencePoint: \"{0}\"".format(ReferencePoint))
-    MaximumValueIndex, MaximumValue = max(enumerate([hypot(Point.X - ReferencePoint.X, Point.Y - ReferencePoint.Y) for Point in OtherPoints]), key=operator.itemgetter(0))
-    MaximumValuePoint = OtherPoints[MaximumValueIndex]
-    return MaximumValuePoint, MaximumValue
+    
