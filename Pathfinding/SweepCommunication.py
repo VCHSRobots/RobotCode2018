@@ -21,7 +21,7 @@ def checkMotorStatus(sweep):
     sweep.write(b"MZ\n")
     return sweep.readline()
 
-def checkMotorInfo(sweep):
+def checkMotorSpeed(sweep):
     sweep.write(b"MI\n")
     return sweep.readline()
 
@@ -29,11 +29,11 @@ def checkSampleRate(sweep):
     sweep.write(b"LI\n")
     return sweep.readline()
 
-def checkMotorInfo(sweep):
+def checkVersionInfo(sweep):
     sweep.write(b"IV\n")
     return sweep.readline()
 
-def checkMotorInfo(sweep):
+def checkDeviceInfo(sweep):
     sweep.write(b"ID\n")
     return sweep.readline()
 

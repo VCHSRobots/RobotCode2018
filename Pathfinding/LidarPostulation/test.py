@@ -3,7 +3,7 @@
 
 import numpy as np
 import cProfile
-import cysimlidar
+import CythonLidarPost
 import time
 import json
 # import SweepCommunication
@@ -40,10 +40,10 @@ def findBestLocation(lidardists, location, testingrange, angoffsetrange):
     xs = tuple(range(cordrange[0], cordrange[1] + 1))
     ys = tuple(range(cordrange[2], cordrange[3] + 1))
     angs = tuple(range(location[2] - angoffsetrange, location[2] + angoffsetrange + 1))
-    fieldlines = cysimlidar.openEnvFile("FRC_Field_2018.map")
+    fieldlines = CythonLidarPost.openEnvFile("FRC_Field_2018.map")
     for x in xs:
         for y in ys:
-            postdata = cysimlidar.angledRayIntersects(cysimlidar.Point(x, y), 0, fieldlines)
+            postdata = CythonLidarPost.angledRayIntersects(CythonLidarPost.Point(x, y), 0, fieldlines)
             for angle in angs:
                 idealdists = shiftInds(postdata, angle)
                 # distdifs = findDistDifs(lidardists, idealdists)
@@ -70,11 +70,11 @@ def findRobotLocation(lidardists, location, testingrange, angoffsetrange):
     xs = tuple(range(cordrange[0], cordrange[1] + 1))
     ys = tuple(range(cordrange[2], cordrange[3] + 1))
     angs = tuple(range(location[2] - angoffsetrange, location[2] + angoffsetrange + 1))
-    fieldlines = cysimlidar.openEnvFile("FRC_Field_2018.map")
+    fieldlines = CythonLidarPost.openEnvFile("FRC_Field_2018.map")
     lidarkeys = lidardists.keys()
     for x in xs:
         for y in ys:
-            postdata = cysimlidar.customRayIntersects(cysimlidar.Point(x, y), lidarkeys, fieldlines)
+            postdata = CythonLidarPost.customRayIntersects(CythonLidarPost.Point(x, y), lidarkeys, fieldlines)
             for angle in angs:
                 idealdists = shiftKeys(postdata, angle)
                 # distdifs = findDistDifs(lidardists, idealdists)
@@ -102,11 +102,11 @@ def findClosestDot(lidardists, minv, maxv, mode, location, ang = None):
         ys = variance.copy() + location[1]
         for x in xs:
             for y in ys:
-                testdists = cysimlidar.angledRayIntersects(cysimlidar.Point(x, y), ang)
+                testdists = CythonLidarPost.angledRayIntersects(CythonLidarPost.Point(x, y), ang)
                 difvsret[findDotDif(lidardists, testdists)] = (x, y)  # findDotDif finds the dot sum of the arguments
     if mode == "angle":
         for var in variance:
-            testdists = cysimlidar.angledRayIntersects(cysimlidar.Point(location[0], location[1]), var)
+            testdists = CythonLidarPost.angledRayIntersects(CythonLidarPost.Point(location[0], location[1]), var)
             difvsret[findDotDif(lidardists, testdists)] = var
     return difvsret[sorted(difvsret)[-1]]
     # return difvsret[sorted(difvsret)[0]]
@@ -252,7 +252,7 @@ def speedThisProgramUpDramatically():
     for x in xs:
         for y in ys:
             for ang in angs:
-                postpoints[(x, y, ang)] = cysimlidar.angledRayIntersects(cysimlidar.Point(x, y), ang)
+                postpoints[(x, y, ang)] = CythonLidarPost.angledRayIntersects(CythonLidarPost.Point(x, y), ang)
     json.dump(postpoints, "postpoints.json")
 
 
@@ -269,7 +269,7 @@ def measureTime(func):
 
 def main():
     realpoints = [50, 48]
-    testval = shiftInds(cysimlidar.angledRayIntersects(cysimlidar.Point(realpoints[0], realpoints[1]), 0, cysimlidar.openEnvFile("FRC_Field_2018.map")), 7,)
+    testval = shiftInds(CythonLidarPost.angledRayIntersects(CythonLidarPost.Point(realpoints[0], realpoints[1]), 0, CythonLidarPost.openEnvFile("FRC_Field_2018.map")), 7,)
     printinfo, pointvals = findBestLocation(testval, [49, 49, 2], 5, 15)
     # print(printinfo)
     dotSvg(findLargestPointPerAngle(pointvals), realpoints)
@@ -278,4 +278,4 @@ def main():
 # speedThisProgramUpDramatically()
 
 # cProfile.run("main()")
-print(cysimlidar.customRayIntersects(cysimlidar.Point(100, 100), [1], "FRC_Field_2018.map"))
+print(CythonLidarPost.customRayIntersects(CythonLidarPost.Point(100, 100), [1], "FRC_Field_2018.map"))

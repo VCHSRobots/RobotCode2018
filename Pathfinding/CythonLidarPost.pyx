@@ -46,7 +46,7 @@ cdef findSlope(self, p1, p2):
     return slope
 
 cdef float findXWithY(self, y):
-    x = y - self.inter
+    x = (y - self.inter)/self.slope
     return x
 
 cdef float findYWithX(self, x):
@@ -176,6 +176,14 @@ cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fiel
         intersect = findLineIntersect(angle, robotlocation, fieldlines)
         rayinters[angle] =  dist(robotlocation, intersect)
     return rayinters
+
+cpdef Point pointFromDistAng(startpoint, ang, dist):
+    quadrant = int(ang / 90) + 1
+    x = dist * np.cos(deg2rad(ang))
+    y = dist * np.sin(deg2rad(ang))
+    distpoint = Point(startpoint.x + x ,startpoint.y + y)
+    return distpoint
+
 
 cdef compForAngle(rayinters, float robotangle):
     cdef list angles = []

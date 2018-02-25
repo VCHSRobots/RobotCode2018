@@ -170,7 +170,7 @@ cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerat
     # rayinters = compForAngle(rayinters, robotangle)
     return rayinters
 
-cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fieldlines):
+cpdef dict customRayIntersects(Point robotlocation, list anglestopost, str fieldlines):
     cdef dict rayinters = {}
     for angle in anglestopost:
         intersect = findLineIntersect(angle, robotlocation, fieldlines)
