@@ -4907,7 +4907,7 @@ static PyObject *__pyx_pf_15CythonLidarPost_2customRayIntersects(CYTHON_UNUSED P
 
 static PyObject *__pyx_pw_15CythonLidarPost_5pointFromDistAng(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_pointFromDistAng(PyObject *__pyx_v_startpoint, PyObject *__pyx_v_ang, PyObject *__pyx_v_dist, CYTHON_UNUSED int __pyx_skip_dispatch) {
-  CYTHON_UNUSED PyObject *__pyx_v_quadrant = NULL;
+  PyObject *__pyx_v_quadrant = NULL;
   PyObject *__pyx_v_x = NULL;
   PyObject *__pyx_v_y = NULL;
   struct __pyx_obj_15CythonLidarPost_Point *__pyx_v_distpoint = NULL;
@@ -4919,6 +4919,8 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_point
   double __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
+  int __pyx_t_7;
+  int __pyx_t_8;
   __Pyx_RefNannySetupContext("pointFromDistAng", 0);
 
   /* "CythonLidarPost.pyx":181
@@ -4944,7 +4946,7 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_point
  *     quadrant = int(ang / 90) + 1
  *     x = dist * np.cos(deg2rad(ang))             # <<<<<<<<<<<<<<
  *     y = dist * np.sin(deg2rad(ang))
- *     distpoint = Point(startpoint.x + x ,startpoint.y + y)
+ *     if quadrant in [2, 3]:
  */
   __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 182, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -5010,8 +5012,8 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_point
  *     quadrant = int(ang / 90) + 1
  *     x = dist * np.cos(deg2rad(ang))
  *     y = dist * np.sin(deg2rad(ang))             # <<<<<<<<<<<<<<
- *     distpoint = Point(startpoint.x + x ,startpoint.y + y)
- *     return distpoint
+ *     if quadrant in [2, 3]:
+ *         x *= -1
  */
   __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -5076,21 +5078,82 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_point
   /* "CythonLidarPost.pyx":184
  *     x = dist * np.cos(deg2rad(ang))
  *     y = dist * np.sin(deg2rad(ang))
+ *     if quadrant in [2, 3]:             # <<<<<<<<<<<<<<
+ *         x *= -1
+ *         y *= -1
+ */
+  __Pyx_INCREF(__pyx_v_quadrant);
+  __pyx_t_6 = __pyx_v_quadrant;
+  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_t_6, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!__pyx_t_8) {
+  } else {
+    __pyx_t_7 = __pyx_t_8;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_t_6, __pyx_int_3, 3, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_7 = __pyx_t_8;
+  __pyx_L4_bool_binop_done:;
+  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  __pyx_t_8 = (__pyx_t_7 != 0);
+  if (__pyx_t_8) {
+
+    /* "CythonLidarPost.pyx":185
+ *     y = dist * np.sin(deg2rad(ang))
+ *     if quadrant in [2, 3]:
+ *         x *= -1             # <<<<<<<<<<<<<<
+ *         y *= -1
+ *     distpoint = Point(startpoint.x + x ,startpoint.y + y)
+ */
+    __pyx_t_6 = PyNumber_InPlaceMultiply(__pyx_v_x, __pyx_int_neg_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 185, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF_SET(__pyx_v_x, __pyx_t_6);
+    __pyx_t_6 = 0;
+
+    /* "CythonLidarPost.pyx":186
+ *     if quadrant in [2, 3]:
+ *         x *= -1
+ *         y *= -1             # <<<<<<<<<<<<<<
+ *     distpoint = Point(startpoint.x + x ,startpoint.y + y)
+ *     return distpoint
+ */
+    __pyx_t_6 = PyNumber_InPlaceMultiply(__pyx_v_y, __pyx_int_neg_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 186, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF_SET(__pyx_v_y, __pyx_t_6);
+    __pyx_t_6 = 0;
+
+    /* "CythonLidarPost.pyx":184
+ *     x = dist * np.cos(deg2rad(ang))
+ *     y = dist * np.sin(deg2rad(ang))
+ *     if quadrant in [2, 3]:             # <<<<<<<<<<<<<<
+ *         x *= -1
+ *         y *= -1
+ */
+  }
+
+  /* "CythonLidarPost.pyx":187
+ *         x *= -1
+ *         y *= -1
  *     distpoint = Point(startpoint.x + x ,startpoint.y + y)             # <<<<<<<<<<<<<<
  *     return distpoint
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_startpoint, __pyx_n_s_x); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_startpoint, __pyx_n_s_x); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_3 = PyNumber_Add(__pyx_t_6, __pyx_v_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_6, __pyx_v_x); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_startpoint, __pyx_n_s_y); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_startpoint, __pyx_n_s_y); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_5 = PyNumber_Add(__pyx_t_6, __pyx_v_y); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Add(__pyx_t_6, __pyx_v_y); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3);
@@ -5098,14 +5161,14 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_point
   PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_5);
   __pyx_t_3 = 0;
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 184, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_v_distpoint = ((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "CythonLidarPost.pyx":185
- *     y = dist * np.sin(deg2rad(ang))
+  /* "CythonLidarPost.pyx":188
+ *         y *= -1
  *     distpoint = Point(startpoint.x + x ,startpoint.y + y)
  *     return distpoint             # <<<<<<<<<<<<<<
  * 
@@ -5238,7 +5301,7 @@ static PyObject *__pyx_pf_15CythonLidarPost_4pointFromDistAng(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "CythonLidarPost.pyx":188
+/* "CythonLidarPost.pyx":191
  * 
  * 
  * cdef compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
@@ -5264,43 +5327,43 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("compForAngle", 0);
 
-  /* "CythonLidarPost.pyx":189
+  /* "CythonLidarPost.pyx":192
  * 
  * cdef compForAngle(rayinters, float robotangle):
  *     cdef list angles = []             # <<<<<<<<<<<<<<
  *     cdef list inters = []
  *     cdef dict adjustedinters = {}
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 189, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 192, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_angles = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":190
+  /* "CythonLidarPost.pyx":193
  * cdef compForAngle(rayinters, float robotangle):
  *     cdef list angles = []
  *     cdef list inters = []             # <<<<<<<<<<<<<<
  *     cdef dict adjustedinters = {}
  *     for angle in rayinters:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 190, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 193, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_inters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":191
+  /* "CythonLidarPost.pyx":194
  *     cdef list angles = []
  *     cdef list inters = []
  *     cdef dict adjustedinters = {}             # <<<<<<<<<<<<<<
  *     for angle in rayinters:
  *         angles.append(angle)
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 191, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 194, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_adjustedinters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":192
+  /* "CythonLidarPost.pyx":195
  *     cdef list inters = []
  *     cdef dict adjustedinters = {}
  *     for angle in rayinters:             # <<<<<<<<<<<<<<
@@ -5311,26 +5374,26 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
     __pyx_t_1 = __pyx_v_rayinters; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_rayinters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 192, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_rayinters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 195, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 192, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 195, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 192, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 195, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 192, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 195, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 192, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 195, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 192, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 195, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -5340,7 +5403,7 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 192, __pyx_L1_error)
+          else __PYX_ERR(1, 195, __pyx_L1_error)
         }
         break;
       }
@@ -5349,28 +5412,28 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "CythonLidarPost.pyx":193
+    /* "CythonLidarPost.pyx":196
  *     cdef dict adjustedinters = {}
  *     for angle in rayinters:
  *         angles.append(angle)             # <<<<<<<<<<<<<<
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):
  */
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_angles, __pyx_v_angle); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 193, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_angles, __pyx_v_angle); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 196, __pyx_L1_error)
 
-    /* "CythonLidarPost.pyx":194
+    /* "CythonLidarPost.pyx":197
  *     for angle in rayinters:
  *         angles.append(angle)
  *         inters.append(rayinters[angle])             # <<<<<<<<<<<<<<
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  */
-    __pyx_t_4 = PyObject_GetItem(__pyx_v_rayinters, __pyx_v_angle); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 194, __pyx_L1_error)
+    __pyx_t_4 = PyObject_GetItem(__pyx_v_rayinters, __pyx_v_angle); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 197, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 194, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(1, 197, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "CythonLidarPost.pyx":192
+    /* "CythonLidarPost.pyx":195
  *     cdef list inters = []
  *     cdef dict adjustedinters = {}
  *     for angle in rayinters:             # <<<<<<<<<<<<<<
@@ -5380,7 +5443,7 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":195
+  /* "CythonLidarPost.pyx":198
  *         angles.append(angle)
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5392,9 +5455,9 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   for (;;) {
     if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(1, 195, __pyx_L1_error)
+    __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(1, 198, __pyx_L1_error)
     #else
-    __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 195, __pyx_L1_error)
+    __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 198, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_4);
@@ -5402,28 +5465,28 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
     __pyx_v_ind = __pyx_t_2;
     __pyx_t_2 = (__pyx_t_2 + 1);
 
-    /* "CythonLidarPost.pyx":196
+    /* "CythonLidarPost.pyx":199
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360             # <<<<<<<<<<<<<<
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]
  */
-    __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_angles, __pyx_v_ind, Py_ssize_t, 1, PyInt_FromSsize_t, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 196, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetItemInt_List(__pyx_v_angles, __pyx_v_ind, Py_ssize_t, 1, PyInt_FromSsize_t, 1, 1, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_robotangle); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 196, __pyx_L1_error)
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_robotangle); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_8 = PyNumber_Add(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 196, __pyx_L1_error)
+    __pyx_t_8 = PyNumber_Add(__pyx_t_4, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __Pyx_PyInt_RemainderObjC(__pyx_t_8, __pyx_int_360, 0x168, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 196, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_RemainderObjC(__pyx_t_8, __pyx_int_360, 0x168, 0); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    if (unlikely(__Pyx_SetItemInt(__pyx_v_angles, __pyx_v_ind, __pyx_t_7, Py_ssize_t, 1, PyInt_FromSsize_t, 1, 1, 1) < 0)) __PYX_ERR(1, 196, __pyx_L1_error)
+    if (unlikely(__Pyx_SetItemInt(__pyx_v_angles, __pyx_v_ind, __pyx_t_7, Py_ssize_t, 1, PyInt_FromSsize_t, 1, 1, 1) < 0)) __PYX_ERR(1, 199, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "CythonLidarPost.pyx":195
+    /* "CythonLidarPost.pyx":198
  *         angles.append(angle)
  *         inters.append(rayinters[angle])
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5433,7 +5496,7 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":197
+  /* "CythonLidarPost.pyx":200
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5445,9 +5508,9 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   for (;;) {
     if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_7 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_7); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(1, 197, __pyx_L1_error)
+    __pyx_t_7 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_7); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(1, 200, __pyx_L1_error)
     #else
-    __pyx_t_7 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 197, __pyx_L1_error)
+    __pyx_t_7 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 200, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_angle, __pyx_t_7);
@@ -5455,19 +5518,19 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
     __pyx_v_ind = __pyx_t_2;
     __pyx_t_2 = (__pyx_t_2 + 1);
 
-    /* "CythonLidarPost.pyx":198
+    /* "CythonLidarPost.pyx":201
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]             # <<<<<<<<<<<<<<
  *     return adjustedinters
  * 
  */
-    __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_inters, __pyx_v_ind, Py_ssize_t, 1, PyInt_FromSsize_t, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 198, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetItemInt_List(__pyx_v_inters, __pyx_v_ind, Py_ssize_t, 1, PyInt_FromSsize_t, 1, 1, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 201, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    if (unlikely(PyDict_SetItem(__pyx_v_adjustedinters, __pyx_v_angle, __pyx_t_7) < 0)) __PYX_ERR(1, 198, __pyx_L1_error)
+    if (unlikely(PyDict_SetItem(__pyx_v_adjustedinters, __pyx_v_angle, __pyx_t_7) < 0)) __PYX_ERR(1, 201, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "CythonLidarPost.pyx":197
+    /* "CythonLidarPost.pyx":200
  *     for ind, angle in enumerate(angles):
  *         angles[ind] = (angles[ind] + robotangle) % 360
  *     for ind, angle in enumerate(angles):             # <<<<<<<<<<<<<<
@@ -5477,7 +5540,7 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":199
+  /* "CythonLidarPost.pyx":202
  *     for ind, angle in enumerate(angles):
  *         adjustedinters[angle] = inters[ind]
  *     return adjustedinters             # <<<<<<<<<<<<<<
@@ -5489,7 +5552,7 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   __pyx_r = __pyx_v_adjustedinters;
   goto __pyx_L0;
 
-  /* "CythonLidarPost.pyx":188
+  /* "CythonLidarPost.pyx":191
  * 
  * 
  * cdef compForAngle(rayinters, float robotangle):             # <<<<<<<<<<<<<<
@@ -5515,7 +5578,7 @@ static PyObject *__pyx_f_15CythonLidarPost_compForAngle(PyObject *__pyx_v_rayint
   return __pyx_r;
 }
 
-/* "CythonLidarPost.pyx":202
+/* "CythonLidarPost.pyx":205
  * 
  * 
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):             # <<<<<<<<<<<<<<
@@ -5541,28 +5604,28 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("findLineIntersect", 0);
 
-  /* "CythonLidarPost.pyx":203
+  /* "CythonLidarPost.pyx":206
  * 
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):
  *     inters = []             # <<<<<<<<<<<<<<
  *     ray = Ray(ang, location)
  *     for line in fieldlines:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 203, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 206, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_inters = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":204
+  /* "CythonLidarPost.pyx":207
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):
  *     inters = []
  *     ray = Ray(ang, location)             # <<<<<<<<<<<<<<
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_Ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 204, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_Ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_ang); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 204, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_ang); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -5579,7 +5642,7 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, ((PyObject *)__pyx_v_location)};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 204, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 207, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -5588,14 +5651,14 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, ((PyObject *)__pyx_v_location)};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 204, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 207, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 204, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 207, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -5606,7 +5669,7 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
     __Pyx_GIVEREF(((PyObject *)__pyx_v_location));
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, ((PyObject *)__pyx_v_location));
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 204, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 207, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
@@ -5614,7 +5677,7 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
   __pyx_v_ray = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":205
+  /* "CythonLidarPost.pyx":208
  *     inters = []
  *     ray = Ray(ang, location)
  *     for line in fieldlines:             # <<<<<<<<<<<<<<
@@ -5623,33 +5686,33 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
  */
   if (unlikely(__pyx_v_fieldlines == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(1, 205, __pyx_L1_error)
+    __PYX_ERR(1, 208, __pyx_L1_error)
   }
   __pyx_t_1 = __pyx_v_fieldlines; __Pyx_INCREF(__pyx_t_1); __pyx_t_7 = 0;
   for (;;) {
     if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(1, 205, __pyx_L1_error)
+    __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_7); __Pyx_INCREF(__pyx_t_2); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(1, 208, __pyx_L1_error)
     #else
-    __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 205, __pyx_L1_error)
+    __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 208, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     #endif
     __Pyx_XDECREF_SET(__pyx_v_line, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "CythonLidarPost.pyx":206
+    /* "CythonLidarPost.pyx":209
  *     ray = Ray(ang, location)
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))             # <<<<<<<<<<<<<<
  *     inters = filterNone(inters)
  *     dists = makeDictOfDists(inters, location)
  */
-    __pyx_t_2 = __pyx_f_15CythonLidarPost_findinter(__pyx_v_line, __pyx_v_ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 206, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_15CythonLidarPost_findinter(__pyx_v_line, __pyx_v_ray); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 209, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 206, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_inters, __pyx_t_2); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 209, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "CythonLidarPost.pyx":205
+    /* "CythonLidarPost.pyx":208
  *     inters = []
  *     ray = Ray(ang, location)
  *     for line in fieldlines:             # <<<<<<<<<<<<<<
@@ -5659,53 +5722,53 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":207
+  /* "CythonLidarPost.pyx":210
  *     for line in fieldlines:
  *         inters.append(findinter(line, ray))
  *     inters = filterNone(inters)             # <<<<<<<<<<<<<<
  *     dists = makeDictOfDists(inters, location)
  *     # try:
  */
-  __pyx_t_1 = __pyx_f_15CythonLidarPost_filterNone(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 207, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_filterNone(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 210, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF_SET(__pyx_v_inters, ((PyObject*)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":208
+  /* "CythonLidarPost.pyx":211
  *         inters.append(findinter(line, ray))
  *     inters = filterNone(inters)
  *     dists = makeDictOfDists(inters, location)             # <<<<<<<<<<<<<<
  *     # try:
  *     closestpoint = sorted(dists)[0]
  */
-  __pyx_t_1 = __pyx_f_15CythonLidarPost_makeDictOfDists(__pyx_v_inters, __pyx_v_location); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 208, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_makeDictOfDists(__pyx_v_inters, __pyx_v_location); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 211, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_dists = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":210
+  /* "CythonLidarPost.pyx":213
  *     dists = makeDictOfDists(inters, location)
  *     # try:
  *     closestpoint = sorted(dists)[0]             # <<<<<<<<<<<<<<
  *     return dists[closestpoint]
  *     # except IndexError:
  */
-  __pyx_t_2 = PySequence_List(__pyx_v_dists); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 210, __pyx_L1_error)
+  __pyx_t_2 = PySequence_List(__pyx_v_dists); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 213, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_1 = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
-  __pyx_t_8 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 210, __pyx_L1_error)
+  __pyx_t_8 = PyList_Sort(__pyx_t_1); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 213, __pyx_L1_error)
   if (unlikely(__pyx_t_1 == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(1, 210, __pyx_L1_error)
+    __PYX_ERR(1, 213, __pyx_L1_error)
   }
-  __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 210, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetItemInt_List(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 1, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 213, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_closestpoint = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "CythonLidarPost.pyx":211
+  /* "CythonLidarPost.pyx":214
  *     # try:
  *     closestpoint = sorted(dists)[0]
  *     return dists[closestpoint]             # <<<<<<<<<<<<<<
@@ -5715,16 +5778,16 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
   __Pyx_XDECREF(((PyObject *)__pyx_r));
   if (unlikely(__pyx_v_dists == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(1, 211, __pyx_L1_error)
+    __PYX_ERR(1, 214, __pyx_L1_error)
   }
-  __pyx_t_2 = __Pyx_PyDict_GetItem(__pyx_v_dists, __pyx_v_closestpoint); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 211, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_GetItem(__pyx_v_dists, __pyx_v_closestpoint); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_15CythonLidarPost_Point))))) __PYX_ERR(1, 211, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_15CythonLidarPost_Point))))) __PYX_ERR(1, 214, __pyx_L1_error)
   __pyx_r = ((struct __pyx_obj_15CythonLidarPost_Point *)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "CythonLidarPost.pyx":202
+  /* "CythonLidarPost.pyx":205
  * 
  * 
  * cdef Point findLineIntersect(float ang, Point location, list fieldlines):             # <<<<<<<<<<<<<<
@@ -5752,7 +5815,7 @@ static struct __pyx_obj_15CythonLidarPost_Point *__pyx_f_15CythonLidarPost_findL
   return __pyx_r;
 }
 
-/* "CythonLidarPost.pyx":216
+/* "CythonLidarPost.pyx":219
  * 
  * 
  * cdef dict makeDictOfDists(inters, Point location):             # <<<<<<<<<<<<<<
@@ -5771,19 +5834,19 @@ static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_int
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("makeDictOfDists", 0);
 
-  /* "CythonLidarPost.pyx":217
+  /* "CythonLidarPost.pyx":220
  * 
  * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}             # <<<<<<<<<<<<<<
  *     for point in inters:
  *         dists[dist(location, point)] = point
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 217, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 220, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_dists = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":218
+  /* "CythonLidarPost.pyx":221
  * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}
  *     for point in inters:             # <<<<<<<<<<<<<<
@@ -5794,26 +5857,26 @@ static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_int
     __pyx_t_1 = __pyx_v_inters; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 218, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_inters); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 221, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 218, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 221, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 218, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 221, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 218, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 218, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 221, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 218, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 221, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -5823,7 +5886,7 @@ static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_int
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 218, __pyx_L1_error)
+          else __PYX_ERR(1, 221, __pyx_L1_error)
         }
         break;
       }
@@ -5832,19 +5895,19 @@ static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_int
     __Pyx_XDECREF_SET(__pyx_v_point, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "CythonLidarPost.pyx":219
+    /* "CythonLidarPost.pyx":222
  *     dists = {}
  *     for point in inters:
  *         dists[dist(location, point)] = point             # <<<<<<<<<<<<<<
  *     return dists
  * 
  */
-    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_15CythonLidarPost_dist(((PyObject *)__pyx_v_location), __pyx_v_point)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 219, __pyx_L1_error)
+    __pyx_t_4 = PyFloat_FromDouble(__pyx_f_15CythonLidarPost_dist(((PyObject *)__pyx_v_location), __pyx_v_point)); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 222, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (unlikely(PyDict_SetItem(__pyx_v_dists, __pyx_t_4, __pyx_v_point) < 0)) __PYX_ERR(1, 219, __pyx_L1_error)
+    if (unlikely(PyDict_SetItem(__pyx_v_dists, __pyx_t_4, __pyx_v_point) < 0)) __PYX_ERR(1, 222, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "CythonLidarPost.pyx":218
+    /* "CythonLidarPost.pyx":221
  * cdef dict makeDictOfDists(inters, Point location):
  *     dists = {}
  *     for point in inters:             # <<<<<<<<<<<<<<
@@ -5854,7 +5917,7 @@ static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_int
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":220
+  /* "CythonLidarPost.pyx":223
  *     for point in inters:
  *         dists[dist(location, point)] = point
  *     return dists             # <<<<<<<<<<<<<<
@@ -5866,7 +5929,7 @@ static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_int
   __pyx_r = __pyx_v_dists;
   goto __pyx_L0;
 
-  /* "CythonLidarPost.pyx":216
+  /* "CythonLidarPost.pyx":219
  * 
  * 
  * cdef dict makeDictOfDists(inters, Point location):             # <<<<<<<<<<<<<<
@@ -5888,7 +5951,7 @@ static PyObject *__pyx_f_15CythonLidarPost_makeDictOfDists(PyObject *__pyx_v_int
   return __pyx_r;
 }
 
-/* "CythonLidarPost.pyx":223
+/* "CythonLidarPost.pyx":226
  * 
  * 
  * cdef list filterNone(filtered):             # <<<<<<<<<<<<<<
@@ -5910,19 +5973,19 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
   int __pyx_t_7;
   __Pyx_RefNannySetupContext("filterNone", 0);
 
-  /* "CythonLidarPost.pyx":224
+  /* "CythonLidarPost.pyx":227
  * 
  * cdef list filterNone(filtered):
  *     res = []             # <<<<<<<<<<<<<<
  *     for item in filtered:
  *         if item is not None:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 224, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 227, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_res = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":225
+  /* "CythonLidarPost.pyx":228
  * cdef list filterNone(filtered):
  *     res = []
  *     for item in filtered:             # <<<<<<<<<<<<<<
@@ -5933,26 +5996,26 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
     __pyx_t_1 = __pyx_v_filtered; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_filtered); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 225, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_filtered); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 228, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 225, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 228, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 225, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 228, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 225, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 228, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 225, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(1, 228, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 225, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 228, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -5962,7 +6025,7 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 225, __pyx_L1_error)
+          else __PYX_ERR(1, 228, __pyx_L1_error)
         }
         break;
       }
@@ -5971,7 +6034,7 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
     __Pyx_XDECREF_SET(__pyx_v_item, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "CythonLidarPost.pyx":226
+    /* "CythonLidarPost.pyx":229
  *     res = []
  *     for item in filtered:
  *         if item is not None:             # <<<<<<<<<<<<<<
@@ -5982,16 +6045,16 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
     __pyx_t_6 = (__pyx_t_5 != 0);
     if (__pyx_t_6) {
 
-      /* "CythonLidarPost.pyx":227
+      /* "CythonLidarPost.pyx":230
  *     for item in filtered:
  *         if item is not None:
  *             res.append(item)             # <<<<<<<<<<<<<<
  *     return res
  * 
  */
-      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_res, __pyx_v_item); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(1, 227, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyList_Append(__pyx_v_res, __pyx_v_item); if (unlikely(__pyx_t_7 == ((int)-1))) __PYX_ERR(1, 230, __pyx_L1_error)
 
-      /* "CythonLidarPost.pyx":226
+      /* "CythonLidarPost.pyx":229
  *     res = []
  *     for item in filtered:
  *         if item is not None:             # <<<<<<<<<<<<<<
@@ -6000,7 +6063,7 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
  */
     }
 
-    /* "CythonLidarPost.pyx":225
+    /* "CythonLidarPost.pyx":228
  * cdef list filterNone(filtered):
  *     res = []
  *     for item in filtered:             # <<<<<<<<<<<<<<
@@ -6010,7 +6073,7 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":228
+  /* "CythonLidarPost.pyx":231
  *         if item is not None:
  *             res.append(item)
  *     return res             # <<<<<<<<<<<<<<
@@ -6022,7 +6085,7 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
   __pyx_r = __pyx_v_res;
   goto __pyx_L0;
 
-  /* "CythonLidarPost.pyx":223
+  /* "CythonLidarPost.pyx":226
  * 
  * 
  * cdef list filterNone(filtered):             # <<<<<<<<<<<<<<
@@ -6044,7 +6107,7 @@ static PyObject *__pyx_f_15CythonLidarPost_filterNone(PyObject *__pyx_v_filtered
   return __pyx_r;
 }
 
-/* "CythonLidarPost.pyx":231
+/* "CythonLidarPost.pyx":234
  * 
  * 
  * cpdef list openEnvFile(env):             # <<<<<<<<<<<<<<
@@ -6077,26 +6140,26 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
   int __pyx_t_13;
   __Pyx_RefNannySetupContext("openEnvFile", 0);
 
-  /* "CythonLidarPost.pyx":232
+  /* "CythonLidarPost.pyx":235
  * 
  * cpdef list openEnvFile(env):
  *     lines = []             # <<<<<<<<<<<<<<
  *     file = open(env, "r")
  *     field = json.load(file)
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 232, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 235, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_lines = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":233
+  /* "CythonLidarPost.pyx":236
  * cpdef list openEnvFile(env):
  *     lines = []
  *     file = open(env, "r")             # <<<<<<<<<<<<<<
  *     field = json.load(file)
  *     file.close()
  */
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 233, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 236, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_env);
   __Pyx_GIVEREF(__pyx_v_env);
@@ -6104,22 +6167,22 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
   __Pyx_INCREF(__pyx_n_s_r);
   __Pyx_GIVEREF(__pyx_n_s_r);
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_r);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 233, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 236, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_file = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "CythonLidarPost.pyx":234
+  /* "CythonLidarPost.pyx":237
  *     lines = []
  *     file = open(env, "r")
  *     field = json.load(file)             # <<<<<<<<<<<<<<
  *     file.close()
  *     elements = field["Elements"]
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 234, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_load); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 234, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_load); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = NULL;
@@ -6133,13 +6196,13 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
     }
   }
   if (!__pyx_t_1) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_file); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 234, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_file); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 237, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_v_file};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 234, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 237, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
@@ -6147,19 +6210,19 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[2] = {__pyx_t_1, __pyx_v_file};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 234, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 237, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 234, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 237, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1); __pyx_t_1 = NULL;
       __Pyx_INCREF(__pyx_v_file);
       __Pyx_GIVEREF(__pyx_v_file);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_file);
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 234, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 237, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -6168,14 +6231,14 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
   __pyx_v_field = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "CythonLidarPost.pyx":235
+  /* "CythonLidarPost.pyx":238
  *     file = open(env, "r")
  *     field = json.load(file)
  *     file.close()             # <<<<<<<<<<<<<<
  *     elements = field["Elements"]
  *     for e in elements:
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 235, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_file, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 238, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -6188,28 +6251,28 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 235, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 238, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 235, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 238, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "CythonLidarPost.pyx":236
+  /* "CythonLidarPost.pyx":239
  *     field = json.load(file)
  *     file.close()
  *     elements = field["Elements"]             # <<<<<<<<<<<<<<
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  */
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_field, __pyx_n_s_Elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 236, __pyx_L1_error)
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_field, __pyx_n_s_Elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 239, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_elements = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "CythonLidarPost.pyx":237
+  /* "CythonLidarPost.pyx":240
  *     file.close()
  *     elements = field["Elements"]
  *     for e in elements:             # <<<<<<<<<<<<<<
@@ -6220,26 +6283,26 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
     __pyx_t_2 = __pyx_v_elements; __Pyx_INCREF(__pyx_t_2); __pyx_t_5 = 0;
     __pyx_t_6 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 237, __pyx_L1_error)
+    __pyx_t_5 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_elements); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 240, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 237, __pyx_L1_error)
+    __pyx_t_6 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 240, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_6)) {
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 237, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 240, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 237, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 240, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 237, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_5); __Pyx_INCREF(__pyx_t_3); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(1, 240, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 237, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 240, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -6249,7 +6312,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 237, __pyx_L1_error)
+          else __PYX_ERR(1, 240, __pyx_L1_error)
         }
         break;
       }
@@ -6258,74 +6321,74 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
     __Pyx_XDECREF_SET(__pyx_v_e, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "CythonLidarPost.pyx":238
+    /* "CythonLidarPost.pyx":241
  *     elements = field["Elements"]
  *     for e in elements:
  *         if elements[e]["Solidity"]:             # <<<<<<<<<<<<<<
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]
  */
-    __pyx_t_3 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 238, __pyx_L1_error)
+    __pyx_t_3 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 241, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_Solidity); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 238, __pyx_L1_error)
+    __pyx_t_4 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_Solidity); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 241, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(1, 238, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(1, 241, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_7) {
 
-      /* "CythonLidarPost.pyx":239
+      /* "CythonLidarPost.pyx":242
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):             # <<<<<<<<<<<<<<
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]
  *     return lines
  */
-      __pyx_t_4 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 239, __pyx_L1_error)
+      __pyx_t_4 = PyObject_GetItem(__pyx_v_elements, __pyx_v_e); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = PyObject_GetItem(__pyx_t_4, __pyx_n_s_Points); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 239, __pyx_L1_error)
+      __pyx_t_3 = PyObject_GetItem(__pyx_t_4, __pyx_n_s_Points); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __pyx_f_15CythonLidarPost_findLinesFromPoints(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 239, __pyx_L1_error)
+      __pyx_t_4 = __pyx_f_15CythonLidarPost_findLinesFromPoints(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (unlikely(__pyx_t_4 == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-        __PYX_ERR(1, 239, __pyx_L1_error)
+        __PYX_ERR(1, 242, __pyx_L1_error)
       }
       __pyx_t_3 = __pyx_t_4; __Pyx_INCREF(__pyx_t_3); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       for (;;) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(1, 239, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_8); __Pyx_INCREF(__pyx_t_4); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(1, 242, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 239, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_3, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 242, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
         __Pyx_XDECREF_SET(__pyx_v_l, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "CythonLidarPost.pyx":240
+        /* "CythonLidarPost.pyx":243
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]             # <<<<<<<<<<<<<<
  *     return lines
  * 
  */
-        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_LineSeg); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_LineSeg); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_10 = __Pyx_GetItemInt(__pyx_t_9, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_GetItemInt(__pyx_t_9, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_11 = __Pyx_GetItemInt(__pyx_t_9, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_GetItemInt(__pyx_t_9, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_GIVEREF(__pyx_t_10);
         PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_10);
@@ -6333,20 +6396,20 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
         PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_11);
         __pyx_t_10 = 0;
         __pyx_t_11 = 0;
-        __pyx_t_11 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_10 = __Pyx_GetItemInt(__pyx_t_9, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_GetItemInt(__pyx_t_9, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_l, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_12 = __Pyx_GetItemInt(__pyx_t_9, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_GetItemInt(__pyx_t_9, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_GIVEREF(__pyx_t_10);
         PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_10);
@@ -6354,7 +6417,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
         PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_12);
         __pyx_t_10 = 0;
         __pyx_t_12 = 0;
-        __pyx_t_12 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_15CythonLidarPost_Point), __pyx_t_9, NULL); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_9 = NULL;
@@ -6372,7 +6435,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_11, __pyx_t_12};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 240, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 243, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -6382,7 +6445,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
           PyObject *__pyx_temp[3] = {__pyx_t_9, __pyx_t_11, __pyx_t_12};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 240, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-__pyx_t_13, 2+__pyx_t_13); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 243, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -6390,7 +6453,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
         } else
         #endif
         {
-          __pyx_t_10 = PyTuple_New(2+__pyx_t_13); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 240, __pyx_L1_error)
+          __pyx_t_10 = PyTuple_New(2+__pyx_t_13); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 243, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_10);
           if (__pyx_t_9) {
             __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -6401,23 +6464,23 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
           PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_13, __pyx_t_12);
           __pyx_t_11 = 0;
           __pyx_t_12 = 0;
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_10, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 240, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_10, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 243, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         }
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-        __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_GIVEREF(__pyx_t_4);
         PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_v_lines, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 240, __pyx_L1_error)
+        __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_v_lines, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 243, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
         __Pyx_DECREF_SET(__pyx_v_lines, ((PyObject*)__pyx_t_4));
         __pyx_t_4 = 0;
 
-        /* "CythonLidarPost.pyx":239
+        /* "CythonLidarPost.pyx":242
  *     for e in elements:
  *         if elements[e]["Solidity"]:
  *             for l in findLinesFromPoints(elements[e]["Points"]):             # <<<<<<<<<<<<<<
@@ -6427,7 +6490,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "CythonLidarPost.pyx":238
+      /* "CythonLidarPost.pyx":241
  *     elements = field["Elements"]
  *     for e in elements:
  *         if elements[e]["Solidity"]:             # <<<<<<<<<<<<<<
@@ -6436,7 +6499,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
  */
     }
 
-    /* "CythonLidarPost.pyx":237
+    /* "CythonLidarPost.pyx":240
  *     file.close()
  *     elements = field["Elements"]
  *     for e in elements:             # <<<<<<<<<<<<<<
@@ -6446,7 +6509,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "CythonLidarPost.pyx":241
+  /* "CythonLidarPost.pyx":244
  *             for l in findLinesFromPoints(elements[e]["Points"]):
  *                 lines += [LineSeg(Point(l[0][0], l[0][1]), Point(l[1][0], l[1][1]))]
  *     return lines             # <<<<<<<<<<<<<<
@@ -6458,7 +6521,7 @@ static PyObject *__pyx_f_15CythonLidarPost_openEnvFile(PyObject *__pyx_v_env, CY
   __pyx_r = __pyx_v_lines;
   goto __pyx_L0;
 
-  /* "CythonLidarPost.pyx":231
+  /* "CythonLidarPost.pyx":234
  * 
  * 
  * cpdef list openEnvFile(env):             # <<<<<<<<<<<<<<
@@ -6509,7 +6572,7 @@ static PyObject *__pyx_pf_15CythonLidarPost_6openEnvFile(CYTHON_UNUSED PyObject 
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("openEnvFile", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_15CythonLidarPost_openEnvFile(__pyx_v_env, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 231, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_15CythonLidarPost_openEnvFile(__pyx_v_env, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -6526,7 +6589,7 @@ static PyObject *__pyx_pf_15CythonLidarPost_6openEnvFile(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "CythonLidarPost.pyx":244
+/* "CythonLidarPost.pyx":247
  * 
  * 
  * cdef list findLinesFromPoints(points):             # <<<<<<<<<<<<<<
@@ -6551,19 +6614,19 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("findLinesFromPoints", 0);
 
-  /* "CythonLidarPost.pyx":245
+  /* "CythonLidarPost.pyx":248
  * 
  * cdef list findLinesFromPoints(points):
  *     ret = []             # <<<<<<<<<<<<<<
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 245, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 248, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":246
+  /* "CythonLidarPost.pyx":249
  * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
@@ -6572,15 +6635,15 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
  */
   __Pyx_INCREF(__pyx_int_0);
   __pyx_t_1 = __pyx_int_0;
-  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_points, 0, -1L, NULL, NULL, &__pyx_slice__3, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 246, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetSlice(__pyx_v_points, 0, -1L, NULL, NULL, &__pyx_slice__3, 0, 1, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 249, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
     __pyx_t_3 = __pyx_t_2; __Pyx_INCREF(__pyx_t_3); __pyx_t_4 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 246, __pyx_L1_error)
+    __pyx_t_4 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 249, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 246, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 249, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   for (;;) {
@@ -6588,17 +6651,17 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
       if (likely(PyList_CheckExact(__pyx_t_3))) {
         if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 246, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 249, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 246, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 249, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_4 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 246, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_4); __Pyx_INCREF(__pyx_t_2); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(1, 249, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 246, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_3, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 249, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -6608,7 +6671,7 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(1, 246, __pyx_L1_error)
+          else __PYX_ERR(1, 249, __pyx_L1_error)
         }
         break;
       }
@@ -6618,27 +6681,27 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
     __pyx_t_2 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_ind, __pyx_t_1);
-    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 246, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 249, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "CythonLidarPost.pyx":247
+    /* "CythonLidarPost.pyx":250
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]             # <<<<<<<<<<<<<<
  *         ret.append(pair)
  *     return ret
  */
-    __pyx_t_2 = PyObject_GetItem(__pyx_v_points, __pyx_v_ind); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 247, __pyx_L1_error)
+    __pyx_t_2 = PyObject_GetItem(__pyx_v_points, __pyx_v_ind); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_v_ind, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 247, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_v_ind, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = PyObject_GetItem(__pyx_v_points, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 247, __pyx_L1_error)
+    __pyx_t_7 = PyObject_GetItem(__pyx_v_points, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = PyList_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 247, __pyx_L1_error)
+    __pyx_t_6 = PyList_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 250, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_2);
     PyList_SET_ITEM(__pyx_t_6, 0, __pyx_t_2);
@@ -6649,15 +6712,15 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
     __Pyx_XDECREF_SET(__pyx_v_pair, ((PyObject*)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "CythonLidarPost.pyx":248
+    /* "CythonLidarPost.pyx":251
  *     for ind, point in enumerate(points[:-1]):
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)             # <<<<<<<<<<<<<<
  *     return ret
  */
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_v_pair); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 248, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_v_pair); if (unlikely(__pyx_t_8 == ((int)-1))) __PYX_ERR(1, 251, __pyx_L1_error)
 
-    /* "CythonLidarPost.pyx":246
+    /* "CythonLidarPost.pyx":249
  * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
@@ -6668,7 +6731,7 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "CythonLidarPost.pyx":249
+  /* "CythonLidarPost.pyx":252
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)
  *     return ret             # <<<<<<<<<<<<<<
@@ -6678,7 +6741,7 @@ static PyObject *__pyx_f_15CythonLidarPost_findLinesFromPoints(PyObject *__pyx_v
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "CythonLidarPost.pyx":244
+  /* "CythonLidarPost.pyx":247
  * 
  * 
  * cdef list findLinesFromPoints(points):             # <<<<<<<<<<<<<<
@@ -6932,8 +6995,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 static int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_TypeError = __Pyx_GetBuiltinName(__pyx_n_s_TypeError); if (!__pyx_builtin_TypeError) __PYX_ERR(0, 2, __pyx_L1_error)
   __pyx_builtin_round = __Pyx_GetBuiltinName(__pyx_n_s_round); if (!__pyx_builtin_round) __PYX_ERR(1, 122, __pyx_L1_error)
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 195, __pyx_L1_error)
-  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(1, 233, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 198, __pyx_L1_error)
+  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(1, 236, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -6962,14 +7025,14 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "CythonLidarPost.pyx":246
+  /* "CythonLidarPost.pyx":249
  * cdef list findLinesFromPoints(points):
  *     ret = []
  *     for ind, point in enumerate(points[:-1]):             # <<<<<<<<<<<<<<
  *         pair = [points[ind], points[ind + 1]]
  *         ret.append(pair)
  */
-  __pyx_slice__3 = PySlice_New(Py_None, __pyx_int_neg_1, Py_None); if (unlikely(!__pyx_slice__3)) __PYX_ERR(1, 246, __pyx_L1_error)
+  __pyx_slice__3 = PySlice_New(Py_None, __pyx_int_neg_1, Py_None); if (unlikely(!__pyx_slice__3)) __PYX_ERR(1, 249, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_slice__3);
   __Pyx_GIVEREF(__pyx_slice__3);
 

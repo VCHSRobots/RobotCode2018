@@ -15,11 +15,10 @@ size = [324, 360]
 
 
 def catchMyDrift(lidarid, location):
-    # lidardists = parseLidar("COM3")
+    lidardists = parseLidar("COM3")
     fieldlines = CythonLidarPost.openEnvFile("FRC_Field_2018.map")
-    lidardists = CythonLidarPost.customRayIntersects(CythonLidarPost.Point(location.x+1, location.x+1), list(range(1, 200)), fieldlines)
+    lidardists = CythonLidarPost.customRayIntersects(CythonLidarPost.Point(location.x, location.y), list(range(1, 50)), fieldlines)
     location, ang, distdifs = findRobotLocation(lidardists, location, 15, 5, 15, fieldlines)
-    print(location.x, location.y)
     obstacles = measureObstacles(distdifs, 6)
     obstaclepoints = extractPointsFromObstacles(obstacles, location, lidardists)
     return location, ang, obstaclepoints
@@ -49,6 +48,9 @@ def measureObstacles(distdifs, sensitivity = 1):
             else:
                 obstacles[-1].append(ang)
     return obstacles
+
+
+x = measureObstacles
 
 
 def parseLidar(sweepusb):
@@ -87,11 +89,8 @@ def findBestLocation(lidardists, location, testingrange, angoffsetrange):
     return (reallocation, ang), difvsret
 
 
-def findRobotLocation(lidardists, location, angle, testingrange, angoffsetrange, fieldlines):
+def findRobotLocation(lidardists, location, robotangle, testingrange, angoffsetrange, fieldlines):
     difvsret = {}
-    # xs = tuple(range(location[0] - testingrange, location[0] + (testingrange + 1)))
-    # ys = tuple(range(location[1] - testingrange, location[1] + (testingrange + 1)))
-    # angs = tuple(range(location[2] - angoffsetrange, location[2] + angoffsetrange + 1))
     cordrange = np.array([[location.x - testingrange, location.x + testingrange],
                           [location.y - testingrange, location.y + testingrange]])
     cordrange[cordrange <= 0] = 1
@@ -102,21 +101,22 @@ def findRobotLocation(lidardists, location, angle, testingrange, angoffsetrange,
     cordrange = np.array([cordx[0], cordx[1], cordy[0], cordy[1]])
     xs = tuple(range(int(cordrange[0]), int(cordrange[1] + 1)))
     ys = tuple(range(int(cordrange[2]), int(cordrange[3] + 1)))
-    angs = tuple(range(angle - angoffsetrange, angle + angoffsetrange + 1))
+    angs = tuple(range(robotangle - angoffsetrange, robotangle + angoffsetrange + 1))
     lidardists = CmToInchesInDict(lidardists)
     lidarkeys = list(lidardists.keys())
+    lidarlist = np.array(list(lidardists.values()))
     for x in xs:
         for y in ys:
-            postdata = CythonLidarPost.customRayIntersects(CythonLidarPost.Point(x, y), lidarkeys, fieldlines)
+            # postdata = np.array(list(CythonLidarPost.customRayIntersects(CythonLidarPost.Point(x, y), lidarkeys, fieldlines).values()))
             for angle in angs:
-                idealdists = shiftKeys(postdata, angle)
-                # distdifs = findDistDifs(lidardists, idealdists)
-                # lidardists = accountForObstacles(lidardists, measureObstacles(distdifs, sensitivity = 20))
-                difvsret[findDotDif(lidardists, idealdists)] = [CythonLidarPost.Point(x, y), angle, idealdists]
+                idealdists = np.array(list(CythonLidarPost.customRayIntersects(CythonLidarPost.Point(x, y), lidarkeys, angle, fieldlines).values()))
+                # idealdists = shiftInds(postdata, angle)
+                difvsret[findDotDif(lidarlist, idealdists)] = [CythonLidarPost.Point(x, y), angle, idealdists]
     bestdotdif = difvsret[sorted(difvsret)[0]]
     location = bestdotdif[0]
+    print(location.x, location.y)
     angle = bestdotdif[1]
-    distdifs = (findDistDifs(lidardists, bestdotdif[2]))
+    distdifs = (findDistDifs(lidarlist, bestdotdif[2]))
     return location, angle, distdifs
 
 
@@ -126,7 +126,6 @@ def CmToInchesInDict(dict):
     dictvalues *= .3937088
     for ind, key in enumerate(dict):
         inchDict[key] = dictvalues[ind]
-    print(inchDict)
     return inchDict
 
 
@@ -173,9 +172,8 @@ def parseLidar(lidarid):
 
 
 def findDotDif(lidardists, idealdists):
-    #- Uncoment out
-    idealdists = np.array(list(idealdists.values()))
-    lidardists = np.array(list(lidardists.values()))
+    # idealdists = np.array(list([idealdists[key] for key in list(idealdists.keys())]))
+    # lidardists = np.array(list([lidardists[key] for key in list(lidardists.keys())]))
     csum = np.dot(lidardists, lidardists)
     realsum = np.dot(idealdists, lidardists)
     return abs(csum - realsum)
@@ -183,8 +181,8 @@ def findDotDif(lidardists, idealdists):
 
 def findDistDifs(lidardists, idealdists):
     distdifs = {} 
-    for ang in idealdists:
-        distdifs[ang] = idealdists[ang] - lidardists[ang]
+    for ind in range(len(idealdists)):
+        distdifs[ind] = idealdists[ind] - lidardists[ind]
     return distdifs
 
 
@@ -197,10 +195,10 @@ def findKeysInCommon(maindict, testingdict):
 
 
 def shiftKeys(shifted, offset):
-    keys = [key for key in shifted]
-    vals = [shifted[key] for key in shifted]
+    keys = list(shifted.keys())
+    vals = list(shifted.values())
     shiftedkeys = []
-    for key, ind in enumerate(keys):
+    for ind, key in enumerate(keys):
         shiftedkeys.append(keys[(ind + offset) % len(keys)])
     for ind, key in enumerate(shiftedkeys):
         shifted[key] = vals[ind]
@@ -280,12 +278,16 @@ def speedThisProgramUpDramatically():
     json.dump(postpoints, "postpoints.json")
 
 
-x = CythonLidarPost.pointFromDistAng(CythonLidarPost.Point(150, 150), 45, 8)
-print(x.x, x.y)
+
 
 def shiftInds(itershift, offset):
     return np.concatenate((itershift[offset:], itershift[:offset]))
     # return itershift[offset:] + itershift[:offset]
+
+
+x = catchMyDrift(0, CythonLidarPost.Point(150, 150))
+print(x)
+
 
 def measureTime(func):
     start = time.time()

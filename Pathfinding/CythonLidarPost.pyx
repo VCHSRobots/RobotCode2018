@@ -170,8 +170,10 @@ cpdef angledRayIntersects(Point robotlocation, robotangle, fieldlines, samplerat
     # rayinters = compForAngle(rayinters, robotangle)
     return rayinters
 
-cpdef dict customRayIntersects(Point robotlocation, list anglestopost, list fieldlines):
+cpdef dict customRayIntersects(Point robotlocation, list anglestopost, float compangle, list fieldlines):
     cdef dict rayinters = {}
+    anglestopost = np.array(anglestopost) + compangle
+    anglestopost[anglestopost > 359] %= 360
     for angle in anglestopost:
         intersect = findLineIntersect(angle, robotlocation, fieldlines)
         rayinters[angle] =  dist(robotlocation, intersect)
@@ -181,6 +183,9 @@ cpdef Point pointFromDistAng(startpoint, ang, dist):
     quadrant = int(ang / 90) + 1
     x = dist * np.cos(deg2rad(ang))
     y = dist * np.sin(deg2rad(ang))
+    if quadrant in [2, 3]:
+        x *= -1
+        y *= -1
     distpoint = Point(startpoint.x + x ,startpoint.y + y)
     return distpoint
 
