@@ -89,7 +89,7 @@ def testScanData():
     startScan(sweep)
     data = getData(sweep, 10)
     for dict in data:
-        if dict["sync"] == 0 or dict["sync"] == 1:
+        if dist["sync"] == 0 or dict["sync"] == 1:
             print(dict["angle"], dict["distance"])
     stopScan(sweep)
 
