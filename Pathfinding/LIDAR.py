@@ -76,6 +76,8 @@ def GetExpectedData(CurrentPosition, CurrentRotation):
         if Angle > 359:
             Angle = abs(360 - Angle) # No angles larger than 255!
         Intersection = Scan(CurrentPosition, Angle)
+        TempFile = open("TestPostulation.csv", "a")
+        TempFile.write("{0}, {1}\r\n".format(Intersection[0], Intersection[1]))
         ExpectedData.append(Intersection)
         VectorsAnalyzed += 1
         print("VectorsAnalyzed: {0} / {1}".format(VectorsAnalyzed, NumberOfVectors)) # TODO: TEMP
@@ -86,13 +88,23 @@ def GetIntersectionPoint(VectorOrigin, VectorAngle, Line,): # Finds intersection
     """
     Finds the intersection point between a vector and a line segment.
     """
+    X, Y = VectorOrigin
     (X1, Y1), (X2, Y2) = Line
     DX = math.cos(VectorAngle)
     DY = math.sin(VectorAngle)
+    if DX == 0 or X2 - X1 == 0: # No dividing by zero! This means that we don't have an intersection.
+        return None
     if DY / DX != (Y2 - Y1) / (X2 - X1):
-        
+        D = (DX * (Y2 - Y1)) - DY * (X2 - X1)
+        if D != 0:
+            R = (((Y - Y1) * (X2 - X1)) - (X - X1) * (Y2 - Y1)) / D
+            S = (((Y - Y1) * DX) - (X - X1) * DY) / D
+            if R >= 0 and 0 <= S <= 1:
+                IntersectionPoint = (X + R * DX, Y + R * DY)
+                return IntersectionPoint
+    return None # Returning None because they do not intersect.
 
-def Scan(OrginPoint, VectorAngle):
+def Scan(OriginPoint, VectorAngle):
     """
     Returns the distance and (X, Y) coordinate for the first point encountered along the vector.
     """
@@ -121,16 +133,18 @@ def Scan(OrginPoint, VectorAngle):
         ElementLinesEvaluated = 0
         while ElementLinesEvaluated < len(LIDARMapData["Elements"][Element]["Points"]) - 1:
             Line = (LIDARMapData["Elements"][Element]["Points"][ElementLinesEvaluated], LIDARMapData["Elements"][Element]["Points"][ElementLinesEvaluated + 1])
-            IntersectionPoint = GetIntersectionPoint(OrginPoint, VectorAngle, Line)
+            IntersectionPoint = GetIntersectionPoint(OriginPoint, VectorAngle, Line)
             if IntersectionPoint:
-                Distance = math.hypot(IntersectionPoint[0] - LineOne[0][0], IntersectionPoint[1] - LineOne[0][1])
+                Distance = math.hypot(IntersectionPoint[0] - OriginPoint[0], IntersectionPoint[1] - OriginPoint[1])
                 ElementIntersections.append((Element, IntersectionPoint, Distance))
             ElementLinesEvaluated += 1
     if ElementIntersections:
         ClosestElementIntersection = sorted(ElementIntersections, key=itemgetter(2))[0]
         return ClosestElementIntersection[1]
+        print("ClosestElementIntersection = {0}".format(ClosestElementIntersection)) # TODO: TEMP
     else:
-        return math.inf, None
+        return OriginPoint # We return nothing because there was no intersection.
+        print("ClosestElementIntersection = {0}".format("NaN")) # TODO: TEMP
 
 #
 # Mainline code.

@@ -85,11 +85,11 @@ def Render(MapData, FileName = None, PathInformation = None): # TODO: Simplify F
     Log("Saving render \"{0}\".".format(NewFileName), 0)
     cv2.imwrite("{0}/{1}".format(Config["RenderStorageLocation"], NewFileName), Image)
 
-def RenderPoints(Points):
+def RenderPoints(MapData, Points):
     """
     Render some points.
     """
-    RenderMapData = dMapDataeepcopy(MapData) # Make a copy of MapData so that we don't modify the original variable's value.
+    RenderMapData = deepcopy(MapData) # Make a copy of MapData so that we don't modify the original variable's value.
     Image = np.zeros((RenderMapData["Size"][1] + RenderBorder * 2, RenderMapData["Size"][0] + RenderBorder * 2, 3), np.uint8)
     for Point in Points:
         X, Y = int(round(Point[0])), int(round(Point[1]))
