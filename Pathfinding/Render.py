@@ -11,6 +11,7 @@ Render.py can render .map files, along with any pathing information.
 
 from copy import deepcopy
 import json
+import math
 import time
 
 #
@@ -83,6 +84,19 @@ def Render(MapData, FileName = None, PathInformation = None): # TODO: Simplify F
         NewFileName = "Render {0}.png".format(time.strftime("%Y-%m-%d %H%M%S"))
     Log("Saving render \"{0}\".".format(NewFileName), 0)
     cv2.imwrite("{0}/{1}".format(Config["RenderStorageLocation"], NewFileName), Image)
+
+def RenderPoints(Points):
+    """
+    Render some points.
+    """
+    RenderMapData = dMapDataeepcopy(MapData) # Make a copy of MapData so that we don't modify the original variable's value.
+    Image = np.zeros((RenderMapData["Size"][1] + RenderBorder * 2, RenderMapData["Size"][0] + RenderBorder * 2, 3), np.uint8)
+    for Point in Points:
+        X, Y = int(round(Point[0])), int(round(Point[1]))
+        NewY = abs(Y - len(RenderMapData)) + RenderBorder
+        NewX = X + RenderBorder
+        cv2.rectangle(Image, (NewX, NewY), (NewX, NewY), (255, 255, 255), -1)
+    cv2.imwrite("{0}/{1}".format(Config["RenderStorageLocation"], "ExpectedLidarRender.png"), Image)
 
 #
 # Mainline code.

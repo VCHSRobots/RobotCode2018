@@ -539,7 +539,7 @@ def GetIntersectionPoint(LineOne, LineTwo, LineSegments=True):
 #
 # Temporary Mainline code.
 #
-
+"""
 #MapFile = input("Please enter map file name: ")
 #Sx = input("Please enter X pos. of StartPoint: ")
 #Sy = input("Please enter Y pos. of StartPoint: ")
@@ -571,3 +571,4 @@ EndTime = time.time()
 RunTime = EndTime - StartTime
 
 print("Anya complete! Estimated run time: {0}.".format(RunTime))
+"""

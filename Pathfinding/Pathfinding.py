@@ -226,7 +226,7 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
         StartPoint = PathSteps[StepsEvaluated][1][0]
         EndPoint = PathSteps[StepsEvaluated][1][1]
         StepPoints = [StartPoint]
-        StepPoints.extend(Anya(GridData, StartPoint, EndPoint))
+        #StepPoints.extend(Anya(GridData, StartPoint, EndPoint))
         StepPoints.append(EndPoint)
         StepsEvaluated += 1
         Log("Pathfinding complete for step {0} of {1}.".format(StepsEvaluated, len(PathSteps)), 0)

@@ -2,6 +2,8 @@
 # 1-6-2018
 #
 import json
+import math
+
 import numpy as np
 
 
@@ -156,13 +158,13 @@ class Ray(Line):
 
 
 def rad2deg(rad):
-    pi = 3.1415926535897932384626433832
+    pi = math.pi
     deg = rad * (180 / pi)
     return deg
 
 
 def deg2rad(deg):
-    pi = 3.1415926535897932384626433832
+    pi = math.pi
     rad = deg / (180 / pi)
     return rad
 

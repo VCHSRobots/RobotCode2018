@@ -42,7 +42,7 @@ def resetSweep(sweep):
     return sweep.readline()
 
 def getData(sweep, itertimes):
-    for null in range(itertimes):
+    for null in range(int(itertimes)):
         data = sweep.readline()
         yield parseSweepScannedBytesInDict(data)
 
@@ -98,7 +98,7 @@ def scanRotation(sweep):
     Scans 1 full rotation and returns the angle and distance in a dictionary
     """
     angvsdist = {}
-    samplerate = 250 * (int(checkSampleRate(sweep)[3]) * 250)
+    samplerate = 250 * (int(checkSampleRate(sweep)[3]) + 1)
     motorspeed = int(checkMotorSpeed(sweep)[2:4])
     scansperspin = samplerate/motorspeed
     data = getData(sweep, scansperspin)
