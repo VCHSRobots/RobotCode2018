@@ -75,18 +75,21 @@ def Move(Instructions):
     if AnomalousElements: # If any anomalous elements were detected in the LIDAR scans.
         MapData["Elements"].extend(AnomalousElements)
         MapData = Pathfinding.ExpandMapElements(MapData)
-    PathInformation = Pathfinding.Path(MapData, ParsedInstructions["CurrentPosition"], ParsedInstructions["ElementDistribution"], ParsedInstructions["PathList"])
+    PathInformation = Pathfinding.Path(MapData, ParsedInstructions["CurrentPosition"], ParsedInstructions["CurrentRotation"], ParsedInstructions["ElementDistribution"], ParsedInstructions["PathList"])
     Render(MapData, None, PathInformation)
-    for Item in PathInformation:
-        if type(Item) is str: # If the path item is an action.
-            PerformAction(Item.lower(), CurrentPosition)
-        else: # If the path item is a point to travel to.
-            while DistanceTraversed < 100: # TODO: Do this!
-                # Begin moving toward point.
-                # TODO: Convert "steps" (two pairs of points) to vectors for calculating progression along path.
-                PathInformation = Pathfinding.VectorizePathInformation(PathInformation)
-                DistanceTraversed += 1
-                # Communicate.Send("") # Send direction command to RoboRio.
+    if PathInformation:
+        for Item in PathInformation:
+            if type(Item) is str: # If the path item is an action.
+                PerformAction(Item.lower(), CurrentPosition)
+            else: # If the path item is a point to travel to.
+                while DistanceTraversed < 100: # TODO: Do this!
+                    # Begin moving toward point.
+                    # TODO: Convert "steps" (two pairs of points) to vectors for calculating progression along path.
+                    PathInformation = Pathfinding.VectorizePathInformation(PathInformation)
+                    DistanceTraversed += 1
+                    # Communicate.Send("") # Send direction command to RoboRio.
+    else:
+        Log("No path information returned by function \"Pathfinding.Path\".", 2)
 
 def ParseUserInput():
     Input = [X.lower() for X in sys.argv[1:]]
@@ -121,12 +124,15 @@ atexit.register(Exit)
 Log("Pathfinding system initialized.", 1)
 ParseUserInput()
 
+# Attempt to initialize LIDAR device.
+LIDAR.InitializeLIDAR()
+
 # Attempt to establish connection with RoboRio software.
 Communicate.Connect()
 
 # Receive initial pathfinding instruction set either from remote server or file.
 if Config["InstructionSource"].lower() in ("remote", "server", "roborio"):
-    Log("Receiving pathfinding instruction set from remote server.", 0)
+    Log("Requesting pathfinding instruction set from remote server.", 0)
     while Instructions == "": # Wait for instructions to be updated.
         pass
 else:

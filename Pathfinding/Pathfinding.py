@@ -57,7 +57,7 @@ def BresenhamLinePoints(StartPoint, EndPoint):
     Y = Y1
     Points = []
     for X in range(X1, X2 + 1):
-        Coordinate = Point(Y, X) if IsSteep else Point(X, Y)
+        Coordinate = [Y, X] if IsSteep else [X, Y]
         Points.append(Coordinate)
         Error -= abs(DY)
         if Error < 0:
@@ -145,11 +145,11 @@ def ParseInstructions(Instructions):
     ParsedInstructions = {"CurrentPosition": (int(SplitInstructions[0]), int(SplitInstructions[1])), "CurrentRotation": int(SplitInstructions[2]), "ElementDistribution": SplitInstructions[3], "PathList": SplitInstructions[4:]}
     return ParsedInstructions
 
-def Path(MapData, CurrentPosition, ElementDistribution, PathList):
+def Path(MapData, CurrentPosition, CurrentRotation, ElementDistribution, PathList):
     """
     Constructs and returns the optimal path between each destination in PathList, with respect to the elements described in MapData and ElementDistribution.
     """
-    Log("Pathing instructions:\r\n                                 - Initial position: {0}\r\n                                 - Element distribution: {1}\r\n                                 - Path list: {2}".format(CurrentPosition, ElementDistribution, PathList), 0)
+    Log("Pathing instructions:\r\n                                 - Initial position: {0}, {1}°\r\n                                 - Element distribution: {2}\r\n                                 - Path list: {3}".format(CurrentPosition, CurrentRotation, ElementDistribution, PathList), 0)
     PathfindingMapData = deepcopy(MapData)
     PathInformation = []
     TargetPoints = []
@@ -159,18 +159,18 @@ def Path(MapData, CurrentPosition, ElementDistribution, PathList):
             PathInformation.append(Item)
         elif "," in Item: # If the item is a location (pair of coordinates).
             Item = [int(Number) for Number in Item.split(",")]
-            if 0 > Item[0] > PathfindingMapData["Size"][0]:
-                Log("X value of path coordinate is out of bounds. ({0} != 0 to {1}).".format(Item[0], PathfindingMapData["Size"][0]), 3)
+            if Item[0] < 0 or Item[0] > PathfindingMapData["Size"][0]:
+                Log("X value of path coordinate is out of bounds. ({0} != {{0 --> {1}}}).".format(Item[0], PathfindingMapData["Size"][0]), 3)
                 return
-            if 0 > Item[1] > PathfindingMapData["Size"][1]:
-                Log("Y value of path coordinate is out of bounds. ({0} != 0 to {1}).".format(Item[1], PathfindingMapData["Size"][1]), 3)
+            if Item[1] < 0 or Item[1] > PathfindingMapData["Size"][1]:
+                Log("Y value of path coordinate is out of bounds. ({0} != {{0 --> {1}}}).".format(Item[1], PathfindingMapData["Size"][1]), 3)
                 return
             TargetPoints.append((Item, PathIndex))
         else: # If the item is a pre-defined location, as described in the .map file.
             if not Item in PathfindingMapData["Elements"]:
                 Log("Path target \"{0}\" is not described in map file.".format(Item), 3)
-                return
-            if "InteractiveFaces" in PathfindingMapData["Elements"][Item]:
+                
+            elif "InteractiveFaces" in PathfindingMapData["Elements"][Item]:
                 FacesToEvaluate = []
                 if "InteractiveSides" in PathfindingMapData["Elements"][Item]:
                     if Item == "NearSwitch":
@@ -247,7 +247,7 @@ def RasterizeMapData(MapData):
         RasterMapData.append([0, ] * (MapData["Size"][0] + 1))
         I += 1
     # Add polygonal MapData elements to the grid.
-    for Element in  MapData["Elements"]:
+    for Element in MapData["Elements"]:
         if MapData["Elements"][Element]["Solidity"] > 0:
             Log("Rasterizing element \"{0}\".".format(Element), 0)
             PairsConverted = 0

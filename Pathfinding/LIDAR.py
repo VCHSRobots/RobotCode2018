@@ -12,15 +12,17 @@ LIDAR.py compares measurements between expected and actual LIDAR sweeps at a spe
 import json
 import math
 from operator import itemgetter
-import pprint
+import time
 
 #
 # Custom imports.
 #
 
 import numpy as np
+import serial
 
 import Configuration
+from Log import Log
 from Render import RenderPoints
 
 #
@@ -65,7 +67,7 @@ def GetExpectedData(CurrentPosition, CurrentRotation):
     Estimates and returns the expected LIDAR values based on the current expected location.
     """
     FOV = Config["LIDARFOV"] # A bound of two angles, relative to the robot's personal orientation. ALWAYS centered around 0 degrees. First is a negative degree (moving clockwise), second is positive (moving counterclockwise).
-    ScanRate = Config["LIDARScanRate"]
+    ScanRate = Config["LIDARSampleRate"] / Config["LIDARRotationRate"] # Measurments-Per-Rotation
     SweepSize = abs(FOV[0] - FOV[1])
     IncrementSize = 360 / ScanRate # We get a data point every "IncrementSize" degrees, bound by the angles described by "FOV".
     NumberOfVectors = math.floor(SweepSize / IncrementSize)
@@ -103,6 +105,63 @@ def GetIntersectionPoint(VectorOrigin, VectorAngle, Line,): # Finds intersection
                 IntersectionPoint = (X + R * DX, Y + R * DY)
                 return IntersectionPoint
     return None # Returning None because they do not intersect.
+
+def InitializeLIDAR():
+    Log("Initializing LIDAR device.", 0)
+    SweepLocation = Config["LIDARLocation"]
+    try:
+        Sweep = serial.Serial(SweepLocation, baudrate=115200, parity=serial.PARITY_NONE, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE, xonxoff=False, rtscts=False, dsrdtr=False)
+    except:
+        Log("Unable to detect LIDAR device. Check \"LIDARLocation\" in configuration file.", 3)
+        return
+    SweepReady = False
+    while not SweepReady:
+        Sweep.write(b"MZ\n") # Check if motor is ready.
+        MotorStatus = Sweep.readline().decode("utf-8")[2:4]
+        if MotorStatus == "01":
+            time.sleep(1)
+        else:
+            SweepReady = True
+    Sweep.write(b"IV\n")
+    SweepInformation = Sweep.readline().decode("utf-8")[2:-1]
+    # Log("LIDAR device information:\r\n                                - Model: {0}\r\n                                - Protocol: {1}\r\n                                - Firmware version: {2}\r\n                                - Hardware version: {3}\r\n                                - Serial number: {4}".format(SweepInformation[0:5], SweepInformation[6:7], SweepInformation[8:9], SweepInformation[10], SweepInformation[11:19]), 0)
+    Sweep.write(b"MI\n")
+    MotorSpeed = Sweep.readline().decode("utf-8")[2:4]
+    DesiredMotorSpeed = str(Config["LIDARRotationRate"]).zfill(2)
+    if MotorSpeed != DesiredMotorSpeed:
+        Log("Current LIDAR rotation rate is {0} Hz. Adjusting to desired rate of {1} Hz.".format(MotorSpeed, DesiredMotorSpeed), 0)
+        Sweep.write("MS{0}\n".format(DesiredMotorSpeed).encode())
+        Response = Sweep.readline().decode("utf-8") # Just reading the line so we clear that variable for the next time we want to write / read.
+        SweepReady = False
+        while not SweepReady:
+            Sweep.write(b"MZ\n") # Check if motor is ready.
+            MotorStatus = Sweep.readline().decode("utf-8")[2:4]
+            if MotorStatus == "01":
+                time.sleep(1)
+            else:
+                SweepReady = True
+    Sweep.write(b"LI\n")
+    SampleRate = Sweep.readline().decode("utf-8")[2:4]
+    DesiredSampleRate = Config["LIDARSampleRate"]
+    if SampleRate == "01":
+        SampleRate = 500
+    elif SampleRate == "02":
+        SampleRate = 750
+    elif SampleRate == "03":
+        SampleRate = 1000
+    if SampleRate != DesiredSampleRate:
+        Log("Current LIDAR sample rate is {0} Hz. Adjusting to desired rate of {1} Hz.".format(SampleRate, DesiredSampleRate), 0)
+        if DesiredSampleRate == 500:
+            Rate = "01"
+        elif DesiredSampleRate == 750:
+            Rate = "02"
+        elif DesiredSampleRate == 1000:
+            Rate = "03"
+        else:
+            Log("Invalid LIDARSampleRate described in configuration.", 3)
+            Rate = "03"
+        Sweep.write("LR{0}\n".format(Rate).encode())
+    Log("Current LIDAR rotation rate: {0} Hz. Current LIDAR sample rate: {1} Hz.".format(DesiredMotorSpeed, DesiredSampleRate), 1)
 
 def Scan(OriginPoint, VectorAngle):
     """
