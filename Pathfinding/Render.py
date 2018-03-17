@@ -12,6 +12,7 @@ Render.py can render .map files, along with any pathing information.
 from copy import deepcopy
 import json
 import math
+import sys
 import time
 
 #

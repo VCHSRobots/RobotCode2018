@@ -1,170 +1,71 @@
-from collections import namedtuple
+import heapq
 import math
-import operator
 import time
 
-from RenderAnya import RenderAnya
+#
+# Classes.
+#
 
-Point = namedtuple("Point", "X Y")
-
-ParentsTable = {}
-GValueTable = {}
-Open = {} # Open's format: Point: Value, Point2: Value, ...
-Closed = []
-LineOfSightChecks = 0
-
-def BresenhamLinePoints(PointOne, PointTwo):
+class PriorityQueue():
     """
-    Returns every point that lies along the line created by the StartPoint and the EndPoint.
-    Algorithm based on the example at http://www.roguebasin.com/index.php?title=Bresenham%27s_Line_Algorithm#Python.
+    An object heap.
     """
-    X1, Y1 = [int(round(Number)) for Number in PointOne]
-    X2, Y2 = [int(round(Number)) for Number in PointTwo]
-    DX = X2 - X1
-    DY = Y2 - Y1
-    IsSteep = abs(DY) > abs(DX)
-    if IsSteep:
-        X1, Y1 = Y1, X1
-        X2, Y2 = Y2, X2
-    Swapped = False
-    if X1 > X2:
-        X1, X2 = X2, X1
-        Y1, Y2 = Y2, Y1
-        Swapped = True
-    DX = X2 - X1
-    DY = Y2 - Y1
-    Error = int(DX / 2.0)
-    YStep = 1 if Y1 < Y2 else -1
-    Y = Y1
-    Points = []
-    for X in range(X1, X2 + 1):
-        Coordinate = Point(Y, X) if IsSteep else Point(X, Y)
-        Points.append(Coordinate)
-        Error -= abs(DY)
-        if Error < 0:
-            Y += YStep
-            Error += DX
-    if Swapped:
-        Points.reverse()
-    return Points
+    def __init__(self):
+        self.Elements = []
 
-def ComputeCost(PointOne, PointTwo):
-    # Path 2.
-    PointOneParent = GetParents(PointOne, True)
-    Distance = GetDistance(PointOneParent, PointTwo)
-    if GetGValue(GetParents(PointOne, True)) +  Distance < GetGValue(PointTwo) < GetGValue(PointTwo):
-        SetParent(PointTwo, GetParents(PointOne, True))
+    def Insert(Point, GValue):
+        """
+        Inserts the passed item into Open, with it's passed GValue.
+        """
+        heapq.heappush(self.Elements, (GValue, Point))
+
+    def Pop():
+        """
+        Pop in this context returns the point with the smallest GValue from Open.
+        """
+        return heapq.heappop(self.Elements)
+
+    def Remove(Point): # TODO: Complete remove operation.
+        """
+        Removes (deletes) the passed item from Open.
+        """
+        pass
+
+class Point():
+    """
+    The basic Point object.
+    """
+    def __init__(self, X, Y):
+        """
+        Initialize a new Point.
+        """
+        self.VisibleNeighbors = [NeighborPoint for NeighborPoint in [[X + 1, Y + 1], [X, Y + 1], [X - 1, Y + 1], [X - 1, Y], [X - 1, Y - 1], [X, Y - 1], [X + 1, Y - 1], [X + 1, Y]] if LineOfSight((self.X, self.Y), NeighborPoint)]
+        self.X = X
+        self.Y = Y
+        self.Parent = None
+        self.GValue = 0
+
+#
+# Functions.
+#
 
 def Main(StartPoint, EndPoint):
-    """
-    The main function for Lazy Theta *.
-    """
-    global Closed
-    global Open
-    SetParent(StartPoint, StartPoint)
-    Open[StartPoint] = GetGValue(StartPoint) + GetDistance(StartPoint, StartPoint)
+    StartPoint = Point(StartPoint[0], StartPoint[1])
+    EndPoint = Point(EndPoint[0], EndPoint[1])
+    Open = PriorityQueue()
+    StartPoint.GValue = 0
+    StartPoint.Parent = StartPoint
+    Open[StartPoint] = StartPoint.GValue
     while Open:
-        print("Open is:\r\n{0}".format(Open)) # TODO: TEMP
-        CurrentPoint = sorted(Open, key=Open.__getitem__)[0] # Get the point with the lowest key value (in this case, that refers to the distance).
-        print("CurrentPoint is \"{0}\"".format(CurrentPoint)) # TODO: TEMP
-        SetVertex(CurrentPoint)
-        if CurrentPoint == EndPoint:
+        CurrentPoint = Open.Pop()
+        print("CurrentPoint: {0}".format(CurrentPoint)) # TODO: TEMP
+        if CurrentPoint.X == EndPoint.X and CurrentPoint.Y == EndPoint.Y:
             return "Path found!"
-        Closed = list(set(Closed) | set(CurrentPoint))
-        for NeighborPointWithLOS in GetNeighborsWithLOS(CurrentPoint): # Neighbors of point "S" which have LOS to "S".
-            if NeighborPointWithLOS not in Closed:
-                if NeighborPointWithLOS not in Open:
-                    SetGValue(NeighborPointWithLOS, math.inf)
-                    SetParent(NeighborPointWithLOS, None)
-                UpdateVertex(CurrentPoint, NeighborPointWithLOS)
-    return
-
-def GetDistance(PointOne, PointTwo):
-    """
-    Returns the distance from PointOne to PointTwo, multiplied by the HeuristicWeight.
-    """
-    if PointOne == None or PointTwo == None:
-        return 0
-    return HeuristicWeight * math.hypot(PointTwo.X - PointOne.X, PointTwo.Y - PointOne.Y)
-
-def GetGridData(X, Y):
-    """
-    Return the value of a specific coordinate.
-    """
-    return GridData[Y - 1][X - 1]
-
-def GetNeighbors(ReferancePoint):
-    """
-    Return the values of the eight neighboring verticies.
-    """
-    return [Point(ReferancePoint.X + 1, ReferancePoint.Y + 1), Point(ReferancePoint.X, ReferancePoint.Y + 1), Point(ReferancePoint.X - 1, ReferancePoint.Y + 1), Point(ReferancePoint.X - 1, ReferancePoint.Y), Point(ReferancePoint.X - 1, ReferancePoint.Y - 1), Point(ReferancePoint.X, ReferancePoint.Y - 1), Point(ReferancePoint.X + 1, ReferancePoint.Y - 1), Point(ReferancePoint.X + 1, ReferancePoint.Y)]
-
-def GetNeighborsWithLOS(ReferancePoint):
-    """
-    Returns all neighbor points of the ReferancePoint with a line-of-sight to the ReferancePoint.
-    """
-    return [NeighborPoint for NeighborPoint in GetNeighbors(ReferancePoint) if LineOfSight(ReferancePoint, NeighborPoint)]
-
-def GetGValue(FinalPoint):
-    """
-    Return the G-value of StartPoint -> Parent(s) -> FinalPoint.
-    """
-    return GetDistance(StartPoint, GetParents(FinalPoint, True)) + GetDistance(GetParents(FinalPoint, True), FinalPoint)
-
-def GetParents(InitialPoint, GetOnlyDirectParent=False):
-    """
-    Returns all of the parents a point may have. Call with "OnlyDirectParent=True" to return only the immediate parent.
-    """
-    if GetOnlyDirectParent:
-        return ParentsTable[InitialPoint]
-    else: # Not implemented yet! TODO: Implement this.
-        return
-
-def LineOfSight(PointOne, PointTwo):
-    """
-    Determines whether two points have a line-of-sight; that is, if a line drawn between them does not intersect with any solid (non-traversable) points.
-    """
-    LinePoints = BresenhamLinePoints(PointOne, PointTwo)
-    if any(GetGridData(LinePoint.X, LinePoint.Y) for LinePoint in LinePoints) == 1:
-        return False
-    else:
-        return True
-
-def SetGValue(InitialPoint, GValue):
-    """
-    Sets the G Value of a point.
-    """
-    GValueTable[InitialPoint] = GValue
-
-def SetParent(InitialPoint, ParentPoint):
-    """
-    Sets the parent of Initial Point as ParentPoint in the ParentsTable.
-    """
-    print("Parent of {0} set to {1}.".format(InitialPoint, ParentPoint)) # TODO: TEMP
-    ParentsTable[InitialPoint] = ParentPoint
-
-def SetVertex(InitialPoint):
-    if not LineOfSight(GetParents(InitialPoint, True), InitialPoint):
-        # Path 1.
-        NeighborsWithLOS = [LePoint for LePoint in GetNeighborsWithLOS(InitialPoint).union(Closed)]
-        NeighborsWithLOS = list(set(NeighborsWithLOS) & set(Closed))
-        NeighborIndex, Neighbor = min([GetGValue(Neighbor) + GetDistance(Neighbor, InitialPoint) for NeighborIndex, Neighbor in enumerate(NeighborsWithLOS)], key=operator.itemgetter(1))
-        SetParent(InitialPoint, NeighborsWithLOS[NeighborIndex])
-        # min([GetGValue(Neighbor) + GetDistance(Neighbor, InitialPoint) for NeighborIndex, Neighbor in enumerate(NeighborsWithLOS)], key=operator.itemgetter(1)) TODO: Set G value accordingly.
-        SetGValue() 
-
-def UpdateVertex(PointOne, PointTwo):
-    """
-    Update a vertex.
-    """
-    global Open
-    OldGValue = GetGValue(PointTwo)
-    ComputeCost(PointOne, PointTwo)
-    if GetGValue(PointTwo) < OldGValue:
-        if PointTwo in Open:
-            del Open[PointTwo]
-        print("Open updated.") # TODO: TEMP
-        Open[PointTwo] = GetGValue(PointTwo) + GetDistance(PointTwo, EndPoint)
+        Closed = list(set(Closed) | set([CurrentPoint.X, CurrentPoint.Y]))
+        for Neighbor in CurrentPoint.VisibleNeighbors:
+            if [Neighbor.X, Neighbor.Y] not in Closed:
+                if [Neighbor.X, Neighbor.Y] not in Open:
+                    
 
 #
 # Temporary mainline test code...

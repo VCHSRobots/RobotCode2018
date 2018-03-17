@@ -10,6 +10,7 @@ Configuration.py parses the configuration file ("Pathfinding.cfg") for all modul
 #
 
 import json
+import sys
 
 #
 # Functions.
