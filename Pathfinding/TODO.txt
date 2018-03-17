@@ -1,7 +1,0 @@
-0. Complete basic Pathfinding functions:
-- Pathfinding,
-- Interfacing with RobotCode,
-- Interfacing with LIDAR (Scanse Sweep)
-1. Convert math functions throughout Pathfinding to utilize Numpy wherever possible, and if it presents a possible optimization.
-2. Create documentation for everything!
-- Create an image which describes how coordinates go "in between the lines" of the grid.
