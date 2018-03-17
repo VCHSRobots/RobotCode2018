@@ -1,0 +1,398 @@
+2018-03-05 18:30:44 > INFO:     Pathfinding system initialized.
+2018-03-05 18:30:44 > DEBUG:    No command-line user input received.
+2018-03-05 18:30:44 > DEBUG:    Initializing LIDAR device.
+2018-03-05 18:30:44 > DEBUG:    LIDAR device information:
+                          - Model: EEP1
+                          - Protocol: 1
+                          - Firmware version: 2
+                          - Hardware version: 0
+                          - Serial number: 004557
+2018-03-05 18:30:44 > INFO:     Pathfinding system stopped.
+2018-03-05 18:31:37 > INFO:     Pathfinding system initialized.
+2018-03-05 18:31:37 > DEBUG:    No command-line user input received.
+2018-03-05 18:31:37 > DEBUG:    Initializing LIDAR device.
+2018-03-05 18:31:37 > DEBUG:    LIDAR device information:
+                                - Model: EEP1
+                                - Protocol: 1
+                                - Firmware version: 2
+                                - Hardware version: 0
+                                - Serial number: 004557
+2018-03-05 18:31:37 > DEBUG:    Current LIDAR rotation rate is 01 Hz. Adjusting to desired rate of 10 Hz.
+2018-03-05 18:31:37 > INFO:     Pathfinding system stopped.
+2018-03-05 18:34:10 > INFO:     Pathfinding system initialized.
+2018-03-05 18:34:10 > DEBUG:    No command-line user input received.
+2018-03-05 18:34:10 > DEBUG:    Initializing LIDAR device.
+2018-03-05 18:34:10 > DEBUG:    LIDAR device information:
+                                - Model: EEP1
+                                - Protocol: 1
+                                - Firmware version: 2
+                                - Hardware version: 0
+                                - Serial number: 004557
+2018-03-05 18:34:11 > DEBUG:    Current LIDAR rotation rate is 01 Hz. Adjusting to desired rate of 10 Hz.
+2018-03-05 18:34:11 > DEBUG:    Currend LIDAR sample rate is P
+ Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 18:34:11 > ERROR:    Invalid LIDARSampleRate described in configuration.
+2018-03-05 18:34:11 > INFO:     Current LIDAR rotation rate: {0} Hz. Current LIDAR sample rate: {1} Hz.
+2018-03-05 18:34:11 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 18:34:11 > DEBUG:    Parsing pathing instructions.
+2018-03-05 18:34:11 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 18:34:11 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 18:34:11 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 18:34:11 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 18:34:11 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 18:34:11 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 18:34:11 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 18:34:11 > DEBUG:    Pathfinding complete.
+2018-03-05 18:34:11 > DEBUG:    Saving render "Render 2018-03-05 183411.png".
+2018-03-05 18:34:11 > INFO:     Pathfinding system stopped.
+2018-03-05 18:38:13 > INFO:     Pathfinding system initialized.
+2018-03-05 18:38:13 > DEBUG:    No command-line user input received.
+2018-03-05 18:38:13 > DEBUG:    Initializing LIDAR device.
+2018-03-05 18:38:13 > DEBUG:    LIDAR device information:
+                                - Model: WEEP1
+                                - Protocol: 1
+                                - Firmware version: 2
+                                - Hardware version: 0
+                                - Serial number: 004557
+2018-03-05 18:38:13 > DEBUG:    Currend LIDAR sample rate is 500 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 18:38:13 > INFO:     Current LIDAR rotation rate: {0} Hz. Current LIDAR sample rate: {1} Hz.
+2018-03-05 18:38:13 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 18:38:13 > DEBUG:    Parsing pathing instructions.
+2018-03-05 18:38:13 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 18:38:13 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 18:38:13 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 18:38:13 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 18:38:13 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 18:38:13 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 18:38:13 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 18:38:13 > DEBUG:    Pathfinding complete.
+2018-03-05 18:38:13 > DEBUG:    Saving render "Render 2018-03-05 183813.png".
+2018-03-05 18:38:13 > INFO:     Pathfinding system stopped.
+2018-03-05 19:11:52 > INFO:     Pathfinding system initialized.
+2018-03-05 19:11:52 > DEBUG:    No command-line user input received.
+2018-03-05 19:11:52 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:11:52 > DEBUG:    LIDAR device information:
+                                - Model: WEEP
+                                - Protocol: 1
+                                - Firmware version: 2
+                                - Hardware version: 0
+                                - Serial number: 004557
+2018-03-05 19:11:52 > DEBUG:    Current LIDAR rotation rate is 10 Hz. Adjusting to desired rate of 01 Hz.
+2018-03-05 19:11:53 > DEBUG:    Currend LIDAR sample rate is 500 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:11:53 > INFO:     Current LIDAR rotation rate: {0} Hz. Current LIDAR sample rate: {1} Hz.
+2018-03-05 19:11:53 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:11:53 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:11:53 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:11:53 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:11:53 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:11:53 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:11:53 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:11:53 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:11:53 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:11:53 > DEBUG:    Pathfinding complete.
+2018-03-05 19:11:53 > DEBUG:    Saving render "Render 2018-03-05 191153.png".
+2018-03-05 19:11:53 > INFO:     Pathfinding system stopped.
+2018-03-05 19:14:13 > INFO:     Pathfinding system initialized.
+2018-03-05 19:14:13 > DEBUG:    No command-line user input received.
+2018-03-05 19:14:13 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:14:13 > INFO:     Pathfinding system stopped.
+2018-03-05 19:15:27 > INFO:     Pathfinding system initialized.
+2018-03-05 19:15:27 > DEBUG:    No command-line user input received.
+2018-03-05 19:15:27 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:15:27 > INFO:     Pathfinding system stopped.
+2018-03-05 19:15:47 > INFO:     Pathfinding system initialized.
+2018-03-05 19:15:47 > DEBUG:    No command-line user input received.
+2018-03-05 19:15:47 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:15:47 > ERROR:    Unable to detect LIDAR device. Check "LIDARLocation" in configuration file.
+2018-03-05 19:15:47 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:15:47 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:15:47 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:15:47 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:15:47 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:15:47 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:15:47 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:15:47 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:15:47 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:15:47 > DEBUG:    Pathfinding complete.
+2018-03-05 19:15:47 > DEBUG:    Saving render "Render 2018-03-05 191547.png".
+2018-03-05 19:15:47 > INFO:     Pathfinding system stopped.
+2018-03-05 19:23:27 > INFO:     Pathfinding system initialized.
+2018-03-05 19:23:27 > DEBUG:    No command-line user input received.
+2018-03-05 19:23:27 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:23:28 > DEBUG:    LIDAR device information:
+                                - Model: SWEEP
+                                - Protocol: 1
+                                - Firmware version: 4
+                                - Hardware version: 0
+                                - Serial number: 0004557
+2018-03-05 19:23:28 > DEBUG:    Current LIDAR rotation rate is 01 Hz. Adjusting to desired rate of 10 Hz.
+2018-03-05 19:23:28 > DEBUG:    Currend LIDAR sample rate is P
+ Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:23:28 > INFO:     Current LIDAR rotation rate: 01 Hz. Current LIDAR sample rate: 01 Hz.
+2018-03-05 19:23:28 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:23:28 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:23:28 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:23:28 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:23:28 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:23:28 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:23:28 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:23:28 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:23:28 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:23:28 > DEBUG:    Pathfinding complete.
+2018-03-05 19:23:28 > DEBUG:    Saving render "Render 2018-03-05 192328.png".
+2018-03-05 19:23:28 > INFO:     Pathfinding system stopped.
+2018-03-05 19:25:36 > INFO:     Pathfinding system initialized.
+2018-03-05 19:25:36 > DEBUG:    No command-line user input received.
+2018-03-05 19:25:36 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:25:36 > DEBUG:    LIDAR device information:
+                                - Model: SWEEP
+                                - Protocol: 1
+                                - Firmware version: 4
+                                - Hardware version: 0
+                                - Serial number: 0004557
+2018-03-05 19:25:36 > DEBUG:    Currend LIDAR sample rate is LI03
+ Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:25:36 > INFO:     Current LIDAR rotation rate: 03 Hz. Current LIDAR sample rate: P
+ Hz.
+2018-03-05 19:25:36 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:25:36 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:25:36 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:25:36 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:25:36 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:25:36 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:25:36 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:25:36 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:25:36 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:25:36 > DEBUG:    Pathfinding complete.
+2018-03-05 19:25:36 > DEBUG:    Saving render "Render 2018-03-05 192536.png".
+2018-03-05 19:25:36 > INFO:     Pathfinding system stopped.
+2018-03-05 19:28:37 > INFO:     Pathfinding system initialized.
+2018-03-05 19:28:37 > DEBUG:    No command-line user input received.
+2018-03-05 19:28:37 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:28:37 > DEBUG:    Current LIDAR rotation rate is SW Hz. Adjusting to desired rate of 10 Hz.
+2018-03-05 19:28:37 > DEBUG:    Currend LIDAR sample rate is 1 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:28:37 > INFO:     Current LIDAR rotation rate: P
+ Hz. Current LIDAR sample rate: 01 Hz.
+2018-03-05 19:28:37 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:28:37 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:28:37 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:28:37 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:28:37 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:28:37 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:28:37 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:28:37 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:28:37 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:28:37 > DEBUG:    Pathfinding complete.
+2018-03-05 19:28:37 > DEBUG:    Saving render "Render 2018-03-05 192837.png".
+2018-03-05 19:28:37 > INFO:     Pathfinding system stopped.
+2018-03-05 19:29:51 > INFO:     Pathfinding system initialized.
+2018-03-05 19:29:51 > DEBUG:    No command-line user input received.
+2018-03-05 19:29:51 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:29:51 > DEBUG:    Current LIDAR rotation rate is SW Hz. Adjusting to desired rate of 10 Hz.
+2018-03-05 19:29:51 > DEBUG:    Currend LIDAR sample rate is 10 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:29:51 > INFO:     Current LIDAR rotation rate: 10 Hz. Current LIDAR sample rate: 1000 Hz.
+2018-03-05 19:29:51 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:29:51 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:29:51 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:29:51 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:29:51 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:29:51 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:29:51 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:29:51 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:29:51 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:29:51 > DEBUG:    Pathfinding complete.
+2018-03-05 19:29:51 > DEBUG:    Saving render "Render 2018-03-05 192951.png".
+2018-03-05 19:29:51 > INFO:     Pathfinding system stopped.
+2018-03-05 19:31:51 > INFO:     Pathfinding system initialized.
+2018-03-05 19:31:51 > DEBUG:    No command-line user input received.
+2018-03-05 19:31:51 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:31:51 > DEBUG:    Current LIDAR rotation rate is IVSWEEP1114200004557
+ Hz. Adjusting to desired rate of 10 Hz.
+2018-03-05 19:31:51 > DEBUG:    Current LIDAR sample rate is 10 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:31:51 > INFO:     Current LIDAR rotation rate: 10 Hz. Current LIDAR sample rate: 1000 Hz.
+2018-03-05 19:31:51 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:31:51 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:31:51 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:31:51 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:31:51 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:31:51 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:31:51 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:31:51 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:31:51 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:31:51 > DEBUG:    Pathfinding complete.
+2018-03-05 19:31:51 > DEBUG:    Saving render "Render 2018-03-05 193151.png".
+2018-03-05 19:31:51 > INFO:     Pathfinding system stopped.
+2018-03-05 19:32:16 > INFO:     Pathfinding system initialized.
+2018-03-05 19:32:16 > DEBUG:    No command-line user input received.
+2018-03-05 19:32:16 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:32:17 > DEBUG:    Current LIDAR rotation rate is MI10
+ Hz. Adjusting to desired rate of 10 Hz.
+2018-03-05 19:32:17 > DEBUG:    Current LIDAR sample rate is P
+ Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:32:17 > INFO:     Current LIDAR rotation rate: 10 Hz. Current LIDAR sample rate: 1000 Hz.
+2018-03-05 19:32:17 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:32:17 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:32:17 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:32:17 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:32:17 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:32:17 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:32:17 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:32:17 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:32:17 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:32:17 > DEBUG:    Pathfinding complete.
+2018-03-05 19:32:17 > DEBUG:    Saving render "Render 2018-03-05 193217.png".
+2018-03-05 19:32:17 > INFO:     Pathfinding system stopped.
+2018-03-05 19:33:39 > INFO:     Pathfinding system initialized.
+2018-03-05 19:33:39 > DEBUG:    No command-line user input received.
+2018-03-05 19:33:39 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:33:39 > INFO:     Current LIDAR rotation rate: 10 Hz. Current LIDAR sample rate: 1000 Hz.
+2018-03-05 19:33:39 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:33:39 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:33:39 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:33:39 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:33:39 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:33:39 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:33:39 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:33:39 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:33:39 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:33:39 > DEBUG:    Pathfinding complete.
+2018-03-05 19:33:39 > DEBUG:    Saving render "Render 2018-03-05 193339.png".
+2018-03-05 19:33:39 > INFO:     Pathfinding system stopped.
+2018-03-05 19:34:01 > INFO:     Pathfinding system initialized.
+2018-03-05 19:34:01 > DEBUG:    No command-line user input received.
+2018-03-05 19:34:01 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:34:01 > DEBUG:    Current LIDAR rotation rate is 10 Hz. Adjusting to desired rate of 01 Hz.
+2018-03-05 19:34:01 > DEBUG:    Current LIDAR sample rate is 500 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:34:01 > INFO:     Current LIDAR rotation rate: 01 Hz. Current LIDAR sample rate: 1000 Hz.
+2018-03-05 19:34:01 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:34:01 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:34:01 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:34:01 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:34:01 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:34:01 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:34:01 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:34:01 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:34:01 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:34:01 > DEBUG:    Pathfinding complete.
+2018-03-05 19:34:02 > DEBUG:    Saving render "Render 2018-03-05 193402.png".
+2018-03-05 19:34:02 > INFO:     Pathfinding system stopped.
+2018-03-05 19:34:26 > INFO:     Pathfinding system initialized.
+2018-03-05 19:34:26 > DEBUG:    No command-line user input received.
+2018-03-05 19:34:26 > DEBUG:    Initializing LIDAR device.
+2018-03-05 19:34:26 > DEBUG:    Current LIDAR rotation rate is 01 Hz. Adjusting to desired rate of 05 Hz.
+2018-03-05 19:34:26 > DEBUG:    Current LIDAR sample rate is 500 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-05 19:34:26 > INFO:     Current LIDAR rotation rate: 05 Hz. Current LIDAR sample rate: 1000 Hz.
+2018-03-05 19:34:26 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 19:34:26 > DEBUG:    Parsing pathing instructions.
+2018-03-05 19:34:26 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 19:34:26 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 19:34:26 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 19:34:26 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 19:34:26 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 19:34:27 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 19:34:27 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 19:34:27 > DEBUG:    Pathfinding complete.
+2018-03-05 19:34:27 > DEBUG:    Saving render "Render 2018-03-05 193427.png".
+2018-03-05 19:34:27 > INFO:     Pathfinding system stopped.
+2018-03-05 20:15:21 > INFO:     Pathfinding system initialized.
+2018-03-05 20:15:21 > DEBUG:    No command-line user input received.
+2018-03-05 20:15:21 > DEBUG:    Initializing LIDAR device.
+2018-03-05 20:15:21 > ERROR:    Unable to detect LIDAR device. Check "LIDARLocation" in configuration file.
+2018-03-05 20:15:21 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-05 20:15:21 > DEBUG:    Parsing pathing instructions.
+2018-03-05 20:15:22 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-05 20:15:22 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-05 20:15:22 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-05 20:15:22 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-05 20:15:22 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-05 20:15:22 > DEBUG:    Rasterizing element "Hallway".
+2018-03-05 20:15:22 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-05 20:15:22 > DEBUG:    Pathfinding complete.
+2018-03-05 20:15:22 > DEBUG:    Saving render "Render 2018-03-05 201522.png".
+2018-03-05 20:15:22 > INFO:     Pathfinding system stopped.
+2018-03-09 12:26:17 > INFO:     Pathfinding system initialized.
+2018-03-09 12:26:17 > DEBUG:    No command-line user input received.
+2018-03-09 12:26:17 > DEBUG:    Initializing LIDAR device.
+2018-03-09 12:26:17 > ERROR:    Unable to detect LIDAR device. Check "LIDARLocation" in configuration file.
+2018-03-09 12:26:17 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-09 12:26:17 > DEBUG:    Parsing pathing instructions.
+2018-03-09 12:26:17 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-09 12:26:17 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-09 12:26:17 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-09 12:26:17 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-09 12:26:17 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-09 12:26:17 > DEBUG:    Rasterizing element "Hallway".
+2018-03-09 12:26:17 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-09 12:26:17 > DEBUG:    Pathfinding complete.
+2018-03-09 12:26:17 > DEBUG:    Saving render "Render 2018-03-09 122617.png".
+2018-03-09 12:26:17 > INFO:     Pathfinding system stopped.
+2018-03-09 12:28:01 > INFO:     Pathfinding system initialized.
+2018-03-09 12:28:01 > DEBUG:    No command-line user input received.
+2018-03-09 12:28:01 > DEBUG:    Initializing LIDAR device.
+2018-03-09 12:28:01 > DEBUG:    Current LIDAR sample rate is 500 Hz. Adjusting to desired rate of 1000 Hz.
+2018-03-09 12:28:01 > INFO:     Current LIDAR rotation rate: 05 Hz. Current LIDAR sample rate: 1000 Hz.
+2018-03-09 12:28:01 > DEBUG:    Loading pathfinding instruction set from file "TemporaryInstructions.txt".
+2018-03-09 12:28:01 > DEBUG:    Parsing pathing instructions.
+2018-03-09 12:28:01 > DEBUG:    Saving render "Initial Map Render.png".
+2018-03-09 12:28:01 > DEBUG:    Pathing instructions:
+                                 - Initial position: (162, 14), 90°
+                                 - Element distribution: LLL
+                                 - Path list: ['NearSwitch', 'Deliver', 'Collect', 'Scale', 'Deliver', '320,48']
+2018-03-09 12:28:01 > ERROR:    Path target "NearSwitch" is not described in map file.
+2018-03-09 12:28:01 > ERROR:    Path target "Scale" is not described in map file.
+2018-03-09 12:28:01 > DEBUG:    Converting MapData from Vector to Raster format.
+2018-03-09 12:28:01 > DEBUG:    Rasterizing element "Hallway".
+2018-03-09 12:28:01 > DEBUG:    Pathfinding complete for step 1 of 1.
+2018-03-09 12:28:01 > DEBUG:    Pathfinding complete.
+2018-03-09 12:28:01 > DEBUG:    Saving render "Render 2018-03-09 122801.png".
+2018-03-09 12:28:01 > INFO:     Pathfinding system stopped.
+2018-03-09 15:47:50 > DEBUG:    Saving render "_LazyThetaStarRender GridData.png".
+2018-03-09 15:53:18 > DEBUG:    Saving render "_LazyThetaStarRender GridData.png".
+2018-03-09 16:00:10 > DEBUG:    Saving render "_LazyThetaStarRender GridData.png".
+2018-03-09 16:05:12 > DEBUG:    Saving render "_LazyThetaStarRender GridData.png".
+2018-03-09 16:24:32 > DEBUG:    Saving render "_LazyThetaStarRender GridData.png".
